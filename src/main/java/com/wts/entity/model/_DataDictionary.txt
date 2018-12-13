@@ -1,0 +1,65 @@
+Table: department
+-------------+---------------+------+-----+---------+---------
+ Field       | Type          | Null | Key | Default | Remarks 
+-------------+---------------+------+-----+---------+---------
+ id          | INT(10)       | NO   | PRI |         |         
+ szcs        | VARCHAR(255)  | YES  |     |         | 所在城市    
+ dwzd        | VARCHAR(255)  | YES  |     |         | 单位驻地    
+ dwlb        | VARCHAR(255)  | YES  |     |         | 单位类别    
+ dwlx        | VARCHAR(255)  | YES  |     |         | 单位类型    
+ sjdw        | VARCHAR(255)  | YES  |     |         | 上级单位    
+ dwbh        | VARCHAR(255)  | YES  |     |         | 单位编号    
+ dwmc        | VARCHAR(255)  | YES  |     |         | 单位名称    
+ qtmc        | VARCHAR(255)  | YES  |     |         | 其他名称    
+ ldzs        | VARCHAR(255)  | YES  |     |         | 领导职数    
+ jb          | VARCHAR(255)  | YES  |     |         | 级别      
+ nsjg        | VARCHAR(999)  | YES  |     |         | 内设机构    
+ zyzz        | VARCHAR(9999) | YES  |     |         | 主要职责    
+ xz_plan_num | VARCHAR(255)  | YES  |     |         | 行政编制数   
+ xz_real_num | VARCHAR(255)  | YES  |     |         | 行政实际数   
+ xz_lone_num | VARCHAR(255)  | YES  |     |         | 行政单列数   
+ sy_plan_num | VARCHAR(255)  | YES  |     |         | 事业编制数   
+ sy_real_num | VARCHAR(255)  | YES  |     |         | 事业实际数   
+ sy_lone_num | VARCHAR(255)  | YES  |     |         | 事业单列数   
+ gq_plan_num | VARCHAR(255)  | YES  |     |         | 工勤编制数   
+ gq_real_num | VARCHAR(255)  | YES  |     |         | 工勤实际数   
+ gq_lone_num | VARCHAR(255)  | YES  |     |         | 工勤单列数   
+ url         | VARCHAR(255)  | YES  |     |         | 访问网址    
+ time        | VARCHAR(255)  | YES  |     |         | 更新日期    
+-------------+---------------+------+-----+---------+---------
+
+Table: department_err
+-------+--------------+------+-----+---------+---------
+ Field | Type         | Null | Key | Default | Remarks 
+-------+--------------+------+-----+---------+---------
+ id    | INT(10)      | NO   | PRI |         |         
+ dwbh  | VARCHAR(255) | YES  |     |         | 单位编号    
+ dwmc  | VARCHAR(255) | YES  |     |         | 单位名称    
+ url   | VARCHAR(255) | YES  |     |         | 访问网址    
+-------+--------------+------+-----+---------+---------
+
+Table: person
+-------+--------------+------+-----+---------+---------
+ Field | Type         | Null | Key | Default | Remarks 
+-------+--------------+------+-----+---------+---------
+ id    | INT(10)      | NO   | PRI |         |         
+ dwbh  | VARCHAR(255) | YES  |     |         | 单位编号    
+ dwmc  | VARCHAR(255) | YES  |     |         | 单位名称    
+ ssbm  | VARCHAR(255) | YES  |     |         | 所属部门    
+ ryxm  | VARCHAR(255) | YES  |     |         | 人员姓名    
+ ryxb  | VARCHAR(255) | YES  |     |         | 人员性别    
+ bzlx  | VARCHAR(255) | YES  |     |         | 编制类型    
+ bzqk  | VARCHAR(255) | YES  |     |         | 编制情况    
+-------+--------------+------+-----+---------+---------
+
+Table: person_err
+-------+--------------+------+-----+---------+---------
+ Field | Type         | Null | Key | Default | Remarks 
+-------+--------------+------+-----+---------+---------
+ id    | INT(10)      | NO   | PRI |         |         
+ dwbh  | VARCHAR(255) | YES  |     |         | 单位编号    
+ dwmc  | VARCHAR(255) | YES  |     |         | 单位名称    
+ bzlx  | VARCHAR(255) | YES  |     |         | 编制类型    
+ url   | VARCHAR(255) | YES  |     |         | 访问网址    
+-------+--------------+------+-----+---------+---------
+
