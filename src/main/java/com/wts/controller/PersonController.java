@@ -20,40 +20,22 @@ public class PersonController extends Controller {
     /**
      * 获取人员列表
      */
-    public void Query() {
+    public void list_query() {
         renderJson(Db.paginate(
                 getParaToInt("pageCurrent"),
                 getParaToInt("pageSize"),
-                "SELECT person.ryxm, person.ryxb, person.bzlx, person.bzqk",
+                "SELECT person.ryxm, person.ryxb, person.bzlx, person.bzqk, department.id, department.dwmc",
                 "FROM person LEFT JOIN department ON person.dwbh = department.dwbh " +
-                        "WHERE person.ryxm LIKE '%" + getPara("ryxm") + "%' " +
-                        "And person.ryxb LIKE '%" + getPara("ryxb") + "%' " +
-                        "And person.bzlx LIKE '%" + getPara("bzlx") + "%' " +
-                        "And person.bzqk LIKE '%" + getPara("bzqk") + "%' " +
-                        "AND department.szcs LIKE '%" + getPara("szcs") + "%' " +
-                        "AND department.dwzd LIKE '%" + getPara("dwzd") + "%' " +
-                        "AND department.dwlb LIKE '%" + getPara("dwlb") + "%' " +
-                        "AND department.dwlx LIKE '%" + getPara("dwlx") + "%' " +
-                        "AND department.jb LIKE '%" + getPara("jb") + "%' " +
-                        "AND department.dwbh LIKE '%" + getPara("dwbh") + "%' " +
+                        "WHERE person.ryxm = '" + getPara("ryxm") + "' " +
                         "ORDER BY person.id DESC").getList());
     }
 
     /**
      * 获取人员数量
      */
-    public void Total() {
-        Long count = Db.queryLong("SELECT COUNT(*) FROM person LEFT JOIN department ON person.dwbh = department.dwbh " +
-                "WHERE person.ryxm LIKE '%" + getPara("ryxm") + "%' " +
-                "And person.ryxb LIKE '%" + getPara("ryxb") + "%' " +
-                "And person.bzlx LIKE '%" + getPara("bzlx") + "%' " +
-                "And person.bzqk LIKE '%" + getPara("bzqk") + "%' " +
-                "AND department.szcs LIKE '%" + getPara("szcs") + "%' " +
-                "AND department.dwzd LIKE '%" + getPara("dwzd") + "%' " +
-                "AND department.dwlb LIKE '%" + getPara("dwlb") + "%' " +
-                "AND department.dwlx LIKE '%" + getPara("dwlx") + "%' " +
-                "AND department.jb LIKE '%" + getPara("jb") + "%' " +
-                "AND department.dwbh LIKE '%" + getPara("dwbh") + "%' ");
+    public void list_total() {
+        Long count = Db.queryLong("SELECT COUNT(*) FROM person " +
+                "WHERE person.ryxm = '" + getPara("ryxm") + "'");
         renderText(count.toString());
     }
 
