@@ -1,0 +1,450 @@
+[
+  {
+    'lable': '济南市',
+    'value': '济南市',
+    'children': [
+      {
+        'lable': '市直',
+        'value': '市直',
+        'children': [
+          {
+            'lable': '党委',
+            'value': '党委'
+          },
+          {
+            'lable': '人大',
+            'value': '人大'
+          },
+          {
+            'lable': '政府',
+            'value': '政府'
+          },
+          {
+            'lable': '政协',
+            'value': '政协'
+          },
+          {
+            'lable': '民主党派',
+            'value': '民主党派'
+          },
+          {
+            'lable': '群众团体',
+            'value': '群众团体'
+          },
+          {
+            'lable': '法院',
+            'value': '法院'
+          },
+          {
+            'lable': '检察院',
+            'value': '检察院'
+          }
+        ]
+      }
+      {
+        'lable': '市中区',
+        'value': '市中区',
+        'children': [
+          {
+            'lable': '党委',
+            'value': '党委'
+          },
+          {
+            'lable': '人大',
+            'value': '人大'
+          },
+          {
+            'lable': '政府',
+            'value': '政府'
+          },
+          {
+            'lable': '政协',
+            'value': '政协'
+          },
+          {
+            'lable': '群众团体',
+            'value': '群众团体'
+          },
+          {
+            'lable': '法院',
+            'value': '法院'
+          },
+          {
+            'lable': '检察院',
+            'value': '检察院'
+          },
+          {
+            'lable': '街道办事处',
+            'value': '街道办事处'
+          }
+        ]
+      }
+      {
+        'lable': '历下区',
+        'value': '历下区',
+        'children': [
+          {
+            'lable': '党委',
+            'value': '党委'
+          },
+          {
+            'lable': '人大',
+            'value': '人大'
+          },
+          {
+            'lable': '政府',
+            'value': '政府'
+          },
+          {
+            'lable': '政协',
+            'value': '政协'
+          },
+          {
+            'lable': '群众团体',
+            'value': '群众团体'
+          },
+          {
+            'lable': '法院',
+            'value': '法院'
+          },
+          {
+            'lable': '检察院',
+            'value': '检察院'
+          },
+          {
+            'lable': '街道办事处',
+            'value': '街道办事处'
+          }
+        ]
+      }
+      {
+        'lable': '槐荫区',
+        'value': '槐荫区',
+        'children': [
+          {
+            'lable': '党委',
+            'value': '党委'
+          },
+          {
+            'lable': '人大',
+            'value': '人大'
+          },
+          {
+            'lable': '政府',
+            'value': '政府'
+          },
+          {
+            'lable': '政协',
+            'value': '政协'
+          },
+          {
+            'lable': '群众团体',
+            'value': '群众团体'
+          },
+          {
+            'lable': '法院',
+            'value': '法院'
+          },
+          {
+            'lable': '检察院',
+            'value': '检察院'
+          },
+          {
+            'lable': '街道办事处',
+            'value': '街道办事处'
+          }
+        ]
+      }
+      {
+        'lable': '天桥区',
+        'value': '天桥区',
+        'children': [
+          {
+            'lable': '党委',
+            'value': '党委'
+          },
+          {
+            'lable': '人大',
+            'value': '人大'
+          },
+          {
+            'lable': '政府',
+            'value': '政府'
+          },
+          {
+            'lable': '政协',
+            'value': '政协'
+          },
+          {
+            'lable': '群众团体',
+            'value': '群众团体'
+          },
+          {
+            'lable': '法院',
+            'value': '法院'
+          },
+          {
+            'lable': '检察院',
+            'value': '检察院'
+          },
+          {
+            'lable': '街道办事处',
+            'value': '街道办事处'
+          }
+        ]
+      }
+      {
+        'lable': '历城区',
+        'value': '历城区',
+        'children': [
+          {
+            'lable': '党委',
+            'value': '党委'
+          },
+          {
+            'lable': '人大',
+            'value': '人大'
+          },
+          {
+            'lable': '政府',
+            'value': '政府'
+          },
+          {
+            'lable': '政协',
+            'value': '政协'
+          },
+          {
+            'lable': '群众团体',
+            'value': '群众团体'
+          },
+          {
+            'lable': '法院',
+            'value': '法院'
+          },
+          {
+            'lable': '检察院',
+            'value': '检察院'
+          },
+          {
+            'lable': '街道办事处',
+            'value': '街道办事处'
+          },
+          {
+            'lable': '镇',
+            'value': '镇'
+          }
+        ]
+      }
+      {
+        'lable': '长清区',
+        'value': '长清区',
+        'children': [
+          {
+            'lable': '党委',
+            'value': '党委'
+          },
+          {
+            'lable': '人大',
+            'value': '人大'
+          },
+          {
+            'lable': '政府',
+            'value': '政府'
+          },
+          {
+            'lable': '政协',
+            'value': '政协'
+          },
+          {
+            'lable': '群众团体',
+            'value': '群众团体'
+          },
+          {
+            'lable': '法院',
+            'value': '法院'
+          },
+          {
+            'lable': '检察院',
+            'value': '检察院'
+          },
+          {
+            'lable': '街道办事处',
+            'value': '街道办事处'
+          },
+          {
+            'lable': '镇',
+            'value': '镇'
+          }
+        ]
+      }
+      {
+        'lable': '章丘区',
+        'value': '章丘区',
+        'children': [
+          {
+            'lable': '党委',
+            'value': '党委'
+          },
+          {
+            'lable': '人大',
+            'value': '人大'
+          },
+          {
+            'lable': '政府',
+            'value': '政府'
+          },
+          {
+            'lable': '政协',
+            'value': '政协'
+          },
+          {
+            'lable': '群众团体',
+            'value': '群众团体'
+          },
+          {
+            'lable': '法院',
+            'value': '法院'
+          },
+          {
+            'lable': '检察院',
+            'value': '检察院'
+          },
+          {
+            'lable': '街道办事处',
+            'value': '街道办事处'
+          },
+          {
+            'lable': '镇',
+            'value': '镇'
+          }
+        ]
+      }
+      {
+        'lable': '济阳县',
+        'value': '济阳县',
+        'children': [
+          {
+            'lable': '党委',
+            'value': '党委'
+          },
+          {
+            'lable': '人大',
+            'value': '人大'
+          },
+          {
+            'lable': '政府',
+            'value': '政府'
+          },
+          {
+            'lable': '政协',
+            'value': '政协'
+          },
+          {
+            'lable': '群众团体',
+            'value': '群众团体'
+          },
+          {
+            'lable': '法院',
+            'value': '法院'
+          },
+          {
+            'lable': '检察院',
+            'value': '检察院'
+          },
+          {
+            'lable': '街道办事处',
+            'value': '街道办事处'
+          },
+          {
+            'lable': '镇',
+            'value': '镇'
+          }
+        ]
+      }
+      {
+        'lable': '商河县',
+        'value': '商河县',
+        'children': [
+          {
+            'lable': '党委',
+            'value': '党委'
+          },
+          {
+            'lable': '人大',
+            'value': '人大'
+          },
+          {
+            'lable': '政府',
+            'value': '政府'
+          },
+          {
+            'lable': '政协',
+            'value': '政协'
+          },
+          {
+            'lable': '群众团体',
+            'value': '群众团体'
+          },
+          {
+            'lable': '法院',
+            'value': '法院'
+          },
+          {
+            'lable': '检察院',
+            'value': '检察院'
+          },
+          {
+            'lable': '街道办事处',
+            'value': '街道办事处'
+          },
+          {
+            'lable': '镇',
+            'value': '镇'
+          }
+        ]
+      }
+      {
+        'lable': '平阴县',
+        'value': '平阴县',
+        'children': [
+          {
+            'lable': '党委',
+            'value': '党委'
+          },
+          {
+            'lable': '人大',
+            'value': '人大'
+          },
+          {
+            'lable': '政府',
+            'value': '政府'
+          },
+          {
+            'lable': '政协',
+            'value': '政协'
+          },
+          {
+            'lable': '群众团体',
+            'value': '群众团体'
+          },
+          {
+            'lable': '法院',
+            'value': '法院'
+          },
+          {
+            'lable': '检察院',
+            'value': '检察院'
+          },
+          {
+            'lable': '街道办事处',
+            'value': '街道办事处'
+          },
+          {
+            'lable': '镇',
+            'value': '镇'
+          }
+        ]
+      }
+    ]
+  }
+]
