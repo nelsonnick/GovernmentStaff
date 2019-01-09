@@ -13,10 +13,9 @@ import org.apache.log4j.Logger;
 public class PersonController extends Controller {
     private static Logger logger = Logger.getLogger(Person.class);
 
-    public void Get() {
-        renderJson(Person.dao.findById(getPara("id")));
+    public void get(){
+        renderJson(Person.dao.find("SELECT * FROM person WHERE dwbh="+getPara("dwbh")+" AND bzlx='"+getPara("bzlx")+"' ORDER BY ryxb"));
     }
-
     /**
      * 获取人员列表
      */

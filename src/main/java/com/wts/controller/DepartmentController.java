@@ -17,8 +17,8 @@ import java.util.List;
 public class DepartmentController extends Controller {
     private static Logger logger = Logger.getLogger(Department.class);
 
-    public void get() {
-        renderJson(Department.dao.findById(getPara("id")));
+    public void get(){
+        renderJson(Department.dao.findFirst("SELECT * FROM department WHERE dwbh="+getPara("dwbh")));
     }
 
     /**
@@ -28,17 +28,40 @@ public class DepartmentController extends Controller {
      * szcs：所在城市
      * dwzd：单位驻地
      * dwlb：单位类别
+     * dwlx：单位类别
      */
-    public void list_query() {
+    public void list() {
+        String szcs, dwzd, dwlb, dwlx;
+        if (getPara("szcs").equals("")){
+            szcs = "szcs LIKE '%" + getPara("szcs") + "%' ";
+        }else{
+            szcs = "szcs = '" + getPara("szcs") + "' ";
+        }
+        if (getPara("dwzd").equals("")){
+            dwzd = "dwzd LIKE '%" + getPara("dwzd") + "%' ";
+        }else{
+            dwzd = "dwzd = '" + getPara("dwzd") + "' ";
+        }
+        if (getPara("dwlb").equals("")){
+            dwlb = "dwlb LIKE '%" + getPara("dwlb") + "%' ";
+        }else{
+            dwlb = "dwlb = '" + getPara("dwlb") + "' ";
+        }
+        if (getPara("dwlx").equals("")){
+            dwlx = "dwlx LIKE '%" + getPara("dwlx") + "%' ";
+        }else{
+            dwlx = "dwlx = '" + getPara("dwlx") + "' ";
+        }
         renderJson(Db.paginate(
                 getParaToInt("pageCurrent"),
                 getParaToInt("pageSize"),
-                "SELECT *",
+                "SELECT id, dwmc, dwbh",
                 "FROM department " +
-                        "WHERE szcs = '" + getPara("szcs") + "' " +
-                        "AND dwzd = '" + getPara("dwzd") + "' " +
-                        "AND dwlb = '" + getPara("dwlb") + "' " +
-                        "ORDER BY department.id DESC").getList());
+                        "WHERE " + szcs +
+                        "AND " + dwzd  +
+                        "AND " + dwlb +
+                        "AND " + dwlx +
+                        "ORDER BY department.id ASC").getList());
     }
 
     /**
@@ -46,33 +69,41 @@ public class DepartmentController extends Controller {
      * szcs：所在城市
      * dwzd：单位驻地
      * dwlb：单位类别
+     * dwlx：单位类别
      */
-    public void list_totol() {
+    public void total() {
+        String szcs, dwzd, dwlb, dwlx;
+        if (getPara("szcs").equals("")){
+            szcs = "szcs LIKE '%" + getPara("szcs") + "%' ";
+        }else{
+            szcs = "szcs = '" + getPara("szcs") + "' ";
+        }
+        if (getPara("dwzd").equals("")){
+            dwzd = "dwzd LIKE '%" + getPara("dwzd") + "%' ";
+        }else{
+            dwzd = "dwzd = '" + getPara("dwzd") + "' ";
+        }
+        if (getPara("dwlb").equals("")){
+            dwlb = "dwlb LIKE '%" + getPara("dwlb") + "%' ";
+        }else{
+            dwlb = "dwlb = '" + getPara("dwlb") + "' ";
+        }
+        if (getPara("dwlx").equals("")){
+            dwlx = "dwlx LIKE '%" + getPara("dwlx") + "%' ";
+        }else{
+            dwlx = "dwlx = '" + getPara("dwlx") + "' ";
+        }
         Long count = Db.queryLong("SELECT COUNT(*) FROM department " +
-                "WHERE szcs = '" + getPara("szcs") + "' " +
-                "AND dwzd = '" + getPara("dwzd") + "' " +
-                "AND dwlb = '" + getPara("dwlb") + "' ");
+                "WHERE " + szcs +
+                "AND " + dwzd +
+                "AND " + dwlb +
+                "AND  "+ dwlx);
         renderText(count.toString());
     }
 
-    public void go(){
-        List<Record> dwzd_content = Db.query("SELECT DISTINCT dwzd FROM department");
-        List<Record> dwlb_content = Db.query("SELECT DISTINCT dwlb FROM department");
-        List<Record> dwlx_content = Db.query("SELECT DISTINCT dwlx FROM department");
-        List<Record> jb_content = Db.query("SELECT DISTINCT jb FROM department");
-        renderJson(jb_content);
-    }
-    public void getSZCS(){
-        renderJson(Db.find("SELECT DISTINCT szcs FROM department" ));
-    }
-    public void getDWZD(){
-        renderJson(Db.find("SELECT DISTINCT dwzd FROM department WHERE szcs= '" + getPara("szcs") + "' " ));
-    }
-    public void getDWLB(){
-        renderJson(Db.find("SELECT DISTINCT dwlb FROM department WHERE szcs= '" + getPara("szcs") + "' AND dwzd = '" + getPara("dwzd") + "' "  ));
-    }
 
-    public void g(){
+
+    public void getCascaderOptions(){
         String str ="[";
         List<Record> szcs = Db.find("SELECT DISTINCT szcs FROM department" );
         for (Record s :szcs){
@@ -82,10 +113,8 @@ public class DepartmentController extends Controller {
                 str = str +"{'label':'"+d.getStr("dwzd")+"','value':'"+d.getStr("dwzd")+"','children': [";
                 List<Record> dwlb =Db.find("SELECT DISTINCT dwlb FROM department WHERE szcs= '" + s.getStr("szcs") + "' AND dwzd = '" + d.getStr("dwzd") + "' "  );
                 for (Record b :dwlb){
-//                    str = str +"{'label':'"+b.getStr("dwlb")+"','value':'"+b.getStr("dwlb")+"'},";
                     str = str +"{'label':'"+b.getStr("dwlb")+"','value':'"+b.getStr("dwlb")+"','children': [";
                     List<Record> dwlx =Db.find("SELECT DISTINCT dwlx FROM department WHERE szcs= '" + s.getStr("szcs") + "' AND dwzd = '" + d.getStr("dwzd") + "' AND dwlb = '" + b.getStr("dwlb") + "' " );
-                    System.out.println("SELECT DISTINCT dwlx FROM department WHERE szcs= '" + s.getStr("szcs") + "' AND dwzd = '" + d.getStr("dwzd") + "' AND dwlb = '" + b.getStr("dwlb") + "' " );
                     for (Record x :dwlx){
                         str = str +"{'label':'"+x.getStr("dwlx")+"','value':'"+x.getStr("dwlx")+"'},";
                     }
@@ -104,27 +133,7 @@ public class DepartmentController extends Controller {
                 .replace("'政协'", "d").replace("'民主党派'", "e").replace("'群众团体'", "f")
                 .replace("'法院'", "g").replace("'检察院'", "h").replace("'经济实体'", "i")
                 .replace("'街道办事处'", "j").replace("'乡'", "j").replace("'镇'", "l");
-        System.out.println(str.replace("'","\"").replace(" ",""));
         renderText(str.replace("'","\"").replace(" ",""));
     }
 
-    public void gg(){
-        String str ="[";
-        List<Record> szcs = Db.find("SELECT DISTINCT szcs FROM department" );
-        for (Record s :szcs){
-            str = str +"{'label':'"+s.getStr("szcs")+"','children': [";
-            List<Record> dwzd = Db.find("SELECT DISTINCT dwzd FROM department WHERE szcs= '" + s.getStr("szcs") + "' " );
-            for (Record d :dwzd){
-                str = str +"{'label':'"+d.getStr("dwzd")+"','children': [";
-                List<Record> dwlb =Db.find("SELECT DISTINCT dwlb FROM department WHERE szcs= '" + s.getStr("szcs") + "' AND dwzd = '" + d.getStr("dwzd") + "' "  );
-                for (Record b :dwlb){
-                    str = str +"{'label':'"+b.getStr("dwlb")+"'},";
-                }
-                str = str + "],},";
-            }
-            str = str + "],},";
-        }
-        str = str + "]";
-        System.out.println(str);
-    }
 }
