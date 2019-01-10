@@ -29,38 +29,40 @@ public class DepartmentController extends Controller {
      * dwzd：单位驻地
      * dwlb：单位类别
      * dwlx：单位类别
+     * sjdw：上级单位
      */
     public void list() {
-        String szcs, dwzd, dwlb, dwlx;
+        String szcs, dwzd, dwlb, dwlx, sjdw;
         if (getPara("szcs").equals("")){
-            szcs = "szcs LIKE '%" + getPara("szcs") + "%' ";
+            szcs = "WHERE szcs LIKE '%" + getPara("szcs") + "%' ";
         }else{
-            szcs = "szcs = '" + getPara("szcs") + "' ";
+            szcs = "WHERE szcs = '" + getPara("szcs") + "' ";
         }
         if (getPara("dwzd").equals("")){
-            dwzd = "dwzd LIKE '%" + getPara("dwzd") + "%' ";
+            dwzd = "AND dwzd LIKE '%" + getPara("dwzd") + "%' ";
         }else{
-            dwzd = "dwzd = '" + getPara("dwzd") + "' ";
+            dwzd = "AND dwzd = '" + getPara("dwzd") + "' ";
         }
         if (getPara("dwlb").equals("")){
-            dwlb = "dwlb LIKE '%" + getPara("dwlb") + "%' ";
+            dwlb = "AND dwlb LIKE '%" + getPara("dwlb") + "%' ";
         }else{
-            dwlb = "dwlb = '" + getPara("dwlb") + "' ";
+            dwlb = "AND dwlb = '" + getPara("dwlb") + "' ";
         }
         if (getPara("dwlx").equals("")){
-            dwlx = "dwlx LIKE '%" + getPara("dwlx") + "%' ";
+            dwlx = "AND dwlx LIKE '%" + getPara("dwlx") + "%' ";
         }else{
-            dwlx = "dwlx = '" + getPara("dwlx") + "' ";
+            dwlx = "AND dwlx = '" + getPara("dwlx") + "' ";
+        }
+        if (getPara("sjdw").equals("")){
+            sjdw = " ";
+        }else{
+            sjdw = " AND sjdw = '" + getPara("sjdw") + "' ";
         }
         renderJson(Db.paginate(
                 getParaToInt("pageCurrent"),
                 getParaToInt("pageSize"),
-                "SELECT id, dwmc, dwbh",
-                "FROM department " +
-                        "WHERE " + szcs +
-                        "AND " + dwzd  +
-                        "AND " + dwlb +
-                        "AND " + dwlx +
+                "SELECT id, dwlx, dwmc, dwbh",
+                "FROM department " + szcs + dwzd  + dwlb + dwlx + sjdw +
                         "ORDER BY department.id ASC").getList());
     }
 
@@ -72,32 +74,33 @@ public class DepartmentController extends Controller {
      * dwlx：单位类别
      */
     public void total() {
-        String szcs, dwzd, dwlb, dwlx;
+        String szcs, dwzd, dwlb, dwlx, sjdw;
         if (getPara("szcs").equals("")){
-            szcs = "szcs LIKE '%" + getPara("szcs") + "%' ";
+            szcs = "WHERE szcs LIKE '%" + getPara("szcs") + "%' ";
         }else{
-            szcs = "szcs = '" + getPara("szcs") + "' ";
+            szcs = "WHERE szcs = '" + getPara("szcs") + "' ";
         }
         if (getPara("dwzd").equals("")){
-            dwzd = "dwzd LIKE '%" + getPara("dwzd") + "%' ";
+            dwzd = "AND dwzd LIKE '%" + getPara("dwzd") + "%' ";
         }else{
-            dwzd = "dwzd = '" + getPara("dwzd") + "' ";
+            dwzd = "AND dwzd = '" + getPara("dwzd") + "' ";
         }
         if (getPara("dwlb").equals("")){
-            dwlb = "dwlb LIKE '%" + getPara("dwlb") + "%' ";
+            dwlb = "AND dwlb LIKE '%" + getPara("dwlb") + "%' ";
         }else{
-            dwlb = "dwlb = '" + getPara("dwlb") + "' ";
+            dwlb = "AND dwlb = '" + getPara("dwlb") + "' ";
         }
         if (getPara("dwlx").equals("")){
-            dwlx = "dwlx LIKE '%" + getPara("dwlx") + "%' ";
+            dwlx = "AND dwlx LIKE '%" + getPara("dwlx") + "%' ";
         }else{
-            dwlx = "dwlx = '" + getPara("dwlx") + "' ";
+            dwlx = "AND dwlx = '" + getPara("dwlx") + "' ";
         }
-        Long count = Db.queryLong("SELECT COUNT(*) FROM department " +
-                "WHERE " + szcs +
-                "AND " + dwzd +
-                "AND " + dwlb +
-                "AND  "+ dwlx);
+        if (getPara("sjdw").equals("")){
+            sjdw = " ";
+        }else{
+            sjdw = " AND sjdw = '" + getPara("sjdw") + "' ";
+        }
+        Long count = Db.queryLong("SELECT COUNT(*) FROM department " +  szcs + dwzd + dwlb + dwlx + sjdw);
         renderText(count.toString());
     }
 
