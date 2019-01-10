@@ -9,6 +9,7 @@ import com.jfinal.plugin.druid.DruidPlugin;
 import com.jfinal.server.undertow.UndertowServer;
 import com.jfinal.template.Engine;
 import com.wts.controller.DepartmentController;
+import com.wts.controller.MainController;
 import com.wts.controller.PersonController;
 import com.wts.entity.model._MappingKit;
 
@@ -32,6 +33,7 @@ public class Config extends JFinalConfig {
 
     @Override
     public void configRoute(Routes me) {
+        me.add("/main", MainController.class);
         me.add("/person", PersonController.class);
         me.add("/department", DepartmentController.class);
     }

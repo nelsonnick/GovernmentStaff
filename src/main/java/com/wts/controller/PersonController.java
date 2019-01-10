@@ -1,6 +1,5 @@
 package com.wts.controller;
 import com.jfinal.core.Controller;
-import com.jfinal.plugin.activerecord.Db;
 import com.wts.entity.model.Person;
 import org.apache.log4j.Logger;
 
@@ -14,28 +13,7 @@ public class PersonController extends Controller {
     private static Logger logger = Logger.getLogger(Person.class);
 
     public void get(){
-        renderJson(Person.dao.find("SELECT * FROM person WHERE dwbh="+getPara("dwbh")+" AND bzlx='"+getPara("bzlx")+"' ORDER BY ryxb"));
-    }
-    /**
-     * 获取人员列表
-     */
-    public void list_query() {
-        renderJson(Db.paginate(
-                getParaToInt("pageCurrent"),
-                getParaToInt("pageSize"),
-                "SELECT person.ryxm, person.ryxb, person.bzlx, person.bzqk, department.id, department.dwmc",
-                "FROM person LEFT JOIN department ON person.dwbh = department.dwbh " +
-                        "WHERE person.ryxm = '" + getPara("ryxm") + "' " +
-                        "ORDER BY person.id DESC").getList());
-    }
-
-    /**
-     * 获取人员数量
-     */
-    public void list_total() {
-        Long count = Db.queryLong("SELECT COUNT(*) FROM person " +
-                "WHERE person.ryxm = '" + getPara("ryxm") + "'");
-        renderText(count.toString());
+        renderJson(Person.dao.find("SELECT id,ssbm,ryxm,ryxb,bzlx,bzqk FROM person WHERE dwbh="+getPara("dwbh")+" AND bzlx='"+getPara("bzlx")+"' ORDER BY ryxb"));
     }
 
 }
