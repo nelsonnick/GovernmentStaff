@@ -31,7 +31,7 @@ public class MainController extends Controller {
         }else if(type.equals("2")){
             sqlExcptSelect = " FROM person LEFT JOIN department ON person.dwbh = department.dwbh WHERE person.ryxm LIKE '%" + ryxm + "%' ";
         }else if(type.equals("3")) {
-            sqlExcptSelect = " FROM department WHERE sjdw = '" + sjdw + "' ";
+            sqlExcptSelect = " FROM department WHERE department.sjdw = '" + sjdw + "' ";
         }else{
             sqlExcptSelect = "";
         }
@@ -53,7 +53,7 @@ public class MainController extends Controller {
      */
     public void list() {
         String select = "SELECT DISTINCT department.id, department.dwlx, department.dwmc, department.dwbh";
-        String sqlExcptSelect = getsqlExcptSelect(getPara("type"), getPara("szcs"), getPara("dwzd"), getPara("dwlb"), getPara("dwlx"), getPara("sjdw"), getPara("dwmc"), getPara("ryxm"))+" ORDER BY department.dwlx ASC";
+        String sqlExcptSelect = getsqlExcptSelect(getPara("type"), getPara("szcs"), getPara("dwzd"), getPara("dwlb"), getPara("dwlx"), getPara("sjdw"), getPara("dwmc"), getPara("ryxm"))+" ORDER BY department.dwlx DESC";
         renderJson(Db.paginate(getParaToInt("pageCurrent"), getParaToInt("pageSize"), select, sqlExcptSelect).getList());
     }
 
