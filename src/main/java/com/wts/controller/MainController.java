@@ -46,7 +46,7 @@ public class MainController extends Controller {
      * szcs：所在城市
      * dwzd：单位驻地
      * dwlb：单位类别
-     * dwlx：单位类别
+     * dwlx：单位类型
      * sjdw：上级单位
      * dwmc：单位名称
      * ryxm：人员姓名
@@ -63,7 +63,7 @@ public class MainController extends Controller {
      * szcs：所在城市
      * dwzd：单位驻地
      * dwlb：单位类别
-     * dwlx：单位类别
+     * dwlx：单位类型
      * sjdw：上级单位
      * dwmc：单位名称
      * ryxm：人员姓名
@@ -79,14 +79,14 @@ public class MainController extends Controller {
      * szcs：所在城市
      * dwzd：单位驻地
      * dwlb：单位类别
-     * dwlx：单位类别
+     * dwlx：单位类型
      */
-    public String getBaseSQL(String szcs, String dwzd, String dwlb, String dwlx){
-        String sqlExcptSelect = "";
+    public static String getBaseSQL(String szcs, String dwzd, String dwlb, String dwlx){
+        String sqlExcptSelect = " WHERE ";
         if (szcs.equals("")) {
-            sqlExcptSelect = sqlExcptSelect + " WHERE department.szcs LIKE '%" + szcs + "%' ";
+            sqlExcptSelect = sqlExcptSelect + "department.szcs LIKE '%" + szcs + "%' ";
         } else {
-            sqlExcptSelect = sqlExcptSelect + " WHERE department.szcs = '" + szcs + "' ";
+            sqlExcptSelect = sqlExcptSelect + "department.szcs = '" + szcs + "' ";
         }
         if (dwzd.equals("")) {
             sqlExcptSelect = sqlExcptSelect + " AND department.dwzd LIKE '%" + dwzd + "%' ";
@@ -111,21 +111,21 @@ public class MainController extends Controller {
      * szcs：所在城市
      * dwzd：单位驻地
      * dwlb：单位类别
-     * dwlx：单位类别
+     * dwlx：单位类型
      */
     public Long getDepartmentNum(String szcs, String dwzd, String dwlb, String dwlx){
-        return Db.queryLong("SELECT COUNT(*) FORM department" + getBaseSQL(szcs, dwzd,dwlb,dwlx));
+        return Db.queryLong("SELECT COUNT(*) FROM department" + getBaseSQL(szcs, dwzd,dwlb,dwlx));
     }
     /**
      * 获取人员数量
      * szcs：所在城市
      * dwzd：单位驻地
      * dwlb：单位类别
-     * dwlx：单位类别
+     * dwlx：单位类型
      * ryxb：人员性别：空白、男、女
      * bzlx：编制类型：空白、行政编制、事业编制、工勤编制
      */
-    public Long getPersonNum(String szcs, String dwzd, String dwlb, String dwlx, String ryxb, String bzlx){
+    public static Long getPersonNum(String szcs, String dwzd, String dwlb, String dwlx, String ryxb, String bzlx){
         String sql = "";
         if (!ryxb.equals("")) {
             sql = sql + " AND person.ryxb = '" + ryxb + "' ";
@@ -133,14 +133,14 @@ public class MainController extends Controller {
         if (!bzlx.equals("")) {
             sql = sql + " AND person.bzlx = '" + bzlx + "' ";
         }
-        return Db.queryLong("SELECT COUNT(*) FORM person LEFT JOIN department ON person.dwbh = department.dwbh" + getBaseSQL(szcs, dwzd,dwlb,dwlx)+sql);
+        return Db.queryLong("SELECT COUNT(*) FROM person LEFT JOIN department ON person.dwbh = department.dwbh" + getBaseSQL(szcs, dwzd,dwlb,dwlx)+sql);
     }
     /**
      * 根据列名获取单位计数
      * szcs：所在城市
      * dwzd：单位驻地
      * dwlb：单位类别
-     * dwlx：单位类别
+     * dwlx：单位类型
      * column：列名：ldzs、xz_plan_num、xz_real_num、xz_lone_num、sy_plan_num、sy_real_num、sy_lone_num、gq_plan_num、gq_real_num、gq_lone_num
      */
     public String getTotal_column(String szcs, String dwzd, String dwlb, String dwlx, String column){
@@ -151,12 +151,12 @@ public class MainController extends Controller {
      * szcs：所在城市
      * dwzd：单位驻地
      * dwlb：单位类别
-     * dwlx：单位类别
+     * dwlx：单位类型
      * column_plan：列名：xz_plan_num、sy_plan_num、gq_plan_num
      * column_real：列名：xz_real_num、sy_real_num、gq_real_num
      * type：类型：<已超编、>有空编、=编制满
      */
-    public String getTotal_type(String szcs, String dwzd, String dwlb, String dwlx, String column_plan, String column_real, String type){
+    public static String getTotalType(String szcs, String dwzd, String dwlb, String dwlx, String column_plan, String column_real, String type){
         return Db.queryLong("SELECT SUM(" + column_plan + "-" + column_real + type+"0) FROM department" + getBaseSQL(szcs, dwzd,dwlb,dwlx)).toString();
     }
 }
