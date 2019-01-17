@@ -124,7 +124,7 @@ public class MainController extends Controller {
      * dwlx：单位类型
      */
     public static Long getDepartmentPersonNum(String szcs, String dwzd, String dwlb, String dwlx){
-        return Db.queryLong("SELECT COUNT(*) FROM person LEFT JOIN department ON person.dwbh = department.dwbh" + getBaseSQL(szcs, dwzd,dwlb,dwlx));
+        return Db.queryLong("SELECT COUNT(*) FROM person " + getBaseSQL(szcs, dwzd,dwlb,dwlx));
     }
     /**
      * 获取人员数量
@@ -143,7 +143,7 @@ public class MainController extends Controller {
         if (!bzlx.equals("")) {
             sql = sql + " AND person.bzlx = '" + bzlx + "' ";
         }
-        return Db.queryLong("SELECT COUNT(*) FROM person LEFT JOIN department ON person.dwbh = department.dwbh" + getBaseSQL(szcs, dwzd,dwlb,dwlx)+sql);
+        return Db.queryLong("SELECT COUNT(*) FROM person " + getBaseSQL(szcs, dwzd,dwlb,dwlx)+sql);
     }
     /**
      * 根据列名获取单位计数
