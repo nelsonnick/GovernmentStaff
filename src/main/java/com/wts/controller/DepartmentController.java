@@ -16,14 +16,24 @@ import java.util.List;
  */
 public class DepartmentController extends Controller {
     private static Logger logger = Logger.getLogger(Department.class);
-
+    /**
+     * 获取单位信息
+     * dwbh：单位编号
+     */
     public void get(){
         renderJson(Department.dao.findFirst("SELECT * FROM department WHERE dwbh="+getPara("dwbh")));
     }
+    /**
+     * 获取下级部门数量
+     * dwbh：单位编号
+     */
     public void getUnderNum(){
-        Long count = Db.queryLong("SELECT COUNT(*) FROM department WHERE sjdw = "+getPara("dwbh"));
+        Long count = Db.queryLong("SELECT COUNT(*) FROM department WHERE sjdw = '"+getPara("dwbh") + "'");
         renderText(count.toString());
     }
+    /**
+     * 获取层级目录
+     */
     public void getCascaderOptions(){
         String str ="[";
         List<Record> szcs = Db.find("SELECT DISTINCT szcs FROM department" );

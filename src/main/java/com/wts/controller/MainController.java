@@ -113,8 +113,18 @@ public class MainController extends Controller {
      * dwlb：单位类别
      * dwlx：单位类型
      */
-    public Long getDepartmentNum(String szcs, String dwzd, String dwlb, String dwlx){
+    public static Long getDepartmentNum(String szcs, String dwzd, String dwlb, String dwlx){
         return Db.queryLong("SELECT COUNT(*) FROM department" + getBaseSQL(szcs, dwzd,dwlb,dwlx));
+    }
+    /**
+     * 获取单位人员数量
+     * szcs：所在城市
+     * dwzd：单位驻地
+     * dwlb：单位类别
+     * dwlx：单位类型
+     */
+    public static Long getDepartmentPersonNum(String szcs, String dwzd, String dwlb, String dwlx){
+        return Db.queryLong("SELECT COUNT(*) FROM person LEFT JOIN department ON person.dwbh = department.dwbh" + getBaseSQL(szcs, dwzd,dwlb,dwlx));
     }
     /**
      * 获取人员数量
@@ -157,6 +167,10 @@ public class MainController extends Controller {
      * type：类型：<已超编、>有空编、=编制满
      */
     public static String getTotalType(String szcs, String dwzd, String dwlb, String dwlx, String column_plan, String column_real, String type){
-        return Db.queryLong("SELECT SUM(" + column_plan + "-" + column_real + type+"0) FROM department" + getBaseSQL(szcs, dwzd,dwlb,dwlx)).toString();
+        String a = "";
+        if (type.equals("=")){
+            a=" AND "+ column_plan+ "!=0 ";
+        }
+        return Db.queryLong("SELECT SUM(" + column_plan + "-" + column_real + type+"0" + a + ") FROM department" + getBaseSQL(szcs, dwzd,dwlb,dwlx)).toString();
     }
 }

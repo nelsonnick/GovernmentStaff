@@ -1,9 +1,9 @@
 package com.wts.controller;
 
 import com.jfinal.core.Controller;
+import com.jfinal.plugin.activerecord.Db;
 
-import static com.wts.controller.MainController.getPersonNum;
-import static com.wts.controller.MainController.getTotalType;
+import static com.wts.controller.MainController.*;
 
 /**
  * ChartController class
@@ -13,7 +13,13 @@ import static com.wts.controller.MainController.getTotalType;
  */
 public class ChartController extends Controller {
 
-
+    /**
+     * 获取图表的OPtion
+     * szcs：所在城市
+     * dwzd：单位驻地
+     * dwlb：单位类别
+     * dwlx：单位类型
+     */
     public void t() {
         String subtext = "";
         if (!getPara("szcs").equals("")) {
@@ -41,17 +47,17 @@ public class ChartController extends Controller {
 //            text = "编制类型";
             String data1 = "[" + a1 + ", " + a2 + ", " + a3 + "]";
             String data2 = "[" + b1 + ", " + b2 + ", " + b3 + "]";
-            str = "{\"title\":{\"text\":\"" + text + "\",\"subtext\":\"" + subtext + "\"},\"tooltip\":{\"trigger\":\"axis\",\"axisPointer\":{\"type\":\"shadow\"}},\"legend\":{\"data\":[\"男\",\"女\"]},\"grid\":{\"left\":\"3%\",\"right\":\"4%\",\"bottom\":\"3%\",\"containLabel\":true},\"yAxis\":{\"type\":\"value\"},\"xAxis\":{\"type\":\"category\",\"data\":[\"行政\",\"事业\",\"工勤\"]},\"series\":[{\"name\":\"男\",\"type\":\"bar\",\"stack\":\"总量\",\"label\":{\"normal\":{\"show\":false,\"position\":\"insideRight\"}},\"data\":" + data1 + "},{\"name\":\"女\",\"type\":\"bar\",\"stack\":\"总量\",\"label\":{\"normal\":{\"show\":false,\"position\":\"insideRight\"}},\"data\":" + data2 + "}]}";
+            str = "{\"title\":{\"text\":\"" + text + "\",\"subtext\":\"" + subtext + "\"},\"tooltip\":{\"trigger\":\"axis\",\"axisPointer\":{\"type\":\"shadow\"}},\"legend\":{\"data\":[\"男\",\"女\"]},\"grid\":{\"left\":\"3%\",\"right\":\"4%\",\"bottom\":\"3%\",\"containLabel\":true},\"yAxis\":{\"type\":\"value\"},\"xAxis\":{\"type\":\"category\",\"data\":[\"行政编制\",\"事业编制\",\"工勤编制\"]},\"series\":[{\"name\":\"男\",\"type\":\"bar\",\"stack\":\"总量\",\"label\":{\"normal\":{\"show\":false,\"position\":\"insideRight\"}},\"data\":" + data1 + "},{\"name\":\"女\",\"type\":\"bar\",\"stack\":\"总量\",\"label\":{\"normal\":{\"show\":false,\"position\":\"insideRight\"}},\"data\":" + data2 + "}]}";
         }else if (getPara("type").equals("1")) {
             String a1 = getTotalType(getPara("szcs"),getPara("dwzd"),getPara("dwlb"),getPara("dwlx"),"xz_plan_num","xz_real_num",">").toString();
             String a2 = getTotalType(getPara("szcs"),getPara("dwzd"),getPara("dwlb"),getPara("dwlx"),"sy_plan_num","sy_real_num",">").toString();
             String a3 = getTotalType(getPara("szcs"),getPara("dwzd"),getPara("dwlb"),getPara("dwlx"),"gq_plan_num","gq_real_num",">").toString();
-            String b1 = getTotalType(getPara("szcs"),getPara("dwzd"),getPara("dwlb"),getPara("dwlx"),"xz_plan_num","xz_real_num","=").toString();
-            String b2 = getTotalType(getPara("szcs"),getPara("dwzd"),getPara("dwlb"),getPara("dwlx"),"sy_plan_num","sy_real_num","=").toString();
-            String b3 = getTotalType(getPara("szcs"),getPara("dwzd"),getPara("dwlb"),getPara("dwlx"),"gq_plan_num","gq_real_num","=").toString();
-            String c1 = getTotalType(getPara("szcs"),getPara("dwzd"),getPara("dwlb"),getPara("dwlx"),"xz_plan_num","xz_real_num","<").toString();
-            String c2 = getTotalType(getPara("szcs"),getPara("dwzd"),getPara("dwlb"),getPara("dwlx"),"sy_plan_num","sy_real_num","<").toString();
-            String c3 = getTotalType(getPara("szcs"),getPara("dwzd"),getPara("dwlb"),getPara("dwlx"),"gq_plan_num","gq_real_num","<").toString();
+            String b1 = getTotalType(getPara("szcs"),getPara("dwzd"),getPara("dwlb"),getPara("dwlx"),"xz_plan_num","xz_real_num","<").toString();
+            String b2 = getTotalType(getPara("szcs"),getPara("dwzd"),getPara("dwlb"),getPara("dwlx"),"sy_plan_num","sy_real_num","<").toString();
+            String b3 = getTotalType(getPara("szcs"),getPara("dwzd"),getPara("dwlb"),getPara("dwlx"),"gq_plan_num","gq_real_num","<").toString();
+            String c1 = getTotalType(getPara("szcs"),getPara("dwzd"),getPara("dwlb"),getPara("dwlx"),"xz_plan_num","xz_real_num","=").toString();
+            String c2 = getTotalType(getPara("szcs"),getPara("dwzd"),getPara("dwlb"),getPara("dwlx"),"sy_plan_num","sy_real_num","=").toString();
+            String c3 = getTotalType(getPara("szcs"),getPara("dwzd"),getPara("dwlb"),getPara("dwlx"),"gq_plan_num","gq_real_num","=").toString();
 
 //            text = "编制情况";
             String data1 = "["+a1+", "+a2+", "+a3+"]";
@@ -64,4 +70,16 @@ public class ChartController extends Controller {
         renderJson(str);
     }
 
+    /**
+     * 获取描述
+     * szcs：所在城市
+     * dwzd：单位驻地
+     * dwlb：单位类别
+     * dwlx：单位类型
+     */
+    public void getDesc() {
+        Long d_num = getDepartmentNum(getPara("szcs"), getPara("dwzd"), getPara("dwlb"), getPara("dwlx"));
+        Long p_num = getDepartmentPersonNum(getPara("szcs"), getPara("dwzd"), getPara("dwlb"), getPara("dwlx"));
+        renderText("当前层级共含有" + d_num + "个部门，" + p_num + "名人员");
+    }
 }
