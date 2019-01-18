@@ -84,24 +84,24 @@ public class MainController extends Controller {
     public static String getBaseSQL(String szcs, String dwzd, String dwlb, String dwlx){
         String sqlExcptSelect = " WHERE ";
         if (szcs.equals("")) {
-            sqlExcptSelect = sqlExcptSelect + "department.szcs LIKE '%" + szcs + "%' ";
+            sqlExcptSelect = sqlExcptSelect + "szcs LIKE '%" + szcs + "%' ";
         } else {
-            sqlExcptSelect = sqlExcptSelect + "department.szcs = '" + szcs + "' ";
+            sqlExcptSelect = sqlExcptSelect + "szcs = '" + szcs + "' ";
         }
         if (dwzd.equals("")) {
-            sqlExcptSelect = sqlExcptSelect + " AND department.dwzd LIKE '%" + dwzd + "%' ";
+            sqlExcptSelect = sqlExcptSelect + " AND dwzd LIKE '%" + dwzd + "%' ";
         } else {
-            sqlExcptSelect = sqlExcptSelect + " AND department.dwzd = '" + dwzd + "' ";
+            sqlExcptSelect = sqlExcptSelect + " AND dwzd = '" + dwzd + "' ";
         }
         if (dwlb.equals("")) {
-            sqlExcptSelect = sqlExcptSelect + " AND department.dwlb LIKE '%" + dwlb + "%' ";
+            sqlExcptSelect = sqlExcptSelect + " AND dwlb LIKE '%" + dwlb + "%' ";
         } else {
-            sqlExcptSelect = sqlExcptSelect + " AND department.dwlb = '" + dwlb + "' ";
+            sqlExcptSelect = sqlExcptSelect + " AND dwlb = '" + dwlb + "' ";
         }
         if (dwlx.equals("")) {
-            sqlExcptSelect = sqlExcptSelect + " AND department.dwlx LIKE '%" + dwlx + "%' ";
+            sqlExcptSelect = sqlExcptSelect + " AND dwlx LIKE '%" + dwlx + "%' ";
         } else {
-            sqlExcptSelect = sqlExcptSelect + " AND department.dwlx = '" + dwlx + "' ";
+            sqlExcptSelect = sqlExcptSelect + " AND dwlx = '" + dwlx + "' ";
         }
         return sqlExcptSelect;
     }

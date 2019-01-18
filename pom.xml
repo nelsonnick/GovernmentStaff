@@ -2,7 +2,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.wts</groupId>
-  <artifactId>gs</artifactId>
+  <artifactId>GovernmentStaff</artifactId>
   <version>1.0</version>
   <packaging>war</packaging>
   <name>GovernmentStaff Maven Webapp</name>
@@ -92,10 +92,15 @@
       <artifactId>c3p0</artifactId>
       <version>0.9.5.2</version>
     </dependency>
+    <dependency>
+      <groupId>it.sauronsoftware.cron4j</groupId>
+      <artifactId>cron4j</artifactId>
+      <version>2.2.5</version>
+    </dependency>
   </dependencies>
 
   <build>
-    <finalName>gs</finalName>
+    <finalName>GovernmentStaff</finalName>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

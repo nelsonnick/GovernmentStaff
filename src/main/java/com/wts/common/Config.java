@@ -5,11 +5,14 @@ import com.jfinal.ext.handler.ContextPathHandler;
 import com.jfinal.kit.PropKit;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.jfinal.plugin.activerecord.tx.TxByMethods;
+import com.jfinal.plugin.cron4j.Cron4jPlugin;
 import com.jfinal.plugin.druid.DruidPlugin;
 import com.jfinal.server.undertow.UndertowServer;
 import com.jfinal.template.Engine;
 import com.wts.controller.*;
 import com.wts.entity.model._MappingKit;
+import com.wts.util.OptionTask;
+import com.wts.util.TestTask;
 
 /**
  * Config class
@@ -31,10 +34,11 @@ public class Config extends JFinalConfig {
 
     @Override
     public void configRoute(Routes me) {
-        me.add("/main", MainController.class);
-        me.add("/person", PersonController.class);
-        me.add("/department", DepartmentController.class);
-        me.add("/chart", ChartController.class);
+        String base = "/gs";
+        me.add(base + "/main", MainController.class);
+        me.add(base + "/person", PersonController.class);
+        me.add(base + "/department", DepartmentController.class);
+        me.add(base + "/chart", ChartController.class);
     }
 
     @Override
@@ -50,6 +54,10 @@ public class Config extends JFinalConfig {
         arp.setShowSql(false);
         me.add(arp);
         _MappingKit.mapping(arp);
+        Cron4jPlugin cp = new Cron4jPlugin();
+        cp.addTask("0 1 * * *", new OptionTask());
+//        cp.addTask("* * * * *", new TestTask());
+        me.add(cp);
     }
 
     @Override
