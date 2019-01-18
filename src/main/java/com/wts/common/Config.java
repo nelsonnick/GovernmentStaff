@@ -31,10 +31,10 @@ public class Config extends JFinalConfig {
 
     @Override
     public void configRoute(Routes me) {
-        me.add("/bz/main", MainController.class);
-        me.add("/bz/person", PersonController.class);
-        me.add("/bz/department", DepartmentController.class);
-        me.add("/bz/chart", ChartController.class);
+        me.add("/main", MainController.class);
+        me.add("/person", PersonController.class);
+        me.add("/department", DepartmentController.class);
+        me.add("/chart", ChartController.class);
     }
 
     @Override

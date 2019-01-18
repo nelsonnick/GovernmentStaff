@@ -1,7 +1,6 @@
 package com.wts.controller;
 
 import com.jfinal.core.Controller;
-import com.jfinal.plugin.activerecord.Db;
 
 import static com.wts.controller.MainController.*;
 
@@ -20,7 +19,7 @@ public class ChartController extends Controller {
      * dwlb：单位类别
      * dwlx：单位类型
      */
-    public void t() {
+    public void getChartOption() {
         String subtext = "";
         if (!getPara("szcs").equals("")) {
             subtext = getPara("szcs");
