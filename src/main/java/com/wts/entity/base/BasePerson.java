@@ -17,6 +17,46 @@ public abstract class BasePerson<M extends BasePerson<M>> extends Model<M> imple
 		return getInt("id");
 	}
 
+	public void setSzcs(java.lang.String szcs) {
+		set("szcs", szcs);
+	}
+	
+	public java.lang.String getSzcs() {
+		return getStr("szcs");
+	}
+
+	public void setDwzd(java.lang.String dwzd) {
+		set("dwzd", dwzd);
+	}
+	
+	public java.lang.String getDwzd() {
+		return getStr("dwzd");
+	}
+
+	public void setDwlb(java.lang.String dwlb) {
+		set("dwlb", dwlb);
+	}
+	
+	public java.lang.String getDwlb() {
+		return getStr("dwlb");
+	}
+
+	public void setDwlx(java.lang.String dwlx) {
+		set("dwlx", dwlx);
+	}
+	
+	public java.lang.String getDwlx() {
+		return getStr("dwlx");
+	}
+
+	public void setSjdw(java.lang.String sjdw) {
+		set("sjdw", sjdw);
+	}
+	
+	public java.lang.String getSjdw() {
+		return getStr("sjdw");
+	}
+
 	public void setDwbh(java.lang.String dwbh) {
 		set("dwbh", dwbh);
 	}
