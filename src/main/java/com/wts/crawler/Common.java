@@ -3,7 +3,9 @@ package com.wts.crawler;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.wts.entity.model.DepartmentErr;
 import com.wts.entity.model.Person;
+import com.wts.entity.model.PersonErr;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -21,6 +23,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static com.wts.crawler.city.JiNan.downDepartmentDetails;
+import static com.wts.crawler.city.JiNan.downPersonList;
 
 /**
  * Common class
@@ -149,7 +152,6 @@ public class Common {
         }
 
     }
-
     /**
      * 获取网页数据
      * url：网址
@@ -180,7 +182,6 @@ public class Common {
     public static String getDepartmentUrl(String baseURL, String dwbh) {
         return baseURL + "UnitDetails.aspx?unitId=" + dwbh;
     }
-
     /**
      * 获取人员网址
      * baseURL：基础字符串：http://jnbb.gov.cn/smzgs/
@@ -188,8 +189,9 @@ public class Common {
      * bzlx：编制类型
      * isCode：编制是否代码
      */
-    public static String getPersonUrl(String baseURL, String dwbh, String bzlx, Boolean isCode) {
+    public static String getPersonUrl(String baseURL, String dwbh, String bzlx, Boolean isCode){
         if (isCode) {
+//            return baseURL + "PersonList.aspx?unitId=" + dwbh + "&BZLX=" + java.net.URLEncoder.encode(bzlx, "GB2312");
             if (bzlx.equals("行政编制")) {
                 return baseURL + "PersonList.aspx?unitId=" + dwbh + "&BZLX=%D0%D0%D5%FE%B1%E0%D6%C6";
             } else if (bzlx.equals("事业编制")) {
@@ -203,7 +205,6 @@ public class Common {
             return baseURL + "PersonList.aspx?unitId=" + dwbh + "&BZLX=" + bzlx;
         }
     }
-
     /**
      * 获取更新时间
      * baseURL：基础字符串
@@ -255,7 +256,7 @@ public class Common {
      * structure_str：结构字符串
      * filename：文件名
      */
-    public static void createBefore(String structure_str,String filename){
+    public static void createBefore(String structure_str, String filename){
         try {
             File file = new File("D:\\结构代码\\"+filename+"-before.txt");
             //文件不存在时候，主动穿件文件。
@@ -271,7 +272,6 @@ public class Common {
             // TODO: handle exception
         }
     }
-
     /**
      * 计算出现次数
      * line：字符串
@@ -302,9 +302,10 @@ public class Common {
             int character = 0;
             int g = 0;
             line = br.readLine();
+            String ex="";
             if (!line.contains("-")){
                 while (line != null) {
-                    out.println(line.substring(1));
+                    out.println(ex+line.substring(1));
                     line = br.readLine();
                 }
             }else {
@@ -318,9 +319,9 @@ public class Common {
 //                        }
 //                    }
                     if (character == 1) {
-                        out.println(line.split("-")[1]);
+                        out.println(ex+line.split("-")[1]);
                     } else if (character == 2) {
-                        out.println("\t" + line.split("-")[1]);
+                        out.println(ex+"\t" + line.split("-")[1]);
                     } else {
                         g = countNum(line,"-");
 //                        for (int i = 0; i < line.length(); i++) {
@@ -331,7 +332,7 @@ public class Common {
 //                            }
 //                        }
                         if (g == 0) {
-                            out.println(line.substring(1));
+                            out.println(ex+line.substring(1));
                         } else {
                             if (line.split("-")[1] == "党委\n" || line.split("-")[1] == "人大\n" || line.split("-")[1] == "政府\n" || line.split("-")[1] == "政协\n"
                                     || line.split("-")[1] == "民主党派\n" || line.split("-")[1] == "群众团体\n" || line.split("-")[1] == "法院\n" || line.split("-")[1] == "检察院\n"
@@ -339,11 +340,11 @@ public class Common {
                                     || line.split("-")[1] == "镇\n" || line.split("-")[1] == "行政机关\n" || line.split("-")[1] == "直属事业单位\n" || line.split("-")[1] == "下设机构\n"
                                     || line.split("-")[1] == "事业单位\n") {
                                 for (int i = 2; i < character; i++) {
-                                    out.println("\t");
+                                    out.println(ex+"\t");
                                 }
-                                out.println(line.split("-")[1]);
+                                out.println(ex+line.split("-")[1]);
                             } else {
-                                out.println(line.substring(1));
+                                out.println(ex+line.substring(1));
                             }
                             g = 0;
                         }
@@ -365,8 +366,6 @@ public class Common {
             e.printStackTrace();
         }
     }
-
-
     /**
      * 根据结构字符串下载全部数据
      * baseURL:基础字符串
@@ -473,22 +472,29 @@ public class Common {
                 } else {
                     sjdw = "";
                 }
-//                downDepartmentDetails(baseURL, szcs, dwzd, dwlb, dwlx, sjdw, dwbh, dwmc, time);
+                downDepartmentDetails(baseURL, szcs, dwzd, dwlb, dwlx, sjdw, dwbh, dwmc, time);
                 num = num + 1;
             }
         }catch (IOException e){
 
         }
     }
-
-    public static void main(String[] args) throws Exception {
-//        create_before(get_structure_str("http://120.221.95.1:1888/",true),"青岛");
-//        create_after("青岛");
-//        create_before(get_structure_str("http://jnbb.gov.cn/smzgs/",true),"济南");
-//        create_after("济南");
-        downDetail("","济南",9,12);
-//        System.out.println(Pattern.matches("[^\t].+?\n", "济南市\n"));
+    /**
+     * 下载department错误数据
+     */
+    public static void downDepartmentError(){
+        List<DepartmentErr> departmentErrs = DepartmentErr.dao.find("SELECT * FROM department_err");
+        for(DepartmentErr departmentErr:departmentErrs){
+            downDepartmentDetails(departmentErr.getBase(),departmentErr.getSzcs(),departmentErr.getDwzd(),departmentErr.getDwlb(),departmentErr.getDwlx(),departmentErr.getSjdw(),departmentErr.getDwbh(),departmentErr.getDwmc(),departmentErr.getTime());
+        }
     }
-
-
+    /**
+     * 下载person错误数据
+     */
+    public static void downPersonError(){
+        List<PersonErr> personErrs = PersonErr.dao.find("SELECT * FROM person_err");
+        for(PersonErr personErr:personErrs){
+            downPersonList(personErr.getBase(),personErr.getSzcs(),personErr.getDwzd(),personErr.getDwlb(),personErr.getDwlx(),personErr.getSjdw(),personErr.getDwbh(),personErr.getDwmc(),personErr.getBzlx());
+        }
+    }
 }

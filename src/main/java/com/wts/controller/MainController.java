@@ -3,7 +3,8 @@ package com.wts.controller;
 import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Db;
 
-import static com.wts.crawler.city.JiNan.downDepartmentDetails;
+import static com.wts.crawler.city.QingDao.downDepartmentDetails;
+
 
 /**
  * MainController class
@@ -60,7 +61,8 @@ public class MainController extends Controller {
     }
     public void l() {
         try{
-            downDepartmentDetails("http://sz.jnbb.gov.cn/smzgs/","济南","市中区","政府","行政机关","","037001003419","济南市市中区人民政府办公室","20190121");
+//            downDepartmentDetails("http://sz.jnbb.gov.cn/smzgs/","济南","市中区","政府","行政机关","","037001003419","济南市市中区人民政府办公室","20190121");
+            downDepartmentDetails("http://120.221.95.1:1888/", "青岛", "市直", "政府", "行政机关", "", "037002000129", "青岛市人民政府办公厅", "2019年1月21日");
         }catch (Exception e){
             System.out.println(e);
         }

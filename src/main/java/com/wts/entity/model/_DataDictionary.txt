@@ -81,9 +81,14 @@ Table: person_err
  Field | Type         | Null | Key | Default | Remarks 
 -------+--------------+------+-----+---------+---------
  id    | INT(10)      | NO   | PRI |         |         
+ szcs  | VARCHAR(255) | YES  |     |         | 所在城市    
+ dwzd  | VARCHAR(255) | YES  |     |         | 单位驻地    
+ dwlb  | VARCHAR(255) | YES  |     |         | 单位类别    
+ dwlx  | VARCHAR(255) | YES  |     |         | 单位类型    
+ sjdw  | VARCHAR(255) | YES  |     |         | 上级单位    
  dwbh  | VARCHAR(255) | YES  |     |         | 单位编号    
  dwmc  | VARCHAR(255) | YES  |     |         | 单位名称    
  bzlx  | VARCHAR(255) | YES  |     |         | 编制类型    
- url   | VARCHAR(255) | YES  |     |         | 访问网址    
+ base  | VARCHAR(255) | YES  |     |         | 基础网址    
 -------+--------------+------+-----+---------+---------
 
