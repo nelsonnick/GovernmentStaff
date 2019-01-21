@@ -1,4 +1,4 @@
-package com.wts.crawler;
+package com.wts.crawler.city;
 
 import okhttp3.*;
 import org.jsoup.Jsoup;
