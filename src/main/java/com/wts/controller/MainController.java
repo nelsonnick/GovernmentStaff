@@ -3,6 +3,8 @@ package com.wts.controller;
 import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Db;
 
+import static com.wts.crawler.city.JiNan.downDepartmentDetails;
+
 /**
  * MainController class
  *
@@ -56,7 +58,14 @@ public class MainController extends Controller {
         String sqlExcptSelect = getsqlExcptSelect(getPara("type"), getPara("szcs"), getPara("dwzd"), getPara("dwlb"), getPara("dwlx"), getPara("sjdw"), getPara("dwmc"), getPara("ryxm"))+" ORDER BY department.dwlx DESC";
         renderJson(Db.paginate(getParaToInt("pageCurrent"), getParaToInt("pageSize"), select, sqlExcptSelect).getList());
     }
-
+    public void l() {
+        try{
+            downDepartmentDetails("http://sz.jnbb.gov.cn/smzgs/","济南","市中区","政府","行政机关","","037001003419","济南市市中区人民政府办公室","20190121");
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        renderText("111111111111");
+    }
     /**
      * 获取单位数量
      * type：搜索类型0逐级查看1部门模糊搜索2人员模糊搜索3下级精准搜索
@@ -173,4 +182,5 @@ public class MainController extends Controller {
         }
         return Db.queryLong("SELECT SUM(" + column_plan + "-" + column_real + type+"0" + a + ") FROM department" + getBaseSQL(szcs, dwzd,dwlb,dwlx)).toString();
     }
+
 }

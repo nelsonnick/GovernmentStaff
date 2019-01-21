@@ -10,11 +10,12 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.wts.crawler.Common.getDepartmentUrl;
-import static com.wts.crawler.Common.getPersonUrl;
+import static com.wts.crawler.Common.*;
+
 /**
  * JiNan class
  *
@@ -23,26 +24,7 @@ import static com.wts.crawler.Common.getPersonUrl;
  */
 public class JiNan {
 
-    /**
-     * 获取网页数据
-     * url：网址
-     */
-    public static Document getDoc(String url) throws Exception{
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder()
-                .url(url)
-                .addHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8")
-                .addHeader("Accept-Encoding", "gzip, deflate")
-                .addHeader("Accept-Language", "zh-CN,zh;q=0.9")
-                .addHeader("Connection", "keep-alive")
-                .addHeader("DNT", "1")
-                .addHeader("Upgrade-Insecure-Requests", "1")
-                .addHeader("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.67 Safari/537.36Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.67 Safari/537.36")
-                .build();
-        Response response = client.newCall(request).execute();
-        Document doc = Jsoup.parse(response.body().string());
-        return doc;
-    }
+
     /**
      * 下载部门详情
      * baseURL：基础网址
@@ -105,7 +87,9 @@ public class JiNan {
                 }else{
                     xzRealNum = element.getElementsByTag("td").first().nextElementSibling().nextElementSibling().nextElementSibling().text();
                 }
-                bzlx = "行政编制";
+                if (!xzRealNum.equals("0")) {
+                    downPersonList(baseURL, szcs, dwzd, dwlb, dwlx, sjdw, dwbh, dwmc, "行政编制");
+                }
             }else if(element.getElementsByTag("td").first().text().contains("事业")){
                 syPlanNum = element.getElementsByTag("td").first().nextElementSibling().text();
                 Element syReal = element.getElementsByTag("td").first().nextElementSibling().nextElementSibling().nextElementSibling();
@@ -115,7 +99,9 @@ public class JiNan {
                 }else{
                     syRealNum = element.getElementsByTag("td").first().nextElementSibling().nextElementSibling().nextElementSibling().text();
                 }
-                bzlx = "事业编制";
+                if (!syRealNum.equals("0")) {
+                    downPersonList(baseURL, szcs, dwzd, dwlb, dwlx, sjdw, dwbh, dwmc, "事业编制");
+                }
             }else if(element.getElementsByTag("td").first().text().contains("工勤")){
                 gqPlanNum = element.getElementsByTag("td").first().nextElementSibling().text();
                 Element gqReal = element.getElementsByTag("td").first().nextElementSibling().nextElementSibling().nextElementSibling();
@@ -125,11 +111,12 @@ public class JiNan {
                 }else{
                     gqRealNum = element.getElementsByTag("td").first().nextElementSibling().nextElementSibling().nextElementSibling().text();
                 }
-                bzlx = "工勤编制";
+                if (!gqRealNum.equals("0")) {
+                    downPersonList(baseURL, szcs, dwzd, dwlb, dwlx, sjdw, dwbh, dwmc, "工勤编制");
+                }
             }else{
 
             }
-            downPersonList(baseURL, szcs, dwzd, dwlb, dwlx, sjdw, dwbh, dwmc, bzlx);
         }
         if (xzPlanNum.equals("&nbsp;") || xzPlanNum.equals("")){
             xzPlanNum = "0";
@@ -158,7 +145,7 @@ public class JiNan {
         if (gqLoneNum.equals("&nbsp;") || gqLoneNum.equals("")){
             gqLoneNum = "0";
         }
-        new Department()
+        Department department = new Department()
                 .set("szcs", szcs)
                 .set("dwzd", dwzd)
                 .set("dwlb", dwlb)
@@ -181,37 +168,10 @@ public class JiNan {
                 .set("gq_real_num", gqRealNum)
                 .set("gq_lone_num", gqLoneNum)
                 .set("url", url)
-                .set("time", time)
-                .save();
+                .set("time", time);
+        department.save();
     }
-    /**
-     * 获取人员
-     * cols：列名
-     * row：行
-     */
-    public static Person getPerson(List<String> cols,List<String> row){
-        String dwmc = "";
-        String ryxm = "";
-        String ryxb = "";
-        String ssbm = "";
-        String zybzqk = "";
-        if (cols.contains("单位")){
-            dwmc = row.get(cols.indexOf("单位"));
-        }
-        if (cols.contains("姓名")){
-            ryxm = row.get(cols.indexOf("姓名"));
-        }
-        if (cols.contains("性别")){
-            ryxb = row.get(cols.indexOf("性别"));
-        }
-        if (cols.contains("部门")){
-            ssbm = row.get(cols.indexOf("部门"));
-        }
-        if (cols.contains("占用编制情况")){
-            zybzqk = row.get(cols.indexOf("占用编制情况"));
-        }
-        return new Person().set("dwmc",dwmc).set("ryxm",ryxm).set("ryxb",ryxb).set("ssbm",ssbm).set("zybzqk",zybzqk);
-    }
+
     /**
      * 下载人员详情
      * baseURL：基础网址
@@ -227,7 +187,6 @@ public class JiNan {
     public static void downPersonList(String baseURL, String szcs, String dwzd, String dwlb, String dwlx, String sjdw, String dwbh, String dwmc, String bzlx) throws Exception{
 
         String url = getPersonUrl(baseURL, dwbh, bzlx, false);
-        System.out.println(url);
         Document doc = getDoc(url);
         Element e = doc.getElementById("GVPersonList");
         Elements ths = e.getElementsByAttributeValue("class", "ListHead").first().getElementsByTag("th");
@@ -252,15 +211,16 @@ public class JiNan {
 
             }
             Person person = getPerson(cols,row);
-            person.set("szcs",szcs).set("dwzd",dwzd).set("dwlb",dwlb).set("dwlx",dwlx).set("sjdw",sjdw).set("bzlx",bzlx);
-            System.out.println(person.toString());
+            person.set("szcs",szcs).set("dwzd",dwzd).set("dwlb",dwlb).set("dwlx",dwlx).set("sjdw",sjdw).set("dwbh",dwbh).set("bzlx",bzlx).save();
         }
 
 
 
     }
 
-    public static void main(String[] args) throws Exception{
-        downPersonList("http://jnbb.gov.cn/smzgs/","","","","","","037001000402418","","事业编制");
+    public static void main(String[] args) {
+        String f = "http://jnbb.gov.cn/smzgs/UnitDetails.aspx?unitId=037001000432";
+        String a = f.split("/")[2];
+        System.out.println(a);
     }
 }
