@@ -30,7 +30,7 @@ public class Common {
      * baseURL：基础字符串：http://jnbb.gov.cn/smzgs/
      * isHtml：是否HTML：济南、青岛、淄博、枣庄、东营、潍坊、泰安、威海、滨州、德州、聊城、临沂、菏泽TRUE,省直、烟台、日照FALSE
      */
-    private static String get_structure_str(String baseURL, Boolean isHtml) throws Exception{
+    public static String getStructureStr(String baseURL, Boolean isHtml) throws Exception{
         System.setProperty("webdriver.chrome.driver","C:\\chromedriver.exe");
         WebDriver driver =new ChromeDriver();
         driver.get(baseURL + "TreeViewPage.aspx");
@@ -150,7 +150,7 @@ public class Common {
      * baseURL：基础字符串：http://jnbb.gov.cn/smzgs/
      * dwbh：单位编号
      */
-    private static String get_department_url(String baseURL, String dwbh) {
+    public static String getDepartmentUrl(String baseURL, String dwbh) {
         return baseURL + "UnitDetails.aspx?unitId=" + dwbh;
     }
 
@@ -161,7 +161,7 @@ public class Common {
      * bzlx：编制类型
      * isCode：编制是否代码
      */
-    private static String get_person_url(String baseURL, String dwbh, String bzlx, Boolean isCode) {
+    public static String getPersonUrl(String baseURL, String dwbh, String bzlx, Boolean isCode) {
         if (isCode) {
             if (bzlx.equals("行政编制")) {
                 return baseURL + "PersonList.aspx?unitId=" + dwbh + "&BZLX=%D0%D0%D5%FE%B1%E0%D6%C6";
@@ -182,7 +182,7 @@ public class Common {
      * baseURL：基础字符串：http://jnbb.gov.cn/smzgs/
      * num：从第num个字符开始截取：一般是9，青岛是7
      */
-    private static String get_time(String baseURL,Integer num) throws Exception{
+    public static String getTime(String baseURL,Integer num) throws Exception{
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(baseURL)
@@ -197,7 +197,7 @@ public class Common {
      * structure_str：结构字符串
      * filename：文件名
      */
-    public static void create_before(String structure_str,String filename){
+    public static void createBefore(String structure_str,String filename){
         try {
             File file = new File("D:\\结构代码\\"+filename+"-before.txt");
             //文件不存在时候，主动穿件文件。
@@ -215,56 +215,82 @@ public class Common {
     }
 
     /**
+     * 计算出现次数
+     * line：字符串
+     * count：要计算的字符
+     */
+    public static Integer countNum(String line,String count) {
+        Integer character = 0;
+        for (int i = 0; i < line.length(); i++) {
+            {
+                if (line.charAt(i) == count.charAt(0)) {
+                    character++;
+                }
+            }
+        }
+        return character;
+    }
+    /**
      * 生成after文件
      * filename：文件名
      * 需要转换：青岛
      * 不需要转换：济南
      */
-    public static void create_after(String filename) {
+    public static void createAfter(String filename) {
         try {
             BufferedReader br = new BufferedReader(new FileReader("D:/结构代码/" + filename + "-before.txt"));
             PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("D:/结构代码/" + filename + ".txt", true)));
             String line = null;
             int character = 0;
             int g = 0;
-            while ((line = br.readLine()) != null) {
-                character = 0;
-                for (int i = 0; i < line.length(); i++) {
-                    {
-                        if (line.charAt(i) == "\t".charAt(0)) {
-                            character++;
-                        }
-                    }
+            line = br.readLine();
+            if (!line.contains("-")){
+                while (line != null) {
+                    out.println(line.substring(1));
+                    line = br.readLine();
                 }
-                if (character == 1) {
-                    out.println("\t" + line.split("-")[1]);
-                } else if (character == 2) {
-                    out.println("\t\t" + line.split("-")[1]);
-                } else {
-                    for (int i = 0; i < line.length(); i++) {
-                        {
-                            if (line.charAt(i) == "-".charAt(0)) {
-                                g++;
-                            }
-                        }
-                    }
-                    if (g == 0) {
-                        out.println(line);
+            }else {
+                while (line != null) {
+                    character = countNum(line,"\t");
+//                    for (int i = 0; i < line.length(); i++) {
+//                        {
+//                            if (line.charAt(i) == "\t".charAt(0)) {
+//                                character++;
+//                            }
+//                        }
+//                    }
+                    if (character == 1) {
+                        out.println(line.split("-")[1]);
+                    } else if (character == 2) {
+                        out.println("\t" + line.split("-")[1]);
                     } else {
-                        if (line.split("-")[1] == "党委\n" || line.split("-")[1] == "人大\n" || line.split("-")[1] == "政府\n" || line.split("-")[1] == "政协\n"
-                                || line.split("-")[1] == "民主党派\n" || line.split("-")[1] == "群众团体\n" || line.split("-")[1] == "法院\n" || line.split("-")[1] == "检察院\n"
-                                || line.split("-")[1] == "经济实体\n" || line.split("-")[1] == "其他\n" || line.split("-")[1] == "街道办事处\n" || line.split("-")[1] == "乡\n"
-                                || line.split("-")[1] == "镇\n" || line.split("-")[1] == "行政机关\n" || line.split("-")[1] == "直属事业单位\n" || line.split("-")[1] == "下设机构\n"
-                                || line.split("-")[1] == "事业单位\n") {
-                            for (int i = 1; i < character; i++) {
-                                out.println("\t");
-                            }
-                            out.println(line.split("-")[1]);
+                        g = countNum(line,"-");
+//                        for (int i = 0; i < line.length(); i++) {
+//                            {
+//                                if (line.charAt(i) == "-".charAt(0)) {
+//                                    g++;
+//                                }
+//                            }
+//                        }
+                        if (g == 0) {
+                            out.println(line.substring(1));
                         } else {
-                            out.println(line);
+                            if (line.split("-")[1] == "党委\n" || line.split("-")[1] == "人大\n" || line.split("-")[1] == "政府\n" || line.split("-")[1] == "政协\n"
+                                    || line.split("-")[1] == "民主党派\n" || line.split("-")[1] == "群众团体\n" || line.split("-")[1] == "法院\n" || line.split("-")[1] == "检察院\n"
+                                    || line.split("-")[1] == "经济实体\n" || line.split("-")[1] == "其他\n" || line.split("-")[1] == "街道办事处\n" || line.split("-")[1] == "乡\n"
+                                    || line.split("-")[1] == "镇\n" || line.split("-")[1] == "行政机关\n" || line.split("-")[1] == "直属事业单位\n" || line.split("-")[1] == "下设机构\n"
+                                    || line.split("-")[1] == "事业单位\n") {
+                                for (int i = 2; i < character; i++) {
+                                    out.println("\t");
+                                }
+                                out.println(line.split("-")[1]);
+                            } else {
+                                out.println(line.substring(1));
+                            }
+                            g = 0;
                         }
-                        g=0;
                     }
+                    line = br.readLine();
                 }
             }
 
@@ -282,9 +308,125 @@ public class Common {
         }
     }
 
+
+    /**
+     * 根据结构字符串下载全部数据
+     * baseURL:基础字符串
+     * filename：文件名
+     * timeNum：时间截取字符串：一般是9，青岛是7
+     * codeNum：上级单位截取字符串，一般是12，省直是9
+     */
+    public static void downDetail(String baseURL, String filename,Integer timeNum,Integer codeNum) throws Exception{
+        String szcs = "";
+        String dwzd = "";
+        String dwlb = "";
+        String dwlx = "";
+        String sjdw = "";
+        String dwbh = "";
+        String dwmc = "";
+        String time = "";
+        String line = "";
+        String row =  "";
+        Integer tab = 0;
+        Integer num = 1;
+        BufferedReader br = new BufferedReader(new FileReader("D:/结构代码/" + filename + ".txt"));
+        while ((line = br.readLine()) != null) {
+            if (Pattern.matches("[^\t].+?", line)){
+                szcs = line.replace("\t", "").replace("\n", "");
+                continue;
+            }
+            if (Pattern.matches("\t[^\t].+?", line)) {
+                dwzd = line.replace("\t", "").replace("\n", "");
+//                time = get_time(baseURL, timeNum);
+                continue;
+            }
+            if (Pattern.matches("\t\t[^\t].+?", line) ||Pattern.matches("\t\t[^\t]", line)){
+                dwlb = line.replace("\t", "").replace("\n", "");
+                continue;
+            }
+            if (Pattern.matches("\t\t经济实体", line)){
+                dwlx = "事业单位";
+                tab = countNum(line,"\t");
+                continue;
+            }
+            if (Pattern.matches("\t\t\t行政机关", line)){
+                dwlx = "行政机关";
+                tab = countNum(line,"\t");
+                continue;
+            }
+            if (Pattern.matches("\t\t\t直属事业单位", line)){
+                dwlx = "事业单位";
+                tab = countNum(line,"\t");
+                continue;
+            }
+            if (Pattern.matches("\t\t\t其他单位", line)){
+                dwlx = "事业单位";
+                tab = countNum(line,"\t");
+                continue;
+            }
+            if (Pattern.matches("\t\t\t\t\t下设机构", line)){
+                dwlx = "行政机关";
+                tab = countNum(line,"\t");
+                continue;
+            }
+            if (Pattern.matches("\t\t\t\t\t事业单位", line)){
+                dwlx = "事业单位";
+                tab = countNum(line,"\t");
+                continue;
+            }
+            if (Pattern.matches("\t\t\t\t\t\t下设机构", line)){
+                dwlx = "行政机关";
+                tab = countNum(line,"\t");
+                continue;
+            }
+            if (Pattern.matches("\t\t\t\t\t\t事业单位", line)){
+                dwlx = "事业单位";
+                tab = countNum(line,"\t");
+                continue;
+            }
+            if (Pattern.matches("\t\t\t\t\t\t\t下设机构", line)){
+                dwlx = "行政机关";
+                tab = countNum(line,"\t");
+                continue;
+            }
+            if (Pattern.matches("\t\t\t\t\t\t\t事业单位", line)){
+                dwlx = "事业单位";
+                tab = countNum(line,"\t");
+                continue;
+            }
+            if (Pattern.matches("\t\t街道办事处", line)){
+                dwlx = "行政机关";
+                tab = countNum(line,"\t");
+                continue;
+            }
+            if (countNum(line,"\t") < tab){
+                dwlx = "行政机关";
+            }
+            if ((dwlb.equals("街道办事处") || dwlb.equals("乡") || dwlb.equals("镇")) && Pattern.matches("\t\t\t\t[^\t].+?", line)){
+                dwlx = "事业单位";
+            }
+            tab = countNum(line,"\t");
+            row = line.replace("\t", "").replace("\n", "");
+            dwbh = row.split("-")[0];
+            dwmc = row.split("-")[1];
+            if (dwbh.length()>codeNum){
+                sjdw=dwbh.substring(0,dwbh.length()-3);
+            }else{
+                sjdw="";
+            }
+            System.out.println(szcs+"-"+dwzd+"-"+dwlb+"-"+dwlx+"-"+sjdw+"-"+dwbh+"-"+dwmc);
+//            down_department_details(baseURL, szcs, dwzd, dwlb, dwlx, sjdw, dwbh, dwmc, time);
+            num = num+1;
+        }
+    }
+
     public static void main(String[] args) throws Exception {
 //        create_before(get_structure_str("http://120.221.95.1:1888/",true),"青岛");
-        create_after("济南");
+//        create_after("青岛");
+//        create_before(get_structure_str("http://jnbb.gov.cn/smzgs/",true),"济南");
+//        create_after("济南");
+        downDetail("","济南",9,12);
+//        System.out.println(Pattern.matches("[^\t].+?\n", "济南市\n"));
     }
 
 

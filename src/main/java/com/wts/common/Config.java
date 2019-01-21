@@ -12,8 +12,6 @@ import com.jfinal.template.Engine;
 import com.wts.controller.*;
 import com.wts.entity.model._MappingKit;
 import com.wts.util.OptionTask;
-import com.wts.util.TestTask;
-
 /**
  * Config class
  *
