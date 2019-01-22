@@ -184,6 +184,20 @@ public class Common {
     }
 
     /**
+     * 获取网页数据
+     * url：网址
+     * 链接失败时，抛出IOException
+     */
+    public static Document getDocWithNot(String url) throws IOException {
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+        Response response = client.newCall(request).execute();
+        Document doc = Jsoup.parse(response.body().string());
+        return doc;
+    }
+    /**
      * 获取单位网址
      * baseURL：基础字符串：http://jnbb.gov.cn/smzgs/
      * dwbh：单位编号
@@ -307,9 +321,9 @@ public class Common {
     }
 
     /**
-     * 生成文件
+     * 生成文件，并缩进一个tab
      * filename：文件名
-     * 需要转换：省直、青岛
+     * 需要转换：省直、青岛、烟台
      * 不需要转换：济南
      */
     public static void transFile(String filename) {
@@ -369,21 +383,22 @@ public class Common {
         }
         logger.info("转换文件--->" + DIRECTION + filename + ".txt--->成功！");
     }
+
     /**
-     * 将“XX市市直”变为“市直”，并缩进一个tab
+     * 将“XX市市直”变为“市直”
      * filename：文件名
      * cityname：城市名
      */
-    public static void changeFile(String filename,String cityname) {
+    public static void changeFile(String filename, String cityname) {
         try {
             BufferedReader br = new BufferedReader(new FileReader(DIRECTION + filename + ".txt"));
             PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(DIRECTION + filename + "1.txt", true)));
             String line = br.readLine();
             while (line != null) {
-                if (line.equals("\t\t" + cityname + "市市直")) {
+                if (line.equals("\t" + cityname + "市市直")) {
                     out.println("\t市直");
-                }else{
-                    out.println(line.substring(1));
+                } else {
+                    out.println(line);
                 }
                 line = br.readLine();
             }
@@ -400,19 +415,64 @@ public class Common {
         }
         logger.info("转换文件--->" + DIRECTION + filename + ".txt--->成功！");
     }
+
+    /**
+     * 整个缩进一个tab
+     * filename：文件名
+     */
+    public static void retractFile(String filename) {
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(DIRECTION + filename + ".txt"));
+            PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(DIRECTION + filename + "1.txt", true)));
+            String line = br.readLine();
+            while (line != null) {
+                out.println(line.substring(1));
+                line = br.readLine();
+            }
+            br.close();
+            out.close();
+            File oldfile = new File(DIRECTION + filename + ".txt");
+            File file = new File(DIRECTION + filename + "1.txt");
+            oldfile.delete();
+            file.renameTo(oldfile);
+        } catch (FileNotFoundException e) {
+            logger.error("转换文件--->" + DIRECTION + filename + ".txt--->失败！");
+        } catch (IOException e) {
+            logger.error("转换文件--->" + DIRECTION + filename + ".txt--->失败！");
+        }
+        logger.info("转换文件--->" + DIRECTION + filename + ".txt--->成功！");
+    }
+
     /**
      * 合并文件
      * filename：文件名
+     * map：字典
      */
-    public static void mergeFile(String filename,Map<String, String> map){
+    public static void mergeFile(String filename, Map<String, String> map) {
+        try {
+            PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(DIRECTION + filename + ".txt", true)));
+            for (Map.Entry<String, String> key : map.entrySet()) {
+                BufferedReader br = new BufferedReader(new FileReader(DIRECTION + key.getKey() + ".txt"));
+                String line = null;
+                while ((line = br.readLine()) != null) {
+                    out.println(line);
+                }
+                br.close();
+                File file = new File(DIRECTION + key.getKey() + ".txt");
+                file.delete();
+            }
+            out.close();
+        } catch (Exception e) {
 
+        }
     }
+
     /**
      * 根据结构字符串下载全部数据
      * baseURL:基础字符串
      * filename：文件名
      * timeNum：时间截取字符串：一般是9，青岛是7
-     * codeNum：上级单位截取字符串，一般是12，省直是9
+     * codeNum：上级单位截取字符串，一般是12，省直是6
      */
     public static void downWithFile(String baseURL, String filename, Integer timeNum, Integer codeNum, String city) {
         try {
@@ -508,11 +568,12 @@ public class Common {
                 row = line.replace("\t", "").replace("\n", "");
                 dwbh = row.split("-")[0];
                 dwmc = row.split("-")[1];
-                if (dwbh.length() >= codeNum) {
+                if (dwbh.length() > codeNum) {
                     sjdw = dwbh.substring(0, dwbh.length() - 3);
                 } else {
                     sjdw = "";
                 }
+//                System.out.println(szcs + "-" + dwzd + "-" + dwlb + "-" + dwlx + "-" + dwbh + "-" + dwmc);
                 Class c = Class.forName("com.wts.crawler.city." + city);
                 Method method = c.getMethod("downDepartmentDetails", String.class, String.class, String.class, String.class, String.class, String.class, String.class, String.class, String.class);
                 method.invoke("", baseURL, szcs, dwzd, dwlb, dwlx, sjdw, dwbh, dwmc, time);
@@ -520,6 +581,7 @@ public class Common {
                 num = num + 1;
             }
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println(e.getMessage());
         }
     }

@@ -27,8 +27,8 @@ public class ShengZhi {
             }
             br.close();
             out.close();
-            File oldfile=new File(DIRECTION + filename + ".txt");
-            File newfile=new File(DIRECTION + filename + "-new.txt");
+            File oldfile = new File(DIRECTION + filename + ".txt");
+            File newfile = new File(DIRECTION + filename + "-new.txt");
             oldfile.delete();
             newfile.renameTo(oldfile);
         } catch (Exception e) {
@@ -39,15 +39,15 @@ public class ShengZhi {
     /**
      * 获取结构文件
      */
-    public static void getFile(){
+    public static void getFile() {
         try {
             Map<String, String> map = ShengZhi();
-            for (Map.Entry<String, String> key : map.entrySet()){
-                createFile(getStructureStr(key.getValue(), false),key.getKey());
+            for (Map.Entry<String, String> key : map.entrySet()) {
+                createFile(getStructureStr(key.getValue(), false), key.getKey());
                 transFile(key.getKey());
                 changeFile(key.getKey());
             }
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
     }
@@ -55,13 +55,13 @@ public class ShengZhi {
     /**
      * 下载
      */
-    public static void down(){
+    public static void down() {
         try {
             Map<String, String> map = ShengZhi();
-            for (Map.Entry<String, String> key : map.entrySet()){
-                downWithFile(key.getValue(),key.getKey(),9,9,"JiNan");
+            for (Map.Entry<String, String> key : map.entrySet()) {
+                downWithFile(key.getValue(), key.getKey(), 9, 6, "JiNan");
             }
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
     }

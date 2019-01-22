@@ -1,7 +1,7 @@
 package com.wts.controller;
 
 import com.jfinal.core.Controller;
-import com.wts.crawler.city.ShengZhi;
+import com.wts.crawler.city.*;
 
 
 /**
@@ -13,11 +13,22 @@ import com.wts.crawler.city.ShengZhi;
 public class CrawlerController extends Controller {
 
     public void get() {
-        ShengZhi.getFile();
-        renderText("11111111111111");
+        RiZhao.getFile();
+        renderNull();
     }
-
+    public void get2() {
+        ShengZhi.getFile();
+        renderNull();
+    }
     public void down() {
+        RiZhao.down();
+        renderNull();
+    }
+    public void down1() {
+        JiNan.down();
+        renderNull();
+    }
+    public void down2() {
         ShengZhi.down();
         renderNull();
     }

@@ -5,21 +5,21 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import static com.wts.crawler.Common.*;
-import static com.wts.crawler.URL.JiNan;
+import static com.wts.crawler.URL.RiZhao;
 
 /**
- * JiNan class
- *
+ * RiZhao class
+ * 跟济南基本相似，但是person表里面用的是代码格式 ，不是文本！！！
  * @author wts
- * @date 2019/1/21
+ * @date 2019/1/22
  */
-public class JiNan {
+public class RiZhao {
     /**
      * 下载部门详情
      * base：基础网址
@@ -121,8 +121,8 @@ public class JiNan {
      */
     public  static void downPersonList(String base, String szcs, String dwzd, String dwlb, String dwlx, String sjdw, String dwbh, String dwmc, String bzlx) {
         try {
-            String url = getPersonUrl(base, dwbh, bzlx, false);
-            Document doc = getDoc(url);
+            String url = getPersonUrl(base, dwbh, bzlx, true);
+            Document doc = getDocWithNot(url);
             Element e = doc.getElementById("GVPersonList");
             Elements ths = e.getElementsByAttributeValue("class", "ListHead").first().getElementsByTag("th");
             List<String> cols = new ArrayList<>();
@@ -152,31 +152,24 @@ public class JiNan {
             savePersonErr(base, szcs, dwzd, dwlb, dwlx, sjdw, dwbh, dwmc, bzlx);
         }
     }
+
     /**
      * 获取结构文件
      */
     public static void getFile() {
-        try {
-            Map<String, String> map = JiNan();
-            for (Map.Entry<String, String> key : map.entrySet()){
-                createFile(getStructureStr(key.getValue(), true),key.getKey());
-                transFile(key.getKey());
-            }
-            retractFile("市直");
-            changeFile("市直","济南");
-            mergeFile("济南",JiNan());
-        }catch (Exception e){
+        Map<String, String> map = RiZhao();
+        createFile(getStructureStr(map.get("市直"), false),"日照");
+        transFile("日照");
 
-        }
     }
     /**
      * 下载
      */
     public static void down() {
         try {
-            Map<String, String> map = JiNan();
+            Map<String, String> map = RiZhao();
             for (Map.Entry<String, String> key : map.entrySet()) {
-                downWithFile(key.getValue(), "济南", 9, 12,"JiNan");
+                downWithFile(key.getValue(), "日照", 9, 12,"RiZhao");
             }
         } catch (Exception e) {
 

@@ -19,16 +19,16 @@ public class URL {
     public static Map<String, String> JiNan(){
         Map<String, String> map = new LinkedHashMap<String, String>();
         map.put("市直","http://jnbb.gov.cn/smzgs/");
-//        map.put("市中区","http://sz.jnbb.gov.cn/smzgs/");
-//        map.put("历下区","http://lx.jnbb.gov.cn/smzgs/");
-//        map.put("槐荫区","http://hy.jnbb.gov.cn/smzgs/");
-//        map.put("天桥区","http://tq.jnbb.gov.cn/smzgs/");
-//        map.put("历城区","http://lc.jnbb.gov.cn/smzgs/");
-//        map.put("长清区","http://cq.jnbb.gov.cn/smzgs/");
-//        map.put("章丘区","http://zq.jnbb.gov.cn/smzgs/");
-//        map.put("济阳县","http://jy.jnbb.gov.cn/smzgs/");
-//        map.put("商河县","http://sh.jnbb.gov.cn/smzgs/");
-//        map.put("平阴县","http://py.jnbb.gov.cn/smzgs/");
+        map.put("市中区","http://sz.jnbb.gov.cn/smzgs/");
+        map.put("历下区","http://lx.jnbb.gov.cn/smzgs/");
+        map.put("槐荫区","http://hy.jnbb.gov.cn/smzgs/");
+        map.put("天桥区","http://tq.jnbb.gov.cn/smzgs/");
+        map.put("历城区","http://lc.jnbb.gov.cn/smzgs/");
+        map.put("长清区","http://cq.jnbb.gov.cn/smzgs/");
+        map.put("章丘区","http://zq.jnbb.gov.cn/smzgs/");
+        map.put("济阳县","http://jy.jnbb.gov.cn/smzgs/");
+        map.put("商河县","http://sh.jnbb.gov.cn/smzgs/");
+        map.put("平阴县","http://py.jnbb.gov.cn/smzgs/");
         return map;
     }
     /**
