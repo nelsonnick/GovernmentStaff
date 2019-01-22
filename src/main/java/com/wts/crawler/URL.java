@@ -1,14 +1,15 @@
 package com.wts.crawler;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class URL {
+    public static final String DIRECTION = "D:\\government_staff\\";
     /**
      * 省直
      */
     public static Map<String, String> ShengZhi(){
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new LinkedHashMap<String, String>();
         map.put("省直","http://218.56.49.18/");
         return map;
     }
@@ -16,25 +17,25 @@ public class URL {
      * 济南
      */
     public static Map<String, String> JiNan(){
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new LinkedHashMap<String, String>();
         map.put("市直","http://jnbb.gov.cn/smzgs/");
-        map.put("市中区","http://sz.jnbb.gov.cn/smzgs/");
-        map.put("历下区","http://lx.jnbb.gov.cn/smzgs/");
-        map.put("槐荫区","http://hy.jnbb.gov.cn/smzgs/");
-        map.put("天桥区","http://tq.jnbb.gov.cn/smzgs/");
-        map.put("历城区","http://lc.jnbb.gov.cn/smzgs/");
-        map.put("长清区","http://cq.jnbb.gov.cn/smzgs/");
-        map.put("章丘区","http://zq.jnbb.gov.cn/smzgs/");
-        map.put("济阳县","http://jy.jnbb.gov.cn/smzgs/");
-        map.put("商河县","http://sh.jnbb.gov.cn/smzgs/");
-        map.put("平阴县","http://py.jnbb.gov.cn/smzgs/");
+//        map.put("市中区","http://sz.jnbb.gov.cn/smzgs/");
+//        map.put("历下区","http://lx.jnbb.gov.cn/smzgs/");
+//        map.put("槐荫区","http://hy.jnbb.gov.cn/smzgs/");
+//        map.put("天桥区","http://tq.jnbb.gov.cn/smzgs/");
+//        map.put("历城区","http://lc.jnbb.gov.cn/smzgs/");
+//        map.put("长清区","http://cq.jnbb.gov.cn/smzgs/");
+//        map.put("章丘区","http://zq.jnbb.gov.cn/smzgs/");
+//        map.put("济阳县","http://jy.jnbb.gov.cn/smzgs/");
+//        map.put("商河县","http://sh.jnbb.gov.cn/smzgs/");
+//        map.put("平阴县","http://py.jnbb.gov.cn/smzgs/");
         return map;
     }
     /**
      * 青岛
      */
     public static Map<String, String> QingDao(){
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new LinkedHashMap<String, String>();
         map.put("市直","http://120.221.95.1:1888/");
         map.put("市南区","http://120.221.95.1:1888/");
         map.put("市北区","http://120.221.95.1:1888/");
@@ -52,7 +53,7 @@ public class URL {
      * 烟台
      */
     public static Map<String, String> YanTai(){
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new LinkedHashMap<String, String>();
         map.put("市直","http://smz.yantai.gov.cn/");
         map.put("开发区","http://smz.yantai.gov.cn/");
         map.put("高新区","http://smz.yantai.gov.cn/");
@@ -76,7 +77,7 @@ public class URL {
      * 日照
      */
     public static Map<String, String> RiZhao(){
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new LinkedHashMap<String, String>();
         map.put("市直","http://www.rzbb.gov.cn/smzxxnew/");
         map.put("东港区","http://www.rzbb.gov.cn/smzxxnew/");
         map.put("岚山区","http://www.rzbb.gov.cn/smzxxnew/");
@@ -88,7 +89,7 @@ public class URL {
      * 聊城
      */
     public static Map<String, String> LiaoCheng(){
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new LinkedHashMap<String, String>();
         map.put("市直","http://smz.lcbb.gov.cn/");
         map.put("东昌府区","http://dcfsmz.lcbb.gov.cn/");
         map.put("临清市","http://lqsmz.lcbb.gov.cn/");
@@ -104,7 +105,7 @@ public class URL {
      * 淄博
      */
     public static Map<String, String> ZiBo(){
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new LinkedHashMap<String, String>();
         map.put("市直","http://zbbb.gov.cn/gs/");
         map.put("淄川区","http://zbbb.gov.cn/gs/");
         map.put("张店区","http://zbbb.gov.cn/gs/");
@@ -120,7 +121,7 @@ public class URL {
      * 枣庄
      */
     public static Map<String, String> ZaoZhuamg(){
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new LinkedHashMap<String, String>();
         map.put("市直","http://smz.sdzzbb.gov.cn/");
         map.put("市中区","http://szsmz.sdzzbb.gov.cn/");
         map.put("薛城区","http://tour.xuecheng.gov.cn/");
@@ -134,7 +135,7 @@ public class URL {
      * 东营
      */
     public static Map<String, String> DongYing(){
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new LinkedHashMap<String, String>();
         map.put("市直","http://dysmz.hisofter.com:2021/");
         map.put("东营区","http://www.dyqbb.gov.cn:8056/");
         map.put("河口区","http://smz.hkbb.gov.cn/");
@@ -147,7 +148,7 @@ public class URL {
      * 潍坊
      */
     public static Map<String, String> WeiFang(){
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new LinkedHashMap<String, String>();
         map.put("市直","http://smz.wfbb.gov.cn/");
         map.put("奎文区","http://smz.wfbb.gov.cn/kw/");
         map.put("潍城区","http://smz.wfbb.gov.cn/wc/");
@@ -167,7 +168,7 @@ public class URL {
      * 泰安
      */
     public static Map<String, String> TaiAn(){
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new LinkedHashMap<String, String>();
         map.put("市直","http://111.235.181.125/");
         map.put("泰山区","http://111.235.181.125:8081/");
         map.put("岱岳区","http://111.235.181.125:8082/");
@@ -181,7 +182,7 @@ public class URL {
      * 威海
      */
     public static Map<String, String> WeiHai(){
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new LinkedHashMap<String, String>();
         map.put("市直","http://221.2.150.159:7880/");
         map.put("环翠区","http://221.2.150.159:8008/");
         map.put("文登区","http://221.2.150.159:8002/");
@@ -196,7 +197,7 @@ public class URL {
      * 滨州
      */
     public static Map<String, String> BinZhou(){
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new LinkedHashMap<String, String>();
         map.put("市直","http://60.215.8.11:7002/");
         map.put("沾化区","http://218.56.22.99:8123/");
         map.put("邹平市","http://zpbb.zpgd.net/");
@@ -211,7 +212,7 @@ public class URL {
      * 德州
      */
     public static Map<String, String> DeZhou(){
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new LinkedHashMap<String, String>();
         map.put("市直","http://222.133.41.27:8081/");
 //        map.put("德城区","");
 //        map.put("陵城区","");
@@ -230,7 +231,7 @@ public class URL {
      * 临沂
      */
     public static Map<String, String> LinYi(){
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new LinkedHashMap<String, String>();
         map.put("市直","http://61.133.63.4/smzxxgs/");
 //        map.put("兰山区","");
 //        map.put("河东区","");
@@ -250,7 +251,7 @@ public class URL {
      * 菏泽
      */
     public static Map<String, String> HeZe(){
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new LinkedHashMap<String, String>();
         map.put("市直","http://www.hzbb.gov.cn/smz/");
         map.put("定陶区","http://www.hzbb.gov.cn/dtbb/smz/");
         map.put("郓城县","http://www.hzbb.gov.cn/ycbb/smz/");
@@ -269,7 +270,7 @@ public class URL {
      * http://www.jnjgbz.gov.cn/sz_list/index.php/Home/Index/get_list.html
      */
     public static Map<String, String> JiNing(){
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new LinkedHashMap<String, String>();
         map.put("市直","http://www.jnjgbz.gov.cn/sz_list/");
 //        map.put("任城区","http://www.jnjgbz.gov.cn/jnrcbb/");
 //        map.put("兖州区","http://www.jnjgbz.gov.cn/jnyzbb/");

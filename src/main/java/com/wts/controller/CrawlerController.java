@@ -17,7 +17,8 @@ public class CrawlerController extends Controller {
         renderText("11111111111111");
     }
 
-    public void deown() {
+    public void down() {
         ShengZhi.down();
+        renderNull();
     }
 }

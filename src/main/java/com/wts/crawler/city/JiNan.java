@@ -1,16 +1,18 @@
 package com.wts.crawler.city;
 
 import com.wts.entity.model.Person;
-import com.wts.entity.model.PersonErr;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static com.wts.crawler.Common.*;
+import static com.wts.crawler.URL.DIRECTION;
+import static com.wts.crawler.URL.JiNan;
 
 /**
  * JiNan class
@@ -115,7 +117,7 @@ public class JiNan {
      * dwmc：单位名称
      * bzlx：编制类型
      */
-    public static void downPersonList(String base, String szcs, String dwzd, String dwlb, String dwlx, String sjdw, String dwbh, String dwmc, String bzlx) {
+    public  static void downPersonList(String base, String szcs, String dwzd, String dwlb, String dwlx, String sjdw, String dwbh, String dwmc, String bzlx) {
         try {
             String url = getPersonUrl(base, dwbh, bzlx, false);
             Document doc = getDoc(url);
@@ -149,4 +151,16 @@ public class JiNan {
         }
     }
 
+    public static void main(String[] args) {
+        try {
+            Map<String, String> map = JiNan();
+            for (Map.Entry<String, String> key : map.entrySet()){
+                createFile(getStructureStr(key.getValue(), true),key.getKey());
+                transFile(key.getKey());
+            }
+            changeFile("市直","济南");
+        }catch (Exception e){
+
+        }
+    }
 }

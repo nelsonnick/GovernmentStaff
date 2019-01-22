@@ -19,11 +19,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.io.*;
+import java.lang.reflect.Method;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.wts.crawler.URL.DIRECTION;
 import static com.wts.crawler.city.JiNan.downDepartmentDetails;
 import static com.wts.crawler.city.JiNan.downPersonList;
 
@@ -35,6 +38,7 @@ import static com.wts.crawler.city.JiNan.downPersonList;
  */
 public class Common {
     private static Logger logger = Logger.getLogger(Common.class);
+
     /**
      * 获取结构字符串
      * baseURL：基础字符串：http://jnbb.gov.cn/smzgs/
@@ -267,9 +271,11 @@ public class Common {
      */
     public static void createFile(String structure_str, String filename) {
         try {
-            File oldfile=new File("D:/结构代码/" + filename + ".txt");
-            oldfile.delete();
-            File file = new File("D:\\结构代码\\" + filename + "-before.txt");
+            File oldfile = new File(DIRECTION + filename + ".txt");
+            if (oldfile.exists()) {
+                oldfile.delete();
+            }
+            File file = new File(DIRECTION + filename + "-before.txt");
             if (!file.exists()) {
                 file.createNewFile();
             }
@@ -278,10 +284,11 @@ public class Common {
             bw.write(structure_str);
             bw.close();
             fw.close();
+            file.renameTo(oldfile);
         } catch (Exception e) {
-            logger.error("创建文件--->D:\\结构代码\\" + filename + "-before.txt--->失败！");
+            logger.error("创建文件--->" + DIRECTION + filename + "-before.txt--->失败！:" + e.getMessage());
         }
-        logger.info("创建文件--->D:\\结构代码\\" + filename + "-before.txt--->成功！");
+        logger.info("创建文件--->" + DIRECTION + filename + "-before.txt--->成功！");
     }
 
     /**
@@ -292,10 +299,8 @@ public class Common {
     public static Integer countNum(String line, String count) {
         Integer character = 0;
         for (int i = 0; i < line.length(); i++) {
-            {
-                if (line.charAt(i) == count.charAt(0)) {
-                    character++;
-                }
+            if (line.charAt(i) == count.charAt(0)) {
+                character++;
             }
         }
         return character;
@@ -309,8 +314,8 @@ public class Common {
      */
     public static void transFile(String filename) {
         try {
-            BufferedReader br = new BufferedReader(new FileReader("D:/结构代码/" + filename + "-before.txt"));
-            PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("D:/结构代码/" + filename + ".txt", true)));
+            BufferedReader br = new BufferedReader(new FileReader(DIRECTION + filename + ".txt"));
+            PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(DIRECTION + filename + "1.txt", true)));
             String line = null;
             int character = 0;
             int g = 0;
@@ -334,7 +339,7 @@ public class Common {
                         } else {
                             if (line.split("-")[1].equals("党委") || line.split("-")[1].equals("人大") || line.split("-")[1].equals("政府") || line.split("-")[1].equals("政协")
                                     || line.split("-")[1].equals("民主党派") || line.split("-")[1].equals("群众团体") || line.split("-")[1].equals("法院") || line.split("-")[1].equals("检察院")
-                                    || line.split("-")[1].equals("经济实体") || line.split("-")[1].equals("其他" )|| line.split("-")[1].equals("街道办事处") || line.split("-")[1].equals("乡")
+                                    || line.split("-")[1].equals("经济实体") || line.split("-")[1].equals("其他") || line.split("-")[1].equals("街道办事处") || line.split("-")[1].equals("乡")
                                     || line.split("-")[1].equals("镇") || line.split("-")[1].equals("行政机关") || line.split("-")[1].equals("直属事业单位") || line.split("-")[1].equals("下设机构")
                                     || line.split("-")[1].equals("事业单位")) {
                                 for (int i = 1; i < character; i++) {
@@ -345,7 +350,6 @@ public class Common {
                             } else {
                                 out.println(line.substring(1));
                             }
-//                            System.out.println(line.substring(1)+":"+line);
                             g = 0;
                         }
                     }
@@ -354,14 +358,55 @@ public class Common {
             }
             br.close();
             out.close();
+            File oldfile = new File(DIRECTION + filename + ".txt");
+            File file = new File(DIRECTION + filename + "1.txt");
+            oldfile.delete();
+            file.renameTo(oldfile);
         } catch (FileNotFoundException e) {
-            logger.error("转换文件--->D:\\结构代码\\" + filename + "-after.txt--->失败！");
+            logger.error("转换文件--->" + DIRECTION + filename + ".txt--->失败！");
         } catch (IOException e) {
-            logger.error("转换文件--->D:\\结构代码\\" + filename + "-after.txt--->失败！");
+            logger.error("转换文件--->" + DIRECTION + filename + ".txt--->失败！");
         }
-        logger.info("转换文件--->D:\\结构代码\\" + filename + "-after.txt--->成功！");
+        logger.info("转换文件--->" + DIRECTION + filename + ".txt--->成功！");
     }
+    /**
+     * 将“XX市市直”变为“市直”，并缩进一个tab
+     * filename：文件名
+     * cityname：城市名
+     */
+    public static void changeFile(String filename,String cityname) {
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(DIRECTION + filename + ".txt"));
+            PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(DIRECTION + filename + "1.txt", true)));
+            String line = br.readLine();
+            while (line != null) {
+                if (line.equals("\t\t" + cityname + "市市直")) {
+                    out.println("\t市直");
+                }else{
+                    out.println(line.substring(1));
+                }
+                line = br.readLine();
+            }
+            br.close();
+            out.close();
+            File oldfile = new File(DIRECTION + filename + ".txt");
+            File file = new File(DIRECTION + filename + "1.txt");
+            oldfile.delete();
+            file.renameTo(oldfile);
+        } catch (FileNotFoundException e) {
+            logger.error("转换文件--->" + DIRECTION + filename + ".txt--->失败！");
+        } catch (IOException e) {
+            logger.error("转换文件--->" + DIRECTION + filename + ".txt--->失败！");
+        }
+        logger.info("转换文件--->" + DIRECTION + filename + ".txt--->成功！");
+    }
+    /**
+     * 合并文件
+     * filename：文件名
+     */
+    public static void mergeFile(String filename,Map<String, String> map){
 
+    }
     /**
      * 根据结构字符串下载全部数据
      * baseURL:基础字符串
@@ -369,7 +414,7 @@ public class Common {
      * timeNum：时间截取字符串：一般是9，青岛是7
      * codeNum：上级单位截取字符串，一般是12，省直是9
      */
-    public static void downDetail(String baseURL, String filename, Integer timeNum, Integer codeNum) {
+    public static void downWithFile(String baseURL, String filename, Integer timeNum, Integer codeNum, String city) {
         try {
             String szcs = "";
             String dwzd = "";
@@ -383,7 +428,7 @@ public class Common {
             String row = "";
             Integer tab = 0;
             Integer num = 1;
-            BufferedReader br = new BufferedReader(new FileReader("D:/结构代码/" + filename + ".txt"));
+            BufferedReader br = new BufferedReader(new FileReader(DIRECTION + filename + ".txt"));
             while ((line = br.readLine()) != null) {
                 if (Pattern.matches("[^\t].+?", line)) {
                     szcs = line.replace("\t", "").replace("\n", "");
@@ -463,16 +508,19 @@ public class Common {
                 row = line.replace("\t", "").replace("\n", "");
                 dwbh = row.split("-")[0];
                 dwmc = row.split("-")[1];
-                if (dwbh.length() > codeNum) {
+                if (dwbh.length() >= codeNum) {
                     sjdw = dwbh.substring(0, dwbh.length() - 3);
                 } else {
                     sjdw = "";
                 }
-                downDepartmentDetails(baseURL, szcs, dwzd, dwlb, dwlx, sjdw, dwbh, dwmc, time);
+                Class c = Class.forName("com.wts.crawler.city." + city);
+                Method method = c.getMethod("downDepartmentDetails", String.class, String.class, String.class, String.class, String.class, String.class, String.class, String.class, String.class);
+                method.invoke("", baseURL, szcs, dwzd, dwlb, dwlx, sjdw, dwbh, dwmc, time);
+//                downDepartmentDetails(baseURL, szcs, dwzd, dwlb, dwlx, sjdw, dwbh, dwmc, time);
                 num = num + 1;
             }
-        } catch (IOException e) {
-
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 
@@ -550,6 +598,7 @@ public class Common {
                 .set("url", url)
                 .set("time", time);
         department.save();
+        System.out.println(szcs + "-" + dwzd + "-" + dwlb + "-" + dwlx + "-" + dwbh + "-" + dwmc + "-->下载完成！");
     }
 
     /**
@@ -564,11 +613,12 @@ public class Common {
      * dwmc：单位名称
      * time：更新时间
      */
-    public static void saveDepartmentErr(String base,String szcs, String dwzd, String dwlb, String dwlx, String sjdw, String dwbh, String dwmc,  String time){
+    public static void saveDepartmentErr(String base, String szcs, String dwzd, String dwlb, String dwlx, String sjdw, String dwbh, String dwmc, String time) {
         DepartmentErr departmentErr = new DepartmentErr();
         departmentErr.set("szcs", szcs).set("dwzd", dwzd).set("dwlb", dwlb).set("dwlx", dwlx).set("dwbh", dwbh).set("sjdw", sjdw).set("dwmc", dwmc).set("base", base).set("time", time).save();
-
+        System.out.println(szcs + "-" + dwzd + "-" + dwlb + "-" + dwlx + "-" + dwbh + "-" + dwmc + "-->下载失败！");
     }
+
     /**
      * 保存personErr
      * base：基础网址
@@ -581,11 +631,12 @@ public class Common {
      * dwmc：单位名称
      * bzlx：编制类型
      */
-    public static void savePersonErr(String base,String szcs, String dwzd, String dwlb, String dwlx, String sjdw, String dwbh, String dwmc,  String bzlx){
+    public static void savePersonErr(String base, String szcs, String dwzd, String dwlb, String dwlx, String sjdw, String dwbh, String dwmc, String bzlx) {
         PersonErr personErr = new PersonErr();
         personErr.set("szcs", szcs).set("dwzd", dwzd).set("dwlb", dwlb).set("dwlx", dwlx).set("dwbh", dwbh).set("sjdw", sjdw).set("dwmc", dwmc).set("bzlx", bzlx).set("base", base).save();
 
     }
+
     /**
      * 下载department错误数据
      */
@@ -593,6 +644,7 @@ public class Common {
         List<DepartmentErr> departmentErrs = DepartmentErr.dao.find("SELECT * FROM department_err");
         for (DepartmentErr departmentErr : departmentErrs) {
             downDepartmentDetails(departmentErr.getBase(), departmentErr.getSzcs(), departmentErr.getDwzd(), departmentErr.getDwlb(), departmentErr.getDwlx(), departmentErr.getSjdw(), departmentErr.getDwbh(), departmentErr.getDwmc(), departmentErr.getTime());
+            DepartmentErr.dao.deleteById(departmentErr.getId());
         }
     }
 
@@ -603,6 +655,7 @@ public class Common {
         List<PersonErr> personErrs = PersonErr.dao.find("SELECT * FROM person_err");
         for (PersonErr personErr : personErrs) {
             downPersonList(personErr.getBase(), personErr.getSzcs(), personErr.getDwzd(), personErr.getDwlb(), personErr.getDwlx(), personErr.getSjdw(), personErr.getDwbh(), personErr.getDwmc(), personErr.getBzlx());
+            PersonErr.dao.deleteById(personErr.getId());
         }
     }
 }
