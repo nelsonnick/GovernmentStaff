@@ -3,12 +3,14 @@ package com.wts.crawler;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.wts.entity.model.Department;
 import com.wts.entity.model.DepartmentErr;
 import com.wts.entity.model.Person;
 import com.wts.entity.model.PersonErr;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -32,6 +34,7 @@ import static com.wts.crawler.city.JiNan.downPersonList;
  * @date 2019/1/20
  */
 public class Common {
+    private static Logger logger = Logger.getLogger(Common.class);
     /**
      * 获取结构字符串
      * baseURL：基础字符串：http://jnbb.gov.cn/smzgs/
@@ -152,12 +155,13 @@ public class Common {
         }
 
     }
+
     /**
      * 获取网页数据
      * url：网址
      * 链接失败时，抛出IOException
      */
-    public static Document getDoc(String url) throws IOException{
+    public static Document getDoc(String url) throws IOException {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(url)
@@ -166,7 +170,7 @@ public class Common {
                 .addHeader("Accept-Language", "zh-CN,zh;q=0.9")
                 .addHeader("Connection", "keep-alive")
                 .addHeader("DNT", "1")
-                .addHeader("HOST",url.split("/")[2])
+                .addHeader("HOST", url.split("/")[2])
                 .addHeader("Upgrade-Insecure-Requests", "1")
                 .addHeader("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.67 Safari/537.36Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.67 Safari/537.36")
                 .build();
@@ -174,6 +178,7 @@ public class Common {
         Document doc = Jsoup.parse(response.body().string());
         return doc;
     }
+
     /**
      * 获取单位网址
      * baseURL：基础字符串：http://jnbb.gov.cn/smzgs/
@@ -182,6 +187,7 @@ public class Common {
     public static String getDepartmentUrl(String baseURL, String dwbh) {
         return baseURL + "UnitDetails.aspx?unitId=" + dwbh;
     }
+
     /**
      * 获取人员网址
      * baseURL：基础字符串：http://jnbb.gov.cn/smzgs/
@@ -189,7 +195,7 @@ public class Common {
      * bzlx：编制类型
      * isCode：编制是否代码
      */
-    public static String getPersonUrl(String baseURL, String dwbh, String bzlx, Boolean isCode){
+    public static String getPersonUrl(String baseURL, String dwbh, String bzlx, Boolean isCode) {
         if (isCode) {
 //            return baseURL + "PersonList.aspx?unitId=" + dwbh + "&BZLX=" + java.net.URLEncoder.encode(bzlx, "GB2312");
             if (bzlx.equals("行政编制")) {
@@ -205,12 +211,13 @@ public class Common {
             return baseURL + "PersonList.aspx?unitId=" + dwbh + "&BZLX=" + bzlx;
         }
     }
+
     /**
      * 获取更新时间
      * baseURL：基础字符串
      * num：从第num个字符开始截取：一般是9，青岛是7
      */
-    public static String getTime(String baseURL,Integer num){
+    public static String getTime(String baseURL, Integer num) {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(baseURL)
@@ -219,65 +226,70 @@ public class Common {
             Response response = client.newCall(request).execute();
             Document doc = Jsoup.parse(response.body().string());
             return doc.getElementById("SPAN1").text().substring(num);
-        }catch (IOException e){
+        } catch (IOException e) {
             return "";
         }
     }
+
     /**
      * 获取人员
      * cols：列名
      * row：行
      */
-    public static Person getPerson(List<String> cols, List<String> row){
+    public static Person getPerson(List<String> cols, List<String> row) {
         String dwmc = "";
         String ryxm = "";
         String ryxb = "";
         String ssbm = "";
         String zybzqk = "";
-        if (cols.contains("单位")){
-            dwmc = row.get(cols.indexOf("单位")).replace(" ","");
+        if (cols.contains("单位")) {
+            dwmc = row.get(cols.indexOf("单位")).replace(" ", "");
         }
-        if (cols.contains("姓名")){
-            ryxm = row.get(cols.indexOf("姓名")).replace(" ","");
+        if (cols.contains("姓名")) {
+            ryxm = row.get(cols.indexOf("姓名")).replace(" ", "");
         }
-        if (cols.contains("性别")){
-            ryxb = row.get(cols.indexOf("性别")).replace(" ","");
+        if (cols.contains("性别")) {
+            ryxb = row.get(cols.indexOf("性别")).replace(" ", "");
         }
-        if (cols.contains("部门")){
-            ssbm = row.get(cols.indexOf("部门")).replace(" ","");
+        if (cols.contains("部门")) {
+            ssbm = row.get(cols.indexOf("部门")).replace(" ", "");
         }
-        if (cols.contains("占用编制情况")){
-            zybzqk = row.get(cols.indexOf("占用编制情况")).replace(" ","");
+        if (cols.contains("占用编制情况")) {
+            zybzqk = row.get(cols.indexOf("占用编制情况")).replace(" ", "");
         }
-        return new Person().set("dwmc",dwmc).set("ryxm",ryxm).set("ryxb",ryxb).set("ssbm",ssbm).set("bzqk",zybzqk);
+        return new Person().set("dwmc", dwmc).set("ryxm", ryxm).set("ryxb", ryxb).set("ssbm", ssbm).set("bzqk", zybzqk);
     }
+
     /**
      * 生成before文件
      * structure_str：结构字符串
      * filename：文件名
      */
-    public static void createBefore(String structure_str, String filename){
+    public static void createFile(String structure_str, String filename) {
         try {
-            File file = new File("D:\\结构代码\\"+filename+"-before.txt");
-            //文件不存在时候，主动穿件文件。
-            if(!file.exists()){
+            File oldfile=new File("D:/结构代码/" + filename + ".txt");
+            oldfile.delete();
+            File file = new File("D:\\结构代码\\" + filename + "-before.txt");
+            if (!file.exists()) {
                 file.createNewFile();
             }
-            FileWriter fw = new FileWriter(file,false);
+            FileWriter fw = new FileWriter(file, false);
             BufferedWriter bw = new BufferedWriter(fw);
             bw.write(structure_str);
             bw.close();
             fw.close();
         } catch (Exception e) {
-            // TODO: handle exception
+            logger.error("创建文件--->D:\\结构代码\\" + filename + "-before.txt--->失败！");
         }
+        logger.info("创建文件--->D:\\结构代码\\" + filename + "-before.txt--->成功！");
     }
+
     /**
      * 计算出现次数
      * line：字符串
      * count：要计算的字符
      */
-    public static Integer countNum(String line,String count) {
+    public static Integer countNum(String line, String count) {
         Integer character = 0;
         for (int i = 0; i < line.length(); i++) {
             {
@@ -288,13 +300,14 @@ public class Common {
         }
         return character;
     }
+
     /**
-     * 生成after文件
+     * 生成文件
      * filename：文件名
-     * 需要转换：青岛
+     * 需要转换：省直、青岛
      * 不需要转换：济南
      */
-    public static void createAfter(String filename) {
+    public static void transFile(String filename) {
         try {
             BufferedReader br = new BufferedReader(new FileReader("D:/结构代码/" + filename + "-before.txt"));
             PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("D:/结构代码/" + filename + ".txt", true)));
@@ -302,70 +315,53 @@ public class Common {
             int character = 0;
             int g = 0;
             line = br.readLine();
-            String ex="";
-            if (!line.contains("-")){
+            if (!line.contains("-")) {
                 while (line != null) {
-                    out.println(ex+line.substring(1));
+                    out.println(line.substring(1));
                     line = br.readLine();
                 }
-            }else {
+            } else {
                 while (line != null) {
-                    character = countNum(line,"\t");
-//                    for (int i = 0; i < line.length(); i++) {
-//                        {
-//                            if (line.charAt(i) == "\t".charAt(0)) {
-//                                character++;
-//                            }
-//                        }
-//                    }
+                    character = countNum(line, "\t");
                     if (character == 1) {
-                        out.println(ex+line.split("-")[1]);
+                        out.println(line.split("-")[1]);
                     } else if (character == 2) {
-                        out.println(ex+"\t" + line.split("-")[1]);
+                        out.println("\t" + line.split("-")[1]);
                     } else {
-                        g = countNum(line,"-");
-//                        for (int i = 0; i < line.length(); i++) {
-//                            {
-//                                if (line.charAt(i) == "-".charAt(0)) {
-//                                    g++;
-//                                }
-//                            }
-//                        }
+                        g = countNum(line, "-");
                         if (g == 0) {
-                            out.println(ex+line.substring(1));
+                            out.println(line.substring(1));
                         } else {
-                            if (line.split("-")[1] == "党委\n" || line.split("-")[1] == "人大\n" || line.split("-")[1] == "政府\n" || line.split("-")[1] == "政协\n"
-                                    || line.split("-")[1] == "民主党派\n" || line.split("-")[1] == "群众团体\n" || line.split("-")[1] == "法院\n" || line.split("-")[1] == "检察院\n"
-                                    || line.split("-")[1] == "经济实体\n" || line.split("-")[1] == "其他\n" || line.split("-")[1] == "街道办事处\n" || line.split("-")[1] == "乡\n"
-                                    || line.split("-")[1] == "镇\n" || line.split("-")[1] == "行政机关\n" || line.split("-")[1] == "直属事业单位\n" || line.split("-")[1] == "下设机构\n"
-                                    || line.split("-")[1] == "事业单位\n") {
-                                for (int i = 2; i < character; i++) {
-                                    out.println(ex+"\t");
+                            if (line.split("-")[1].equals("党委") || line.split("-")[1].equals("人大") || line.split("-")[1].equals("政府") || line.split("-")[1].equals("政协")
+                                    || line.split("-")[1].equals("民主党派") || line.split("-")[1].equals("群众团体") || line.split("-")[1].equals("法院") || line.split("-")[1].equals("检察院")
+                                    || line.split("-")[1].equals("经济实体") || line.split("-")[1].equals("其他" )|| line.split("-")[1].equals("街道办事处") || line.split("-")[1].equals("乡")
+                                    || line.split("-")[1].equals("镇") || line.split("-")[1].equals("行政机关") || line.split("-")[1].equals("直属事业单位") || line.split("-")[1].equals("下设机构")
+                                    || line.split("-")[1].equals("事业单位")) {
+                                for (int i = 1; i < character; i++) {
+                                    out.print("\t");
                                 }
-                                out.println(ex+line.split("-")[1]);
+                                out.print(line.split("-")[1]);
+                                out.print("\n");
                             } else {
-                                out.println(ex+line.substring(1));
+                                out.println(line.substring(1));
                             }
+//                            System.out.println(line.substring(1)+":"+line);
                             g = 0;
                         }
                     }
                     line = br.readLine();
                 }
             }
-
-
-            if (br != null) {
-                br.close();
-            }
-            if (out != null) {
-                out.close();
-            }
+            br.close();
+            out.close();
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            logger.error("转换文件--->D:\\结构代码\\" + filename + "-after.txt--->失败！");
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("转换文件--->D:\\结构代码\\" + filename + "-after.txt--->失败！");
         }
+        logger.info("转换文件--->D:\\结构代码\\" + filename + "-after.txt--->成功！");
     }
+
     /**
      * 根据结构字符串下载全部数据
      * baseURL:基础字符串
@@ -373,7 +369,7 @@ public class Common {
      * timeNum：时间截取字符串：一般是9，青岛是7
      * codeNum：上级单位截取字符串，一般是12，省直是9
      */
-    public static void downDetail(String baseURL, String filename,Integer timeNum,Integer codeNum){
+    public static void downDetail(String baseURL, String filename, Integer timeNum, Integer codeNum) {
         try {
             String szcs = "";
             String dwzd = "";
@@ -475,26 +471,138 @@ public class Common {
                 downDepartmentDetails(baseURL, szcs, dwzd, dwlb, dwlx, sjdw, dwbh, dwmc, time);
                 num = num + 1;
             }
-        }catch (IOException e){
+        } catch (IOException e) {
 
         }
+    }
+
+    /**
+     * 检查编制数格式
+     */
+    public static String checkNum(String Num) {
+        if (Num.equals("&nbsp;") || Num.equals("")) {
+            return "0";
+        } else {
+            return Num;
+        }
+    }
+
+    /**
+     * 保存department
+     * xzPlanNum：行政计划数
+     * xzRealNum：行政实际数
+     * xzLoneNum：行政单列数
+     * syPlanNum：事业计划数
+     * syRealNum：事业实际数
+     * syLoneNum：事业单列数
+     * gqPlanNum：工勤计划数
+     * gqRealNum：工勤实际数
+     * gqLoneNum：工勤单列数
+     * szcs：所在城市
+     * dwzd：单位驻地
+     * dwlb：单位类别
+     * dwlx：单位类型
+     * sjdw：上级单位
+     * dwbh：单位编号
+     * dwmc：单位名称
+     * qtmc：其他名称
+     * ldzs：领导职数
+     * nsjg：内设机构
+     * zyzz：主要职责
+     * js：级别
+     * url：访问网址
+     * time：更新时间
+     */
+    public static void saveDepartment(String xzPlanNum, String xzRealNum, String xzLoneNum, String syPlanNum, String syRealNum, String syLoneNum, String gqPlanNum, String gqRealNum, String gqLoneNum,
+                                      String szcs, String dwzd, String dwlb, String dwlx, String sjdw, String dwbh, String dwmc, String qtmc, String ldzs, String nsjg, String zyzz, String jb,
+                                      String url, String time) {
+        if (qtmc.equals("空")) {
+            qtmc = "";
+        }
+        if (nsjg.equals("\'")) {
+            nsjg = "";
+        }
+        if (zyzz.equals("\'")) {
+            zyzz = "";
+        }
+        Department department = new Department()
+                .set("szcs", szcs)
+                .set("dwzd", dwzd)
+                .set("dwlb", dwlb)
+                .set("dwlx", dwlx)
+                .set("sjdw", sjdw)
+                .set("dwbh", dwbh)
+                .set("dwmc", dwmc)
+                .set("qtmc", qtmc)
+                .set("ldzs", ldzs)
+                .set("jb", jb)
+                .set("nsjg", nsjg)
+                .set("zyzz", zyzz)
+                .set("xz_plan_num", checkNum(xzPlanNum))
+                .set("xz_real_num", checkNum(xzRealNum))
+                .set("xz_lone_num", checkNum(xzLoneNum))
+                .set("sy_plan_num", checkNum(syPlanNum))
+                .set("sy_real_num", checkNum(syRealNum))
+                .set("sy_lone_num", checkNum(syLoneNum))
+                .set("gq_plan_num", checkNum(gqPlanNum))
+                .set("gq_real_num", checkNum(gqRealNum))
+                .set("gq_lone_num", checkNum(gqLoneNum))
+                .set("url", url)
+                .set("time", time);
+        department.save();
+    }
+
+    /**
+     * 保存departmentErr
+     * base：基础网址
+     * szcs：所在城市
+     * dwzd：单位驻地
+     * dwlb：单位类别
+     * dwlx：单位类型
+     * sjdw：上级单位
+     * dwbh：单位编号
+     * dwmc：单位名称
+     * time：更新时间
+     */
+    public static void saveDepartmentErr(String base,String szcs, String dwzd, String dwlb, String dwlx, String sjdw, String dwbh, String dwmc,  String time){
+        DepartmentErr departmentErr = new DepartmentErr();
+        departmentErr.set("szcs", szcs).set("dwzd", dwzd).set("dwlb", dwlb).set("dwlx", dwlx).set("dwbh", dwbh).set("sjdw", sjdw).set("dwmc", dwmc).set("base", base).set("time", time).save();
+
+    }
+    /**
+     * 保存personErr
+     * base：基础网址
+     * szcs：所在城市
+     * dwzd：单位驻地
+     * dwlb：单位类别
+     * dwlx：单位类型
+     * sjdw：上级单位
+     * dwbh：单位编号
+     * dwmc：单位名称
+     * bzlx：编制类型
+     */
+    public static void savePersonErr(String base,String szcs, String dwzd, String dwlb, String dwlx, String sjdw, String dwbh, String dwmc,  String bzlx){
+        PersonErr personErr = new PersonErr();
+        personErr.set("szcs", szcs).set("dwzd", dwzd).set("dwlb", dwlb).set("dwlx", dwlx).set("dwbh", dwbh).set("sjdw", sjdw).set("dwmc", dwmc).set("bzlx", bzlx).set("base", base).save();
+
     }
     /**
      * 下载department错误数据
      */
-    public static void downDepartmentError(){
+    public static void downDepartmentError() {
         List<DepartmentErr> departmentErrs = DepartmentErr.dao.find("SELECT * FROM department_err");
-        for(DepartmentErr departmentErr:departmentErrs){
-            downDepartmentDetails(departmentErr.getBase(),departmentErr.getSzcs(),departmentErr.getDwzd(),departmentErr.getDwlb(),departmentErr.getDwlx(),departmentErr.getSjdw(),departmentErr.getDwbh(),departmentErr.getDwmc(),departmentErr.getTime());
+        for (DepartmentErr departmentErr : departmentErrs) {
+            downDepartmentDetails(departmentErr.getBase(), departmentErr.getSzcs(), departmentErr.getDwzd(), departmentErr.getDwlb(), departmentErr.getDwlx(), departmentErr.getSjdw(), departmentErr.getDwbh(), departmentErr.getDwmc(), departmentErr.getTime());
         }
     }
+
     /**
      * 下载person错误数据
      */
-    public static void downPersonError(){
+    public static void downPersonError() {
         List<PersonErr> personErrs = PersonErr.dao.find("SELECT * FROM person_err");
-        for(PersonErr personErr:personErrs){
-            downPersonList(personErr.getBase(),personErr.getSzcs(),personErr.getDwzd(),personErr.getDwlb(),personErr.getDwlx(),personErr.getSjdw(),personErr.getDwbh(),personErr.getDwmc(),personErr.getBzlx());
+        for (PersonErr personErr : personErrs) {
+            downPersonList(personErr.getBase(), personErr.getSzcs(), personErr.getDwzd(), personErr.getDwlb(), personErr.getDwlx(), personErr.getSjdw(), personErr.getDwbh(), personErr.getDwmc(), personErr.getBzlx());
         }
     }
 }

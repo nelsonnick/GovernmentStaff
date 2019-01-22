@@ -1,40 +1,73 @@
 package com.wts.crawler.city;
 
-import okhttp3.*;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 
-import java.util.List;
-import java.util.concurrent.TimeUnit;
+import java.io.*;
+import java.util.Map;
+
+import static com.wts.crawler.Common.*;
+import static com.wts.crawler.URL.ShengZhi;
 
 public class ShengZhi {
-    private static void send() throws Exception{
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder()
-                .url("http://218.56.49.18/UnitDetails.aspx?unitId=037412")
-                .addHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8")
-                .addHeader("Accept-Encoding", "gzip, deflate")
-                .addHeader("Accept-Language", "zh-CN,zh;q=0.9")
-                .addHeader("Connection", "keep-alive")
-                .addHeader("DNT", "1")
-                .addHeader("Host", "218.56.49.18")
-                .addHeader("Upgrade-Insecure-Requests", "1")
-                .addHeader("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.67 Safari/537.36Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.67 Safari/537.36")
-                .build();
-        Response response = client.newCall(request).execute();
-        Document doc = Jsoup.parse(response.body().string());
-        System.out.println(doc);
+
+    /**
+     * 转化文件
+     * filename：文件名
+     */
+    public static void changeFile(String filename) {
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("D:/结构代码/" + filename + ".txt"));
+            PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("D:/结构代码/" + filename + "-new.txt", true)));
+            String line = null;
+            out.println(br.readLine());
+            out.println("\t省直");
+            line = br.readLine();
+            while (line != null) {
+                out.println("\t" + line);
+                line = br.readLine();
+            }
+            br.close();
+            out.close();
+            File oldfile=new File("D:/结构代码/" + filename + ".txt");
+            File newfile=new File("D:/结构代码/" + filename + "-new.txt");
+            File beforefile=new File("D:/结构代码/" + filename + "-before.txt");
+            oldfile.delete();
+            beforefile.delete();
+            newfile.renameTo(oldfile);
+        } catch (Exception e) {
+
+        }
     }
 
+    /**
+     * 获取结构文件
+     */
+    public static void getFile(){
+        try {
 
-    public static void main(String[] args) throws Exception{
-//        send();
-//        tree();
+            Map<String, String> map = ShengZhi();
+            for (Map.Entry<String, String> key : map.entrySet()){
+                File file = new File("D:/结构代码/" + key.getKey() + ".txt");
+                file.delete();
+                createFile(getStructureStr(key.getValue(), false),key.getKey());
+                transFile(key.getKey());
+                changeFile(key.getKey());
+            }
+        }catch (Exception e){
+
+        }
+    }
+
+    /**
+     * 下载
+     */
+    public static void down(){
+        try {
+            Map<String, String> map = ShengZhi();
+            for (Map.Entry<String, String> key : map.entrySet()){
+                downDetail(key.getKey(),key.getValue(),9,9);
+            }
+        }catch (Exception e){
+
+        }
     }
 }

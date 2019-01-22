@@ -1,4 +1,4 @@
-jdbcUrl = jdbc:mysql://127.0.0.1/bz?characterEncoding=utf8&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false
+jdbcUrl = jdbc:mysql://127.0.0.1/government_staff?characterEncoding=utf8&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false
 user = root
 password =root
 devMode = true

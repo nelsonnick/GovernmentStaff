@@ -37,6 +37,7 @@ public class Config extends JFinalConfig {
         me.add(base + "/person", PersonController.class);
         me.add(base + "/department", DepartmentController.class);
         me.add(base + "/chart", ChartController.class);
+        me.add(base + "/", CrawlerController.class);
     }
 
     @Override
