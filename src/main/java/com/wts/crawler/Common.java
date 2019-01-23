@@ -445,7 +445,7 @@ public class Common {
     }
 
     /**
-     * 第一行添加城市民
+     * 第一行添加城市明
      * filename：文件名
      */
     public static void addCity(String filename) {
@@ -453,7 +453,7 @@ public class Common {
             BufferedReader br = new BufferedReader(new FileReader(DIRECTION + filename + ".txt"));
             PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(DIRECTION + filename + "1.txt", true)));
             String line = br.readLine();
-            out.println(filename);
+            out.println(filename+"市");
             while (line != null) {
                 out.println(line);
                 line = br.readLine();
@@ -465,9 +465,37 @@ public class Common {
             oldfile.delete();
             file.renameTo(oldfile);
         } catch (FileNotFoundException e) {
-            logger.error("转换文件--->" + DIRECTION + filename + ".txt--->失败！");
+            e.printStackTrace();
         } catch (IOException e) {
-            logger.error("转换文件--->" + DIRECTION + filename + ".txt--->失败！");
+            e.printStackTrace();
+        }
+        logger.info("转换文件--->" + DIRECTION + filename + ".txt--->成功！");
+    }
+    /**
+     * 删除第一行的城市
+     * filename：文件名
+     */
+    public static void delCity(String filename) {
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(DIRECTION + filename + ".txt"));
+            PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(DIRECTION + filename + "1.txt", true)));
+            String line = null;
+            br.readLine();
+            line = br.readLine();
+            while (line != null) {
+                out.println(line);
+                line = br.readLine();
+            }
+            br.close();
+            out.close();
+            File oldfile = new File(DIRECTION + filename + ".txt");
+            File file = new File(DIRECTION + filename + "1.txt");
+            oldfile.delete();
+            file.renameTo(oldfile);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         logger.info("转换文件--->" + DIRECTION + filename + ".txt--->成功！");
     }

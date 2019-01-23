@@ -3,7 +3,6 @@ package com.wts.controller;
 import com.jfinal.core.Controller;
 import com.wts.crawler.city.*;
 
-
 /**
  * CrawlerController class
  *
@@ -13,11 +12,11 @@ import com.wts.crawler.city.*;
 public class CrawlerController extends Controller {
 
     public void g() {
-        DongYing.getFile();
+        DeZhou.getFile();
         renderNull();
     }
     public void d() {
-        DongYing.down();
+        DeZhou.down();
         renderNull();
     }
 }

@@ -4,14 +4,13 @@ import com.jfinal.core.Controller;
 import com.jfinal.kit.PropKit;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Record;
-import com.mchange.v2.cfg.PropertiesConfig;
 import com.wts.entity.model.Department;
 import org.apache.log4j.Logger;
 
 import java.io.*;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Properties;
+
+import static com.wts.crawler.URL.DIRECTION;
 
 /**
  * DepartmentController class
@@ -82,20 +81,13 @@ public class DepartmentController extends Controller {
      * 创建层级目录文件
      */
     public static void createCascaderOptions(){
-        File file = new File("d:\\op.txt");
-        if (!file.exists()) {
-            try{
-                file.createNewFile();
-                FileWriter fw = new FileWriter(file, true);
-                BufferedWriter bw = new BufferedWriter(fw);
-                bw.write("options=" + getCascaderOptionsStr());
-                bw.flush();
-                bw.close();
-                fw.close();
-            }
-            catch(Exception e){
-                System.out.println(e);
-            }
+        try {
+            FileOutputStream fos = new FileOutputStream(DIRECTION + "options.txt");
+            OutputStreamWriter osw = new OutputStreamWriter(fos, "UTF-8");
+            osw.write("options=" + getCascaderOptionsStr());
+            osw.flush();
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 
@@ -103,11 +95,17 @@ public class DepartmentController extends Controller {
      * 获取层级目录
      */
     public void getCascaderOptions() {
-        File file = new File("d:\\op.txt");
+        File file = new File(DIRECTION + "options.txt");
         if (!file.exists()) {
             createCascaderOptions();
         }
         renderText(PropKit.use(file).get("options"));
     }
 
+    /**
+     * 获取单位总数
+     */
+    public void allTotal() {
+        renderText(Db.queryLong("SELECT COUNT(*) FROM department").toString());
+    }
 }

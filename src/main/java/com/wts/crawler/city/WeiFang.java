@@ -11,28 +11,26 @@ import java.util.List;
 import java.util.Map;
 
 import static com.wts.crawler.Common.*;
-import static com.wts.crawler.URL.DongYing;
-/**
- * DongYing class
- * 东营的网页结构十分特别，分为行政编制数+单列行政编制数，要特别处理
- * @author wts
- * @date 2019/1/23
- */
-public class DongYing {
+import static com.wts.crawler.URL.WeiFang;
+
+public class WeiFang {
     /**
      * 获取结构文件
      */
     public static void getFile() {
         try {
-            Map<String, String> map = DongYing();
+            Map<String, String> map = WeiFang();
             for (Map.Entry<String, String> key : map.entrySet()){
                 createFile(getStructureStr(key.getValue(), true),key.getKey());
                 transFile(key.getKey());
             }
-            mergeFile("东营",DongYing());
-            addCity("东营");
+            retractFile("市直");
+            changeFile("市直","潍坊");
+            delCity("寿光市");
+            retractFile("寿光市");
+            mergeFile("潍坊",WeiFang());
         }catch (Exception e){
-            e.printStackTrace();
+
         }
     }
     /**
@@ -40,9 +38,9 @@ public class DongYing {
      */
     public static void down() {
         try {
-            Map<String, String> map = DongYing();
+            Map<String, String> map = WeiFang();
             for (Map.Entry<String, String> key : map.entrySet()) {
-                downWithFile(key.getValue(), "东营", 9, 12,"DongYing");
+                downWithFile(key.getValue(), "潍坊", 9, 12,"WeiFang");
             }
         } catch (Exception e) {
 
@@ -75,7 +73,7 @@ public class DongYing {
         String ldzs = "";
         try {
             String url = getDepartmentUrl(base, dwbh);
-            Document doc = getDoc(url);
+            Document doc = getDocWithNot(url);
             String dwmc = doc.getElementById("lblUnitName").text();
             String jb = doc.getElementById("lblUnitGuiGe").text();
             String nsjg = doc.getElementById("lblNeiSheJG").text();
@@ -132,6 +130,7 @@ public class DongYing {
             saveDepartment(xzPlanNum, xzRealNum, xzLoneNum, syPlanNum, syRealNum, syLoneNum, gqPlanNum, gqRealNum, gqLoneNum,
                     szcs, dwzd, dwlb, dwlx, sjdw, dwbh, dwmc, qtmc, ldzs, nsjg, zyzz, jb, url, time);
         } catch (IOException e) {
+            e.printStackTrace();
             saveDepartmentErr(base, szcs, dwzd, dwlb, dwlx, sjdw, dwbh, dwmc_1, time);
         }
     }
@@ -156,7 +155,7 @@ public class DongYing {
             }else{
                 bz = bzlx;
             }
-            Document doc = getDoc(url);
+            Document doc = getDocWithNot(url);
             Element e = doc.getElementById("GVPersonList");
             Elements ths = e.getElementsByAttributeValue("class", "ListHead").first().getElementsByTag("th");
             List<String> cols = new ArrayList<>();
@@ -186,7 +185,5 @@ public class DongYing {
             savePersonErr(base, szcs, dwzd, dwlb, dwlx, sjdw, dwbh, dwmc, bzlx);
         }
     }
-    public static void main(String[] args) {
-        downDepartmentDetails("http://dysmz.hisofter.com:2021/","东营","市直","政府","行政机关","","037005000527004","市委巡察组一至五组","2018年11月28日");
-    }
+
 }

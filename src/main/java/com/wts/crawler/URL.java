@@ -202,9 +202,9 @@ public class URL {
         map.put("沾化区","http://218.56.22.99:8123/");
         map.put("邹平市","http://zpbb.zpgd.net/");
         map.put("惠民县","http://smz.hmjgbz.gov.cn/");
-        map.put("博兴县","http://smz.hmjgbz.gov.cn/");
-        map.put("阳信县","http://www.bxbb.gov.cn/smzgs/");
-//        map.put("滨城区","http://smzgs.bincheng.gov.cn/");
+        map.put("博兴县","http://www.bxbb.gov.cn/smzgs/");
+        map.put("阳信县","http://www.yxbb.gov.cn/smzgs/");
+        map.put("滨城区","http://smzgs.bincheng.gov.cn/");
 //        map.put("无棣县","http://www.sdwdbb.gov.cn/smzgs/");
         return map;
     }
@@ -252,8 +252,8 @@ public class URL {
      */
     public static Map<String, String> HeZe(){
         Map<String, String> map = new LinkedHashMap<String, String>();
-        map.put("市直","http://www.hzbb.gov.cn/smz/");
-        map.put("定陶区","http://www.hzbb.gov.cn/dtbb/smz/");
+//        map.put("市直","http://www.hzbb.gov.cn/smz/");
+//        map.put("定陶区","http://www.hzbb.gov.cn/dtbb/smz/");
         map.put("郓城县","http://www.hzbb.gov.cn/ycbb/smz/");
         map.put("成武县","http://www.hzbb.gov.cn/cwbb/smz/");
         map.put("东明县","http://www.hzbb.gov.cn/dmbb/smz/");
