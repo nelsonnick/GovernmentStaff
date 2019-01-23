@@ -20,6 +20,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.io.*;
 import java.lang.reflect.Method;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -161,7 +162,7 @@ public class Common {
     }
 
     /**
-     * 获取网页数据
+     * 获取网页数据---带表头信息
      * url：网址
      * 链接失败时，抛出IOException
      */
@@ -184,7 +185,7 @@ public class Common {
     }
 
     /**
-     * 获取网页数据
+     * 获取网页数据---不带表头信息
      * url：网址
      * 链接失败时，抛出IOException
      */
@@ -300,9 +301,9 @@ public class Common {
             fw.close();
             file.renameTo(oldfile);
         } catch (Exception e) {
-            logger.error("创建文件--->" + DIRECTION + filename + "-before.txt--->失败！:" + e.getMessage());
+            logger.error("创建文件--->" + DIRECTION + filename + ".txt--->失败！:" + e.getMessage());
         }
-        logger.info("创建文件--->" + DIRECTION + filename + "-before.txt--->成功！");
+        logger.info("创建文件--->" + DIRECTION + filename + ".txt--->成功！");
     }
 
     /**
@@ -427,6 +428,34 @@ public class Common {
             String line = br.readLine();
             while (line != null) {
                 out.println(line.substring(1));
+                line = br.readLine();
+            }
+            br.close();
+            out.close();
+            File oldfile = new File(DIRECTION + filename + ".txt");
+            File file = new File(DIRECTION + filename + "1.txt");
+            oldfile.delete();
+            file.renameTo(oldfile);
+        } catch (FileNotFoundException e) {
+            logger.error("转换文件--->" + DIRECTION + filename + ".txt--->失败！");
+        } catch (IOException e) {
+            logger.error("转换文件--->" + DIRECTION + filename + ".txt--->失败！");
+        }
+        logger.info("转换文件--->" + DIRECTION + filename + ".txt--->成功！");
+    }
+
+    /**
+     * 第一行添加城市民
+     * filename：文件名
+     */
+    public static void addCity(String filename) {
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(DIRECTION + filename + ".txt"));
+            PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(DIRECTION + filename + "1.txt", true)));
+            String line = br.readLine();
+            out.println(filename);
+            while (line != null) {
+                out.println(line);
                 line = br.readLine();
             }
             br.close();

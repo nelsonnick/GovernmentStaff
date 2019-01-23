@@ -12,24 +12,12 @@ import com.wts.crawler.city.*;
  */
 public class CrawlerController extends Controller {
 
-    public void get() {
-        RiZhao.getFile();
+    public void g() {
+        DongYing.getFile();
         renderNull();
     }
-    public void get2() {
-        ShengZhi.getFile();
-        renderNull();
-    }
-    public void down() {
-        RiZhao.down();
-        renderNull();
-    }
-    public void down1() {
-        JiNan.down();
-        renderNull();
-    }
-    public void down2() {
-        ShengZhi.down();
+    public void d() {
+        DongYing.down();
         renderNull();
     }
 }

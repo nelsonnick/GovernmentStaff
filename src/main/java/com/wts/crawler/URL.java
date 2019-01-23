@@ -120,7 +120,7 @@ public class URL {
     /**
      * 枣庄
      */
-    public static Map<String, String> ZaoZhuamg(){
+    public static Map<String, String> ZaoZhuang(){
         Map<String, String> map = new LinkedHashMap<String, String>();
         map.put("市直","http://smz.sdzzbb.gov.cn/");
         map.put("市中区","http://szsmz.sdzzbb.gov.cn/");
