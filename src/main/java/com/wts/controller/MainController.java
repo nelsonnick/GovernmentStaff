@@ -1,7 +1,14 @@
 package com.wts.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Db;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
+import java.io.IOException;
 
 import static com.wts.crawler.city.JiNan.downDepartmentDetails;
 
@@ -85,7 +92,6 @@ public class MainController extends Controller {
         Long count = Db.queryLong("SELECT COUNT(*)" + sqlExcptSelect);
         renderText(count.toString());
     }
-
     /**
      * 获取基础SQL字符串
      * szcs：所在城市

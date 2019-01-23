@@ -44,7 +44,7 @@ public class DepartmentController extends Controller {
      */
     public static String getCascaderOptionsStr() {
         String str = "[";
-        List<Record> szcs = Db.find("SELECT DISTINCT szcs FROM department");
+        List<Record> szcs = Db.find("SELECT DISTINCT szcs FROM department ORDER BY FIELD(szcs,'山东省','济南市','青岛市','淄博市','枣庄市','东营市','烟台市','潍坊市','济宁市','泰安市','威海市','日照市','滨州市','德州市','聊城市','临沂市','菏泽市')");
         for (Record s : szcs) {
             str = str + "{'label':'" + s.getStr("szcs") + "','value':'" + s.getStr("szcs") + "','children': [";
             List<Record> dwzd = Db.find("SELECT DISTINCT dwzd FROM department WHERE szcs= '" + s.getStr("szcs") + "' ");

@@ -1,3 +1,16 @@
+Table: advice
+--------+--------------+------+-----+---------+---------
+ Field  | Type         | Null | Key | Default | Remarks 
+--------+--------------+------+-----+---------+---------
+ id     | INT(10)      | NO   | PRI |         |         
+ openid | VARCHAR(255) | YES  |     |         | 识别号码    
+ advice | VARCHAR(255) | YES  |     |         | 建议内容    
+ name   | VARCHAR(255) | YES  |     |         | 人员姓名    
+ phone  | VARCHAR(255) | YES  |     |         | 联系电话    
+ email  | VARCHAR(255) | YES  |     |         | 电子邮箱    
+ time   | DATETIME(26) | YES  |     |         | 提交时间    
+--------+--------------+------+-----+---------+---------
+
 Table: department
 -------------+---------------+------+-----+---------+---------
  Field       | Type          | Null | Key | Default | Remarks 

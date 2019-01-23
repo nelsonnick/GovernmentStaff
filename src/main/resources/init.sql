@@ -101,6 +101,20 @@ CREATE TABLE `person_err` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 -- ----------------------------
+-- Table structure for advice
+-- ----------------------------
+DROP TABLE IF EXISTS `advice`;
+CREATE TABLE `advice` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `openid` varchar(255) DEFAULT NULL COMMENT '识别号码',
+  `advice` varchar(255) DEFAULT NULL COMMENT '建议内容',
+  `name` varchar(255) DEFAULT NULL COMMENT '人员姓名',
+  `phone` varchar(255) DEFAULT NULL COMMENT '联系电话',
+  `email` varchar(255) DEFAULT NULL COMMENT '电子邮箱',
+  `time` datetime(0) NULL DEFAULT NULL COMMENT '提交时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+-- ----------------------------
 -- Table structure for json
 -- ----------------------------
 DROP TABLE IF EXISTS `json`;
