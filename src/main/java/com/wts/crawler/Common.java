@@ -543,9 +543,11 @@ public class Common {
             String line = "";
             String row = "";
             Integer tab = 0;
-            Integer num = 1;
             BufferedReader br = new BufferedReader(new FileReader(DIRECTION + filename + ".txt"));
             while ((line = br.readLine()) != null) {
+                if (line.equals("")){
+                    continue;
+                }
                 if (Pattern.matches("[^\t].+?", line)) {
                     szcs = line.replace("\t", "").replace("\n", "");
                     continue;
@@ -637,7 +639,6 @@ public class Common {
                 Method method = c.getMethod("downDepartmentDetails", String.class, String.class, String.class, String.class, String.class, String.class, String.class, String.class, String.class);
                 method.invoke("", baseURL, szcs, dwzd, dwlb, dwlx, sjdw, dwbh, dwmc, time);
 //                downDepartmentDetails(baseURL, szcs, dwzd, dwlb, dwlx, sjdw, dwbh, dwmc, time);
-                num = num + 1;
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -16,7 +16,7 @@ public class CrawlerController extends Controller {
         renderNull();
     }
     public void d() {
+        renderText("开始下载");
         ZiBo.down();
-        renderNull();
     }
 }
