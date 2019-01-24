@@ -61,20 +61,10 @@ public class MainController extends Controller {
      * dwmc：单位名称
      * ryxm：人员姓名
      */
-    public void list() {
+    public void pageList() {
         String select = "SELECT DISTINCT department.id, department.dwlx, department.dwmc, department.dwbh";
         String sqlExcptSelect = getsqlExcptSelect(getPara("type"), getPara("szcs"), getPara("dwzd"), getPara("dwlb"), getPara("dwlx"), getPara("sjdw"), getPara("dwmc"), getPara("ryxm"))+" ORDER BY department.dwlx DESC";
         renderJson(Db.paginate(getParaToInt("pageCurrent"), getParaToInt("pageSize"), select, sqlExcptSelect).getList());
-    }
-    public void l() {
-        try{
-            downDepartmentDetails("http://218.56.49.18/","山东","省直","政府","行政机关","","037412475","省纪委驻省委办公厅纪检组","20190121");
-//            downDepartmentDetails("http://sz.jnbb.gov.cn/smzgs/","济南","市中区","政府","行政机关","","037001003419","济南市市中区人民政府办公室","20190121");
-//            downDepartmentDetails("http://120.221.95.1:1888/", "青岛", "市直", "政府", "行政机关", "", "037002000129", "青岛市人民政府办公厅", "2019年1月21日");
-        }catch (Exception e){
-            System.out.println(e);
-        }
-        renderText("111111111111");
     }
     /**
      * 获取单位数量
@@ -87,7 +77,7 @@ public class MainController extends Controller {
      * dwmc：单位名称
      * ryxm：人员姓名
      */
-    public void total() {
+    public void pageTotal() {
         String sqlExcptSelect = getsqlExcptSelect(getPara("type"), getPara("szcs"), getPara("dwzd"), getPara("dwlb"), getPara("dwlx"), getPara("sjdw"), getPara("dwmc"), getPara("ryxm"));
         Long count = Db.queryLong("SELECT COUNT(*)" + sqlExcptSelect);
         renderText(count.toString());

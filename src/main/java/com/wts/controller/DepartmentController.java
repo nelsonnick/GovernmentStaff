@@ -108,4 +108,5 @@ public class DepartmentController extends Controller {
     public void allTotal() {
         renderText(Db.queryLong("SELECT COUNT(*) FROM department").toString());
     }
+
 }

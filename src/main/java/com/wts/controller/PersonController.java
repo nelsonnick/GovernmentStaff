@@ -21,6 +21,28 @@ public class PersonController extends Controller {
         renderText(Db.queryLong("SELECT COUNT(*) FROM person").toString());
     }
     /**
+     * 获取人员列表
+     * pageCurrent:当前页
+     * pageSize：数量
+     * dwbh：单位编号
+     * bzlx：编制类型
+     */
+    public void pageList() {
+        String select = "SELECT *";
+        String sqlExcptSelect = " FROM person WHERE dwbh = '" + getPara("dwbh") + "' AND bzlx = '" + getPara("bzlx") + "' ORDER BY ryxb";
+        renderJson(Db.paginate(getParaToInt("pageCurrent"), getParaToInt("pageSize"), select, sqlExcptSelect).getList());
+    }
+
+    /**
+     * 获取人员数量
+     * dwbh：单位编号
+     * bzlx：编制类型
+     */
+    public void pageTotal() {
+        Long count = Db.queryLong("SELECT COUNT(*) FROM person WHERE dwbh='" + getPara("dwbh") + "' AND bzlx='" + getPara("bzlx") + "'");
+        renderText(count.toString());
+    }
+    /**
      * 获取人员数量
      * dwbh：单位编号
      * bzlx：编制类型
