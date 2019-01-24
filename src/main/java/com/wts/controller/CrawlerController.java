@@ -12,7 +12,7 @@ import com.wts.crawler.city.*;
 public class CrawlerController extends Controller {
 
     public void g() {
-        ZiBo.getFile();
+        JiNing.getFile();
         renderNull();
     }
     public void d() {

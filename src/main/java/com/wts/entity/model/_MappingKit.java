@@ -19,6 +19,7 @@ public class _MappingKit {
 		arp.addMapping("advice", "id", Advice.class);
 		arp.addMapping("department", "id", Department.class);
 		arp.addMapping("department_err", "id", DepartmentErr.class);
+		arp.addMapping("jsonstr", "i", Jsonstr.class);
 		arp.addMapping("person", "id", Person.class);
 		arp.addMapping("person_err", "id", PersonErr.class);
 	}

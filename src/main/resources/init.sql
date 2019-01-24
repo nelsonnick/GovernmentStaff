@@ -100,16 +100,14 @@ CREATE TABLE `advice` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 -- ----------------------------
--- Table structure for json
+-- Table structure for jsonstr
 -- ----------------------------
-DROP TABLE IF EXISTS `json`;
-CREATE TABLE `json` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `jid` varchar(255) DEFAULT NULL COMMENT '本级序号',
-  `code` varchar(255) DEFAULT NULL COMMENT '本级序号',
-  `cid` varchar(255) DEFAULT NULL COMMENT '上级序号',
+DROP TABLE IF EXISTS `jsonstr`;
+CREATE TABLE `jsonstr` (
+  `i` int(11) NOT NULL AUTO_INCREMENT,
+  `id` varchar(255) DEFAULT NULL COMMENT '本级序号',
+  `pid` varchar(255) DEFAULT NULL COMMENT '上级序号',
   `name` varchar(255) DEFAULT NULL COMMENT '单位名称',
-  `num` int(11) DEFAULT NULL COMMENT '新增序号',
   `dwbh` varchar(255) DEFAULT NULL COMMENT '单位编号',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`i`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

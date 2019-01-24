@@ -272,16 +272,16 @@ public class URL {
     public static Map<String, String> JiNing(){
         Map<String, String> map = new LinkedHashMap<String, String>();
         map.put("市直","http://www.jnjgbz.gov.cn/sz_list/");
-//        map.put("任城区","http://www.jnjgbz.gov.cn/jnrcbb/");
-//        map.put("兖州区","http://www.jnjgbz.gov.cn/jnyzbb/");
-//        map.put("曲阜市","http://www.jnjgbz.gov.cn/jnqfbb/");
-//        map.put("邹城市","http://www.jnjgbz.gov.cn/jnzcbb/");
-//        map.put("汶上县","http://www.jnjgbz.gov.cn/jnwesbb/");
-//        map.put("梁山县","http://www.jnjgbz.gov.cn/jnlsbb/");
-//        map.put("微山县","http://www.jnjgbz.gov.cn/jnwsbb/");
-//        map.put("鱼台县","http://www.jnjgbz.gov.cn/jnytbb/");
-//        map.put("金乡县","http://www.jnjgbz.gov.cn/jnjxbb/");
-//        map.put("泗水县","http://www.jnjgbz.gov.cn/jnssbb/");
+        map.put("任城区","http://www.jnjgbz.gov.cn/jnrcbb/");
+        map.put("兖州区","http://www.jnjgbz.gov.cn/jnyzbb/");
+        map.put("曲阜市","http://www.jnjgbz.gov.cn/jnqfbb/");
+        map.put("邹城市","http://www.jnjgbz.gov.cn/jnzcbb/");
+        map.put("汶上县","http://www.jnjgbz.gov.cn/jnwesbb/");
+        map.put("梁山县","http://www.jnjgbz.gov.cn/jnlsbb/");
+        map.put("微山县","http://www.jnjgbz.gov.cn/jnwsbb/");
+        map.put("鱼台县","http://www.jnjgbz.gov.cn/jnytbb/");
+        map.put("金乡县","http://www.jnjgbz.gov.cn/jnjxbb/");
+        map.put("泗水县","http://www.jnjgbz.gov.cn/jnssbb/");
 //        map.put("嘉祥县","");
         return map;
     }
@@ -302,7 +302,7 @@ public class URL {
         map.put("鱼台县","037008008");
         map.put("金乡县","037008009");
         map.put("泗水县","037008010");
-        map.put("嘉祥县","037008011");
+//        map.put("嘉祥县","037008011");
         return map;
     }
 }

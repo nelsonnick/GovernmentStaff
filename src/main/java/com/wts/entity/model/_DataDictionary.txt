@@ -26,8 +26,8 @@ Table: department
  qtmc        | VARCHAR(255)  | YES  |     |         | 其他名称    
  ldzs        | VARCHAR(255)  | YES  |     |         | 领导职数    
  jb          | VARCHAR(255)  | YES  |     |         | 级别      
- nsjg        | VARCHAR(2999) | YES  |     |         | 内设机构    
- zyzz        | VARCHAR(2999) | YES  |     |         | 主要职责    
+ nsjg        | VARCHAR(7999) | YES  |     |         | 内设机构    
+ zyzz        | VARCHAR(7999) | YES  |     |         | 主要职责    
  xz_plan_num | VARCHAR(255)  | YES  |     |         | 行政编制数   
  xz_real_num | VARCHAR(255)  | YES  |     |         | 行政实际数   
  xz_lone_num | VARCHAR(255)  | YES  |     |         | 行政单列数   
@@ -57,16 +57,14 @@ Table: department_err
  time  | VARCHAR(255) | YES  |     |         | 更新日期    
 -------+--------------+------+-----+---------+---------
 
-Table: json
+Table: jsonstr
 -------+--------------+------+-----+---------+---------
  Field | Type         | Null | Key | Default | Remarks 
 -------+--------------+------+-----+---------+---------
- id    | INT(10)      | NO   | PRI |         |         
- jid   | VARCHAR(255) | YES  |     |         | 本级序号    
- code  | VARCHAR(255) | YES  |     |         | 本级序号    
- cid   | VARCHAR(255) | YES  |     |         | 上级序号    
+ i     | INT(10)      | NO   | PRI |         |         
+ id    | VARCHAR(255) | YES  |     |         | 本级序号    
+ pid   | VARCHAR(255) | YES  |     |         | 上级序号    
  name  | VARCHAR(255) | YES  |     |         | 单位名称    
- num   | INT(10)      | YES  |     |         | 新增序号    
  dwbh  | VARCHAR(255) | YES  |     |         | 单位编号    
 -------+--------------+------+-----+---------+---------
 
