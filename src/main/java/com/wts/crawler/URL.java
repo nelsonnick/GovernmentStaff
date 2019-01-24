@@ -285,4 +285,24 @@ public class URL {
 //        map.put("嘉祥县","");
         return map;
     }
+    /**
+     * 济宁
+     * http://www.jnjgbz.gov.cn/sz_list/index.php/Home/Index/get_list.html
+     */
+    public static Map<String, String> JiNingCode(){
+        Map<String, String> map = new LinkedHashMap<String, String>();
+        map.put("市直","037008000");
+        map.put("任城区","037008001");
+        map.put("兖州区","037008002");
+        map.put("曲阜市","037008003");
+        map.put("邹城市","037008004");
+        map.put("汶上县","037008005");
+        map.put("梁山县","037008006");
+        map.put("微山县","037008007");
+        map.put("鱼台县","037008008");
+        map.put("金乡县","037008009");
+        map.put("泗水县","037008010");
+        map.put("嘉祥县","037008011");
+        return map;
+    }
 }
