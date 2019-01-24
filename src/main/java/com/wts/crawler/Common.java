@@ -622,6 +622,9 @@ public class Common {
                 }
                 tab = countNum(line, "\t");
                 row = line.replace("\t", "").replace("\n", "");
+                if ( row.split("-").length==1){
+                    continue;
+                }
                 dwbh = row.split("-")[0];
                 dwmc = row.split("-")[1];
                 if (dwbh.length() > codeNum) {
@@ -638,7 +641,6 @@ public class Common {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println(e.getMessage());
         }
     }
 

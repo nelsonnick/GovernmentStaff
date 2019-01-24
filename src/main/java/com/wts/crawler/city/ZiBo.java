@@ -25,7 +25,8 @@ public class ZiBo {
                 downWithFile(key.getValue(), "淄博", 7, 12, "YanTai");
             }
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
     }
+
 }

@@ -12,11 +12,11 @@ import com.wts.crawler.city.*;
 public class CrawlerController extends Controller {
 
     public void g() {
-        DeZhou.getFile();
+        ZiBo.getFile();
         renderNull();
     }
     public void d() {
-        DeZhou.down();
+        ZiBo.down();
         renderNull();
     }
 }
