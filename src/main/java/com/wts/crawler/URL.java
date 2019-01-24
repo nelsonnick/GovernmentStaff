@@ -276,7 +276,7 @@ public class URL {
 //        map.put("兖州区","http://www.jnjgbz.gov.cn/jnyzbb/");
 //        map.put("曲阜市","http://www.jnjgbz.gov.cn/jnqfbb/");
 //        map.put("邹城市","http://www.jnjgbz.gov.cn/jnzcbb/");
-//        map.put("汶上县","http://www.jnjgbz.gov.cn/jnwesbb");
+//        map.put("汶上县","http://www.jnjgbz.gov.cn/jnwesbb/");
 //        map.put("梁山县","http://www.jnjgbz.gov.cn/jnlsbb/");
 //        map.put("微山县","http://www.jnjgbz.gov.cn/jnwsbb/");
 //        map.put("鱼台县","http://www.jnjgbz.gov.cn/jnytbb/");
