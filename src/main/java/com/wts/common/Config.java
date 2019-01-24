@@ -32,8 +32,8 @@ public class Config extends JFinalConfig {
 
     @Override
     public void configRoute(Routes me) {
-        String base = "GovernmentStaff";
-//        String base = "";
+//        String base = "GovernmentStaff";
+        String base = "";
         me.add(base + "/main", MainController.class);
         me.add(base + "/person", PersonController.class);
         me.add(base + "/department", DepartmentController.class);
