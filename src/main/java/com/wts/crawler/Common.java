@@ -300,9 +300,8 @@ public class Common {
             fw.close();
             file.renameTo(oldfile);
         } catch (Exception e) {
-            logger.error("创建文件--->" + DIRECTION + filename + ".txt--->失败！:" + e.getMessage());
+            e.printStackTrace();
         }
-        logger.info("创建文件--->" + DIRECTION + filename + ".txt--->成功！");
     }
 
     /**

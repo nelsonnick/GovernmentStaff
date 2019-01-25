@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.wts.crawler.Common.*;
+import static com.wts.crawler.URL.DIRECTION;
 import static com.wts.crawler.URL.JiNan;
 
 /**
@@ -56,7 +57,7 @@ public class JiNan {
             String zyzz = e.getElementById("lblMainDuty").text();
             Element div = e.getElementsByTag("tr").first().nextElementSibling().nextElementSibling().nextElementSibling().nextElementSibling()
                     .getElementsByTag("td").first().getElementsByTag("div").first();
-            if (div.getElementsByTag("table").size()!=0) {
+            if (div.getElementsByTag("table").size() != 0) {
                 Element tbody = div.getElementsByTag("table").first().getElementsByTag("tbody").first();
                 Elements elements = tbody.getElementsByTag("tr");
                 for (Element element : elements) {
@@ -107,6 +108,7 @@ public class JiNan {
             saveDepartmentErr(base, szcs, dwzd, dwlb, dwlx, sjdw, dwbh, dwmc_1, time);
         }
     }
+
     /**
      * 下载人员详情
      * base：基础网址
@@ -119,7 +121,7 @@ public class JiNan {
      * dwmc：单位名称
      * bzlx：编制类型
      */
-    public  static void downPersonList(String base, String szcs, String dwzd, String dwlb, String dwlx, String sjdw, String dwbh, String dwmc, String bzlx) {
+    public static void downPersonList(String base, String szcs, String dwzd, String dwlb, String dwlx, String sjdw, String dwbh, String dwmc, String bzlx) {
         try {
             String url = getPersonUrl(base, dwbh, bzlx, false);
             Document doc = getDoc(url);
@@ -152,23 +154,28 @@ public class JiNan {
             savePersonErr(base, szcs, dwzd, dwlb, dwlx, sjdw, dwbh, dwmc, bzlx);
         }
     }
+
     /**
      * 获取结构文件
      */
     public static void getFile() {
         try {
-            Map<String, String> map = JiNan();
-            for (Map.Entry<String, String> key : map.entrySet()){
-                createFile(getStructureStr(key.getValue(), true),key.getKey());
-                transFile(key.getKey());
+            File file = new File(DIRECTION + "济南");
+            if (!file.exists()) {
+                file.mkdir();
             }
-            retractFile("市直");
-            changeFile("市直","济南");
-            mergeFile("济南",JiNan());
-        }catch (Exception e){
-
+            Map<String, String> map = JiNan();
+            for (Map.Entry<String, String> key : map.entrySet()) {
+                createFile(getStructureStr(key.getValue(), true), "济南\\" + key.getKey());
+                retractFile("济南\\" + key.getKey());
+            }
+            retractFile("济南\\市直");
+            changeFile("济南\\市直", "济南");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
+
     /**
      * 下载
      */
@@ -176,7 +183,7 @@ public class JiNan {
         try {
             Map<String, String> map = JiNan();
             for (Map.Entry<String, String> key : map.entrySet()) {
-                downWithFile(key.getValue(), "济南", 9, 12,"JiNan");
+                downWithFile(key.getValue(), "济南", 9, 12, "JiNan");
             }
         } catch (Exception e) {
 

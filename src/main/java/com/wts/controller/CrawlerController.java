@@ -12,7 +12,7 @@ import com.wts.crawler.city.*;
 public class CrawlerController extends Controller {
 
     public void g() {
-        JiNing.getFile();
+        JiNan.getFile();
         renderNull();
     }
     public void d() {
