@@ -5,6 +5,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +13,8 @@ import java.util.Map;
 
 import static com.wts.crawler.Common.*;
 import static com.wts.crawler.Common.downWithFile;
-import static com.wts.crawler.URL.DeZhou;
+import static com.wts.crawler.URL.*;
+
 /**
  * DeZhou class
  * 德州的人员不体现性别，需要重新编写代码
@@ -25,15 +27,18 @@ public class DeZhou {
      */
     public static void getFile() {
         try {
-            Map<String, String> map = DeZhou();
-            for (Map.Entry<String, String> key : map.entrySet()){
-                createFile(getStructureStr(key.getValue(), true),key.getKey());
-                transFile(key.getKey());
+            File file = new File(DIRECTION + "德州");
+            if (!file.exists()) {
+                file.mkdir();
             }
-            mergeFile("德州",DeZhou());
-            addCity("德州");
-        }catch (Exception e){
-
+            Map<String, String> map = DeZhou();
+            for (Map.Entry<String, String> key : map.entrySet()) {
+                createFile(getStructureStr(key.getValue(), true), "德州\\" + key.getKey());
+                transFile("德州\\" + key.getKey());
+            }
+            addCity("德州\\德州");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
     /**
@@ -43,7 +48,7 @@ public class DeZhou {
         try {
             Map<String, String> map = DeZhou();
             for (Map.Entry<String, String> key : map.entrySet()) {
-                downWithFile(key.getValue(), "德州", 9, 12,"DeZhou");
+                downWithFile(key.getValue(), "德州\\"+key.getKey(), 9, 12, "DeZhou");
             }
         } catch (Exception e) {
 

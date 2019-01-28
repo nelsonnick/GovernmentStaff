@@ -5,13 +5,15 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import static com.wts.crawler.Common.*;
-import static com.wts.crawler.URL.DongYing;
+import static com.wts.crawler.URL.*;
+
 /**
  * DongYing class
  * 东营的网页结构十分特别，分为行政编制数+单列行政编制数，要特别处理
@@ -24,14 +26,17 @@ public class DongYing {
      */
     public static void getFile() {
         try {
-            Map<String, String> map = DongYing();
-            for (Map.Entry<String, String> key : map.entrySet()){
-                createFile(getStructureStr(key.getValue(), true),key.getKey());
-                transFile(key.getKey());
+            File file = new File(DIRECTION + "东营");
+            if (!file.exists()) {
+                file.mkdir();
             }
-            mergeFile("东营",DongYing());
+            Map<String, String> map = DongYing();
+            for (Map.Entry<String, String> key : map.entrySet()) {
+                createFile(getStructureStr(key.getValue(), true), "东营\\" + key.getKey());
+                transFile("东营\\" + key.getKey());
+            }
             addCity("东营");
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -42,7 +47,7 @@ public class DongYing {
         try {
             Map<String, String> map = DongYing();
             for (Map.Entry<String, String> key : map.entrySet()) {
-                downWithFile(key.getValue(), "东营", 9, 12,"DongYing");
+                downWithFile(key.getValue(), "东营\\"+key.getKey(), 9, 12, "DongYing");
             }
         } catch (Exception e) {
 

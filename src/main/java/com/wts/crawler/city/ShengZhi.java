@@ -41,12 +41,14 @@ public class ShengZhi {
      */
     public static void getFile() {
         try {
-            Map<String, String> map = ShengZhi();
-            for (Map.Entry<String, String> key : map.entrySet()) {
-                createFile(getStructureStr(key.getValue(), false), key.getKey());
-                transFile(key.getKey());
-                changeFile(key.getKey());
+            File file = new File(DIRECTION + "省直");
+            if (!file.exists()) {
+                file.mkdir();
             }
+            Map<String, String> map = ShengZhi();
+            createFile(getStructureStr(map.get("省直"), false), "省直\\省直");
+            transFile("省直\\省直");
+            changeFile("省直\\省直");
         } catch (Exception e) {
 
         }
@@ -58,9 +60,7 @@ public class ShengZhi {
     public static void down() {
         try {
             Map<String, String> map = ShengZhi();
-            for (Map.Entry<String, String> key : map.entrySet()) {
-                downWithFile(key.getValue(), key.getKey(), 9, 6, "JiNan");
-            }
+            downWithFile(map.get("省直"), "省直\\省直", 9, 6, "JiNan");
         } catch (Exception e) {
 
         }

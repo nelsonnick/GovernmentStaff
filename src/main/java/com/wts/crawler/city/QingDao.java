@@ -3,10 +3,12 @@ package com.wts.crawler.city;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
 import static com.wts.crawler.Common.*;
+import static com.wts.crawler.URL.DIRECTION;
 import static com.wts.crawler.city.JiNan.downPersonList;
 import static com.wts.crawler.URL.QingDao;
 /**
@@ -91,10 +93,19 @@ public class QingDao {
      * 获取结构文件
      */
     public static void getFile() {
-        Map<String, String> map = QingDao();
-        createFile(getStructureStr(map.get("市直"), true),"青岛");
-        retractFile("青岛");
-        transFile("青岛");
+        try{
+            File file = new File(DIRECTION + "青岛");
+            if (!file.exists()) {
+                file.mkdir();
+            }
+            Map<String, String> map = QingDao();
+            createFile(getStructureStr(map.get("市直"), true),"青岛\\青岛");
+            retractFile("青岛\\青岛");
+            transFile("青岛\\青岛");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
     /**
      * 下载
@@ -102,9 +113,7 @@ public class QingDao {
     public static void down() {
         try {
             Map<String, String> map = QingDao();
-            for (Map.Entry<String, String> key : map.entrySet()) {
-                downWithFile(key.getValue(), key.getKey(), 7, 12, "QingDao");
-            }
+            downWithFile(map.get("市直"), "青岛\\青岛", 7, 12, "QingDao");
         } catch (Exception e) {
 
         }

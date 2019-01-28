@@ -159,9 +159,9 @@ public class YanTai {
      */
     public static void getFile() {
         Map<String, String> map = YanTai();
-        createFile(getStructureStr(map.get("市直"), false),"烟台");
-        transFile("烟台");
-        changeFile("烟台","烟台");
+        createFile(getStructureStr(map.get("市直"), false),"烟台\\烟台");
+        transFile("烟台\\烟台");
+        changeFile("烟台\\烟台","烟台");
 
     }
     /**
@@ -170,9 +170,7 @@ public class YanTai {
     public static void down() {
         try {
             Map<String, String> map = YanTai();
-            for (Map.Entry<String, String> key : map.entrySet()) {
-                downWithFile(key.getValue(), "烟台", 9, 12, "YanTai");
-            }
+            downWithFile(map.get("市直"), "烟台\\烟台", 9, 12, "YanTai");
         } catch (Exception e) {
 
         }

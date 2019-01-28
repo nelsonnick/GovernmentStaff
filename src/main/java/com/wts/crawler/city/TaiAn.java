@@ -1,8 +1,10 @@
 package com.wts.crawler.city;
 
+import java.io.File;
 import java.util.Map;
 
 import static com.wts.crawler.Common.*;
+import static com.wts.crawler.URL.DIRECTION;
 import static com.wts.crawler.URL.TaiAn;
 
 public class TaiAn {
@@ -11,15 +13,18 @@ public class TaiAn {
      */
     public static void getFile() {
         try {
-            Map<String, String> map = TaiAn();
-            for (Map.Entry<String, String> key : map.entrySet()){
-                createFile(getStructureStr(key.getValue(), true),key.getKey());
-                transFile(key.getKey());
+            File file = new File(DIRECTION + "泰安");
+            if (!file.exists()) {
+                file.mkdir();
             }
-            retractFile("市直");
-            mergeFile("泰安",TaiAn());
-        }catch (Exception e){
-
+            Map<String, String> map = TaiAn();
+            for (Map.Entry<String, String> key : map.entrySet()) {
+                createFile(getStructureStr(key.getValue(), true), "泰安\\" + key.getKey());
+                transFile("泰安\\" +key.getKey());
+            }
+            retractFile("泰安\\市直");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
     /**
@@ -29,7 +34,7 @@ public class TaiAn {
         try {
             Map<String, String> map = TaiAn();
             for (Map.Entry<String, String> key : map.entrySet()) {
-                downWithFile(key.getValue(), "泰安", 9, 12,"JiNan");
+                downWithFile(key.getValue(), "泰安\\"+key.getKey(), 9, 12, "JiNan");
             }
         } catch (Exception e) {
 

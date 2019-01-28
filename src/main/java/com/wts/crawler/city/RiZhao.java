@@ -158,8 +158,8 @@ public class RiZhao {
      */
     public static void getFile() {
         Map<String, String> map = RiZhao();
-        createFile(getStructureStr(map.get("市直"), false),"日照");
-        transFile("日照");
+        createFile(getStructureStr(map.get("市直"), false),"日照\\日照");
+        transFile("日照\\日照");
 
     }
     /**
@@ -168,9 +168,7 @@ public class RiZhao {
     public static void down() {
         try {
             Map<String, String> map = RiZhao();
-            for (Map.Entry<String, String> key : map.entrySet()) {
-                downWithFile(key.getValue(), "日照", 9, 12,"RiZhao");
-            }
+            downWithFile(map.get("市直"), "日照\\日照", 9, 12, "RiZhao");
         } catch (Exception e) {
 
         }

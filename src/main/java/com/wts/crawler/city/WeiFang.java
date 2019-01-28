@@ -5,12 +5,14 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import static com.wts.crawler.Common.*;
+import static com.wts.crawler.URL.DIRECTION;
 import static com.wts.crawler.URL.WeiFang;
 
 public class WeiFang {
@@ -19,18 +21,22 @@ public class WeiFang {
      */
     public static void getFile() {
         try {
-            Map<String, String> map = WeiFang();
-            for (Map.Entry<String, String> key : map.entrySet()){
-                createFile(getStructureStr(key.getValue(), true),key.getKey());
-                transFile(key.getKey());
+            File file = new File(DIRECTION + "潍坊");
+            if (!file.exists()) {
+                file.mkdir();
             }
-            retractFile("市直");
-            changeFile("市直","潍坊");
+            Map<String, String> map = WeiFang();
+            for (Map.Entry<String, String> key : map.entrySet()) {
+                createFile(getStructureStr(key.getValue(), true), "潍坊\\" + key.getKey());
+                retractFile("潍坊\\" + key.getKey());
+            }
+            retractFile("潍坊\\市直");
+            changeFile("潍坊\\市直", "潍坊");
             delCity("寿光市");
             retractFile("寿光市");
             mergeFile("潍坊",WeiFang());
-        }catch (Exception e){
-
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
     /**
@@ -40,7 +46,7 @@ public class WeiFang {
         try {
             Map<String, String> map = WeiFang();
             for (Map.Entry<String, String> key : map.entrySet()) {
-                downWithFile(key.getValue(), "潍坊", 9, 12,"WeiFang");
+                downWithFile(key.getValue(), "潍坊\\"+key.getKey(), 9, 12, "WeiFang");
             }
         } catch (Exception e) {
 

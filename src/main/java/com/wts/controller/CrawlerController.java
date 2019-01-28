@@ -12,11 +12,11 @@ import com.wts.crawler.city.*;
 public class CrawlerController extends Controller {
 
     public void g() {
-        JiNan.getFile();
+        ZiBo.getFile();
         renderNull();
     }
     public void d() {
-        renderText("开始下载");
         ZiBo.down();
+        renderNull();
     }
 }

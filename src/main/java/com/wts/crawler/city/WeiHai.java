@@ -1,9 +1,11 @@
 package com.wts.crawler.city;
 
+import java.io.File;
 import java.util.Map;
 
 import static com.wts.crawler.Common.*;
 import static com.wts.crawler.Common.downWithFile;
+import static com.wts.crawler.URL.DIRECTION;
 import static com.wts.crawler.URL.WeiHai;
 
 public class WeiHai {
@@ -12,15 +14,18 @@ public class WeiHai {
      */
     public static void getFile() {
         try {
-            Map<String, String> map = WeiHai();
-            for (Map.Entry<String, String> key : map.entrySet()){
-                createFile(getStructureStr(key.getValue(), true),key.getKey());
-                transFile(key.getKey());
+            File file = new File(DIRECTION + "威海");
+            if (!file.exists()) {
+                file.mkdir();
             }
-            retractFile("市直");
-            mergeFile("威海",WeiHai());
-        }catch (Exception e){
-
+            Map<String, String> map = WeiHai();
+            for (Map.Entry<String, String> key : map.entrySet()) {
+                createFile(getStructureStr(key.getValue(), true), "威海\\" + key.getKey());
+                transFile("威海\\" + key.getKey());
+            }
+            retractFile("威海\\市直");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
     /**
@@ -30,7 +35,7 @@ public class WeiHai {
         try {
             Map<String, String> map = WeiHai();
             for (Map.Entry<String, String> key : map.entrySet()) {
-                downWithFile(key.getValue(), "威海", 9, 12,"JiNan");
+                downWithFile(key.getValue(), "威海\\"+key.getKey(), 9, 12, "JiNan");
             }
         } catch (Exception e) {
 

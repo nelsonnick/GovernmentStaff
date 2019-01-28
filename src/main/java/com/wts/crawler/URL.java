@@ -50,58 +50,6 @@ public class URL {
         return map;
     }
     /**
-     * 烟台
-     */
-    public static Map<String, String> YanTai(){
-        Map<String, String> map = new LinkedHashMap<String, String>();
-        map.put("市直","http://smz.yantai.gov.cn/");
-        map.put("开发区","http://smz.yantai.gov.cn/");
-        map.put("高新区","http://smz.yantai.gov.cn/");
-        map.put("保税港","http://smz.yantai.gov.cn/");
-        map.put("昆嵛山保护区","http://smz.yantai.gov.cn/");
-        map.put("芝罘区","http://smz.yantai.gov.cn/");
-        map.put("福山区","http://smz.yantai.gov.cn/");
-        map.put("莱山区","http://smz.yantai.gov.cn/");
-        map.put("牟平区","http://smz.yantai.gov.cn/");
-        map.put("莱州区","http://smz.yantai.gov.cn/");
-        map.put("龙口区","http://smz.yantai.gov.cn/");
-        map.put("莱阳市","http://smz.yantai.gov.cn/");
-        map.put("蓬莱市","http://smz.yantai.gov.cn/");
-        map.put("招远市","http://smz.yantai.gov.cn/");
-        map.put("栖霞市","http://smz.yantai.gov.cn/");
-        map.put("海阳市","http://smz.yantai.gov.cn/");
-        map.put("长岛县","http://smz.yantai.gov.cn/");
-        return map;
-    }
-    /**
-     * 日照
-     */
-    public static Map<String, String> RiZhao(){
-        Map<String, String> map = new LinkedHashMap<String, String>();
-        map.put("市直","http://www.rzbb.gov.cn/smzxxnew/");
-        map.put("东港区","http://www.rzbb.gov.cn/smzxxnew/");
-        map.put("岚山区","http://www.rzbb.gov.cn/smzxxnew/");
-        map.put("莒县","http://www.rzbb.gov.cn/smzxxnew/");
-        map.put("五莲县","http://www.rzbb.gov.cn/smzxxnew/");
-        return map;
-    }
-    /**
-     * 聊城
-     */
-    public static Map<String, String> LiaoCheng(){
-        Map<String, String> map = new LinkedHashMap<String, String>();
-        map.put("市直","http://smz.lcbb.gov.cn/");
-        map.put("东昌府区","http://dcfsmz.lcbb.gov.cn/");
-        map.put("临清市","http://lqsmz.lcbb.gov.cn/");
-        map.put("茌平县","http://smz.cpbb.gov.cn/");
-//        map.put("东阿县","http://smz.debb.gov.cn/");
-        map.put("高唐县","http://gtsmz.lcbb.gov.cn/");
-        map.put("阳谷县","http://smz.ygbb.gov.cn/");
-        map.put("冠县","http://smz.sdgxbb.gov.cn/");
-        map.put("莘县","http://smz.sdsxbb.gov.cn/");
-        return map;
-    }
-    /**
      * 淄博
      */
     public static Map<String, String> ZiBo(){
@@ -132,16 +80,27 @@ public class URL {
         return map;
     }
     /**
-     * 东营
+     * 烟台
      */
-    public static Map<String, String> DongYing(){
+    public static Map<String, String> YanTai(){
         Map<String, String> map = new LinkedHashMap<String, String>();
-        map.put("市直","http://dysmz.hisofter.com:2021/");
-        map.put("东营区","http://www.dyqbb.gov.cn:8056/");
-        map.put("河口区","http://smz.hkbb.gov.cn/");
-        map.put("广饶县","http://grsmz.5hl.cn:2021/");
-//        map.put("垦利区","http://www.klbb.gov.cn/smz/");网址能打开，但是不是标准格式
-        map.put("利津县","http://218.58.213.193:8880/");
+        map.put("市直","http://smz.yantai.gov.cn/");
+        map.put("开发区","http://smz.yantai.gov.cn/");
+        map.put("高新区","http://smz.yantai.gov.cn/");
+        map.put("保税港","http://smz.yantai.gov.cn/");
+        map.put("昆嵛山保护区","http://smz.yantai.gov.cn/");
+        map.put("芝罘区","http://smz.yantai.gov.cn/");
+        map.put("福山区","http://smz.yantai.gov.cn/");
+        map.put("莱山区","http://smz.yantai.gov.cn/");
+        map.put("牟平区","http://smz.yantai.gov.cn/");
+        map.put("莱州区","http://smz.yantai.gov.cn/");
+        map.put("龙口区","http://smz.yantai.gov.cn/");
+        map.put("莱阳市","http://smz.yantai.gov.cn/");
+        map.put("蓬莱市","http://smz.yantai.gov.cn/");
+        map.put("招远市","http://smz.yantai.gov.cn/");
+        map.put("栖霞市","http://smz.yantai.gov.cn/");
+        map.put("海阳市","http://smz.yantai.gov.cn/");
+        map.put("长岛县","http://smz.yantai.gov.cn/");
         return map;
     }
     /**
@@ -194,6 +153,49 @@ public class URL {
         return map;
     }
     /**
+     * 日照
+     */
+    public static Map<String, String> RiZhao(){
+        Map<String, String> map = new LinkedHashMap<String, String>();
+        map.put("市直","http://www.rzbb.gov.cn/smzxxnew/");
+        map.put("东港区","http://www.rzbb.gov.cn/smzxxnew/");
+        map.put("岚山区","http://www.rzbb.gov.cn/smzxxnew/");
+        map.put("莒县","http://www.rzbb.gov.cn/smzxxnew/");
+        map.put("五莲县","http://www.rzbb.gov.cn/smzxxnew/");
+        return map;
+    }
+    /**
+     * 聊城
+     */
+    public static Map<String, String> LiaoCheng(){
+        Map<String, String> map = new LinkedHashMap<String, String>();
+        map.put("市直","http://smz.lcbb.gov.cn/");
+        map.put("东昌府区","http://dcfsmz.lcbb.gov.cn/");
+        map.put("临清市","http://lqsmz.lcbb.gov.cn/");
+        map.put("茌平县","http://smz.cpbb.gov.cn/");
+//        map.put("东阿县","http://smz.debb.gov.cn/");
+        map.put("高唐县","http://gtsmz.lcbb.gov.cn/");
+        map.put("阳谷县","http://smz.ygbb.gov.cn/");
+        map.put("冠县","http://smz.sdgxbb.gov.cn/");
+        map.put("莘县","http://smz.sdsxbb.gov.cn/");
+        return map;
+    }
+
+    /**
+     * 东营
+     */
+    public static Map<String, String> DongYing(){
+        Map<String, String> map = new LinkedHashMap<String, String>();
+        map.put("市直","http://dysmz.hisofter.com:2021/");
+        map.put("东营区","http://www.dyqbb.gov.cn:8056/");
+        map.put("河口区","http://smz.hkbb.gov.cn/");
+        map.put("广饶县","http://grsmz.5hl.cn:2021/");
+//        map.put("垦利区","http://www.klbb.gov.cn/smz/");网址能打开，但是不是标准格式
+        map.put("利津县","http://218.58.213.193:8880/");
+        return map;
+    }
+
+    /**
      * 滨州
      */
     public static Map<String, String> BinZhou(){
@@ -228,7 +230,7 @@ public class URL {
         return map;
     }
     /**
-     * 临沂
+     * 临沂------>有网址无数据
      */
     public static Map<String, String> LinYi(){
         Map<String, String> map = new LinkedHashMap<String, String>();
