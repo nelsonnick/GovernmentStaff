@@ -322,7 +322,7 @@ public class Common {
     /**
      * 生成文件，并缩进一个tab
      * filename：文件名
-     * 需要转换：省直、青岛、烟台
+     * 需要转换：省直、青岛、烟台、济宁
      * 不需要转换：济南
      */
     public static void transFile(String filename) {
@@ -354,7 +354,7 @@ public class Common {
                                     || line.split("-")[1].equals("民主党派") || line.split("-")[1].equals("群众团体") || line.split("-")[1].equals("法院") || line.split("-")[1].equals("检察院")
                                     || line.split("-")[1].equals("经济实体") || line.split("-")[1].equals("其他") || line.split("-")[1].equals("街道办事处") || line.split("-")[1].equals("乡")
                                     || line.split("-")[1].equals("镇") || line.split("-")[1].equals("行政机关") || line.split("-")[1].equals("直属事业单位") || line.split("-")[1].equals("下设机构")
-                                    || line.split("-")[1].equals("事业单位")) {
+                                    || line.split("-")[1].equals("事业单位")|| line.split("-")[1].equals("直属单位")) {
                                 for (int i = 1; i < character; i++) {
                                     out.print("\t");
                                 }
@@ -438,6 +438,33 @@ public class Common {
             logger.error("转换文件--->" + DIRECTION + filename + ".txt--->失败！");
         } catch (IOException e) {
             logger.error("转换文件--->" + DIRECTION + filename + ".txt--->失败！");
+        }
+        logger.info("转换文件--->" + DIRECTION + filename + ".txt--->成功！");
+    }
+
+    /**
+     * 整个添加一个tab
+     * filename：文件名
+     */
+    public static void addTab(String filename) {
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(DIRECTION + filename + ".txt"));
+            PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(DIRECTION + filename + "1.txt", true)));
+            String line = br.readLine();
+            while (line != null) {
+                out.println("\t" + line);
+                line = br.readLine();
+            }
+            br.close();
+            out.close();
+            File oldfile = new File(DIRECTION + filename + ".txt");
+            File file = new File(DIRECTION + filename + "1.txt");
+            oldfile.delete();
+            file.renameTo(oldfile);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         logger.info("转换文件--->" + DIRECTION + filename + ".txt--->成功！");
     }
