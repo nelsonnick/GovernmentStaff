@@ -1,7 +1,6 @@
 package com.wts.crawler.city;
 
 import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.wts.entity.model.Jsonstr;
 import org.jsoup.nodes.Document;
 
