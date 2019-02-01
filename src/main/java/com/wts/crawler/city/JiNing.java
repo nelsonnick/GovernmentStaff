@@ -44,9 +44,9 @@ public class JiNing {
     }
 
     /**
-     * 获取结构文件
+     * 将结构保存到SQL数据表
      */
-    public static void getFile() {
+    public static void saveAsSql() {
         try {
             Map<String, String> map = JiNing();
             Map<String, String> code = JiNingCode();
@@ -146,9 +146,6 @@ public class JiNing {
                         }
                     }
                 }
-//                createFile(str,key.getKey());
-//                transFile(key.getKey());
-                System.out.println(arr);
                 for (int m = 0; m < arr.size(); m++) {
                     Jsonstr jsonstr = new Jsonstr();
                     jsonstr.set("id",arr.getJSONObject(m).get("id")).set("name",arr.getJSONObject(m).get("name")).set("pid",arr.getJSONObject(m).get("pid")).set("dwbh",arr.getJSONObject(m).get("dwbh")).save();
@@ -160,6 +157,6 @@ public class JiNing {
     }
 
     public static void main(String[] args) {
-        getFile();
+        saveAsSql();
     }
 }

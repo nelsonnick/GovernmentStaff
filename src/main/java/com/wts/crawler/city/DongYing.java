@@ -35,7 +35,7 @@ public class DongYing {
                 createFile(getStructureStr(key.getValue(), true), "东营\\" + key.getKey());
                 transFile("东营\\" + key.getKey());
             }
-            addCity("东营");
+            addCity("东营","东营");
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -36,7 +36,7 @@ public class DeZhou {
                 createFile(getStructureStr(key.getValue(), true), "德州\\" + key.getKey());
                 transFile("德州\\" + key.getKey());
             }
-            addCity("德州\\德州");
+            addCity("德州\\德州","德州");
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -443,15 +443,16 @@ public class Common {
     }
 
     /**
-     * 第一行添加城市明
+     * 第一行添加城市名
      * filename：文件名
+     * cityname：城市名
      */
-    public static void addCity(String filename) {
+    public static void addCity(String filename, String cityname) {
         try {
             BufferedReader br = new BufferedReader(new FileReader(DIRECTION + filename + ".txt"));
             PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(DIRECTION + filename + "1.txt", true)));
             String line = br.readLine();
-            out.println(filename+"市");
+            out.println(cityname+"市");
             while (line != null) {
                 out.println(line);
                 line = br.readLine();
