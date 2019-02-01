@@ -100,7 +100,7 @@ public class QingDao {
             }
             Map<String, String> map = QingDao();
             createFile(getStructureStr(map.get("市直"), true),"青岛\\青岛");
-            retractFile("青岛\\青岛");
+            delTab("青岛\\青岛");
             transFile("青岛\\青岛");
         }catch (Exception e){
             e.printStackTrace();

@@ -2,6 +2,7 @@ package com.wts.crawler.city;
 
 import com.alibaba.fastjson.JSONArray;
 import com.wts.entity.model.Jsonstr;
+import com.wts.entity.model.Person;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -13,6 +14,8 @@ import org.jsoup.select.Elements;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import static com.wts.crawler.Common.*;
@@ -49,6 +52,7 @@ public class JiNing {
             return "";
         }
     }
+
     /**
      * 获取单位网址
      * baseURL：基础字符串：http://www.jnjgbz.gov.cn/sz_list/
@@ -57,25 +61,35 @@ public class JiNing {
         return baseURL + "index.php/Home/Index/right_info.html";
     }
     /**
+     * 获取人员网址
+     * baseURL：基础字符串：http://www.jnjgbz.gov.cn/sz_list/
+     * cid：单位序号
+     * ptype：编制类型
+     */
+    public static String getPersonUrl(String baseURL, String cid, String bzlx) {
+        if (bzlx.equals("行政编制")) {
+            return baseURL + "index.php/Home/Index/peo_list?cid=" + cid + "&ptype=1";
+        } else if (bzlx.equals("事业编制")) {
+            return baseURL + "index.php/Home/Index/peo_list?cid=" + cid + "&ptype=2";
+        } else if (bzlx.equals("工勤编制")) {
+            return baseURL + "index.php/Home/Index/peo_list?cid=" + cid + "&ptype=3";
+        } else {
+            return "";
+        }
+    }
+
+    /**
      * 获取网页数据---带表头信息
      * url：网址
      * 链接失败时，抛出IOException
      */
-    public static Document getDos(String url,String id) throws IOException {
+    public static Document getDos(String url, String id) throws IOException {
         FormBody.Builder builder = new FormBody.Builder();
-        builder.add("id",id);
+        builder.add("id", id);
         FormBody body = builder.build();
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(url)
-                .addHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8")
-                .addHeader("Accept-Encoding", "gzip, deflate")
-                .addHeader("Accept-Language", "zh-CN,zh;q=0.9")
-                .addHeader("Connection", "keep-alive")
-                .addHeader("DNT", "1")
-                .addHeader("HOST", url.split("/")[2])
-                .addHeader("Upgrade-Insecure-Requests", "1")
-                .addHeader("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.67 Safari/537.36Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.67 Safari/537.36")
                 .post(body)
                 .build();
         Response response = client.newCall(request).execute();
@@ -193,7 +207,7 @@ public class JiNing {
                 createFile(str, "济宁\\" + key.getKey());
                 transFile("济宁\\" + key.getKey());
                 addTab("济宁\\" + key.getKey());
-                addCity("济宁\\" + key.getKey(),"济宁");
+                addCity("济宁\\" + key.getKey(), "济宁");
 //              需要手动将济宁\\市直.txt文件中的第二行改成“市直”
 
                 for (int m = 0; m < arr.size(); m++) {
@@ -206,6 +220,7 @@ public class JiNing {
             e.printStackTrace();
         }
     }
+
     /**
      * 下载
      */
@@ -213,7 +228,7 @@ public class JiNing {
         try {
             Map<String, String> map = JiNing();
             for (Map.Entry<String, String> key : map.entrySet()) {
-                downWithFile(key.getValue(), "济宁\\"+key.getKey(), 9, 12, "JiNing");
+                downWithFile(key.getValue(), "济宁\\" + key.getKey(), 1, 12, "JiNing");
             }
         } catch (Exception e) {
 
@@ -232,7 +247,7 @@ public class JiNing {
      * dwmc：单位名称
      * time：更新时间
      */
-    public static void downDepartmentDetails(String base, String szcs, String dwzd, String dwlb, String dwlx, String sjdw, String dwbh, String dwmc_1, String time) {
+    public static void downDepartmentDetails(String base, String szcs, String dwzd, String dwlb, String dwlx, String sjdw, String dwbh, String dwmc, String time) {
         String xzPlanNum = "0";
         String xzRealNum = "0";
         String xzLoneNum = "0";
@@ -243,18 +258,87 @@ public class JiNing {
         String gqRealNum = "0";
         String gqLoneNum = "0";
         try {
-            String id = Jsonstr.dao.findFirst("SELECT id FROM jsonstr WHERE dwbh="+dwbh).getId();
+            String id = Jsonstr.dao.findFirst("SELECT id FROM jsonstr WHERE dwbh=" + dwbh).getId();
             String url = getDepartmentUrl(base);
-            Document doc = getDos(url,id);
+            Document doc = getDos(url, id);
+            Element e = doc.getElementsByTag("tbody").first();
+            String dwmc_1 = e.getElementsByAttributeValue("name", "one_name").first().val();
+            String qtmc = e.getElementsByAttributeValue("name", "two_name").first().val();
+            String ldzs = e.getElementsByAttributeValue("name", "three_name").first().val();
+            String jb = e.getElementsByAttributeValue("name", "four_name").first().val();
+            try{
+                xzPlanNum = e.getElementsByAttributeValue("name", "five_name").first().val();
+                xzRealNum = e.getElementsByAttributeValue("name", "six_name").first().text();
+                syPlanNum = e.getElementsByAttributeValue("name", "seven_name").first().val();
+                syRealNum = e.getElementsByAttributeValue("name", "eight_name").first().text();
+                gqPlanNum = e.getElementsByAttributeValue("name", "nine_name").first().val();
+                gqRealNum = e.getElementsByAttributeValue("name", "ten_name").first().text();
+            }catch (NullPointerException ex){
+            }
+            String nsjg = e.getElementsByAttributeValue("name", "eleven_name").first().text();
+            String zyzz = e.getElementsByAttributeValue("name", "twelve_name").first().text();
+            if (!checkNum(xzRealNum).equals("0")) {
+                downPersonList(base, szcs, dwzd, dwlb, dwlx, sjdw, dwbh, dwmc, id, "行政编制");
+            }
+            if (!checkNum(syRealNum).equals("0")) {
+                downPersonList(base, szcs, dwzd, dwlb, dwlx, sjdw, dwbh, dwmc,  id, "事业编制");
+            }
+            if (!checkNum(gqRealNum).equals("0")) {
+                downPersonList(base, szcs, dwzd, dwlb, dwlx, sjdw, dwbh, dwmc,  id, "工勤编制");
+            }
+            saveDepartment(xzPlanNum, xzRealNum, xzLoneNum, syPlanNum, syRealNum, syLoneNum, gqPlanNum, gqRealNum, gqLoneNum,
+                    szcs, dwzd, dwlb, dwlx, sjdw, dwbh, dwmc, qtmc, ldzs, nsjg, zyzz, jb, url, time);
         } catch (IOException e) {
-//            saveDepartmentErr(base, szcs, dwzd, dwlb, dwlx, sjdw, dwbh, dwmc_1, time);
+            saveDepartmentErr(base, szcs, dwzd, dwlb, dwlx, sjdw, dwbh, dwmc, time);
         }
     }
 
-    public static void main(String[] args) throws Exception{
-        String url = getDepartmentUrl("http://www.jnjgbz.gov.cn/sz_list/");
-        Document doc = getDos(url,"29");
-        Element e = doc.getElementsByTag("table").first();
-        System.out.println(e);
+    /**
+     * 下载人员详情
+     * base：基础网址
+     * szcs：所在城市
+     * dwzd：单位驻地
+     * dwlb：单位类别
+     * dwlx：单位类型
+     * sjdw：上级单位
+     * dwbh：单位编号
+     * dwmc：单位名称
+     * bzlx：编制类型
+     */
+    public static void downPersonList(String base, String szcs, String dwzd, String dwlb, String dwlx, String sjdw, String dwbh, String dwmc,String id, String bzlx) {
+        try {
+            String url = getPersonUrl(base, id, bzlx);
+            Document doc = getDoc(url);
+            Element e = doc.getElementsByTag("tbody").first();
+            Elements ths = e.getElementsByTag("th");
+            List<String> cols = new ArrayList<>();
+            for (Element th : ths) {
+                cols.add(th.text());
+            }
+            e.getElementsByTag("tr").first().remove();
+            Elements trs = e.getElementsByTag("tr");
+            for (Element tr : trs) {
+                List<String> row = new ArrayList<>();
+                row.add(tr.getElementsByTag("td").first().text());
+                row.add(tr.getElementsByTag("td").first().nextElementSibling().text());
+                row.add(tr.getElementsByTag("td").first().nextElementSibling().nextElementSibling().text());
+                if (cols.size() == 4) {
+                    row.add(tr.getElementsByTag("td").first().nextElementSibling().nextElementSibling().nextElementSibling().text());
+                } else if (cols.size() == 5) {
+                    row.add(tr.getElementsByTag("td").first().nextElementSibling().nextElementSibling().nextElementSibling().text());
+                    row.add(tr.getElementsByTag("td").first().nextElementSibling().nextElementSibling().nextElementSibling().nextElementSibling().text());
+                } else {
+
+                }
+                Person person = getPerson(cols, row);
+                person.set("szcs", szcs).set("dwzd", dwzd).set("dwlb", dwlb).set("dwlx", dwlx).set("sjdw", sjdw).set("dwbh", dwbh).set("bzlx", bzlx).save();
+            }
+        } catch (IOException e) {
+            savePersonErr(base, szcs, dwzd, dwlb, dwlx, sjdw, dwbh, dwmc, bzlx);
+        }
+    }
+
+    public static void main(String[] args) {
+        downPersonList("http://www.jnjgbz.gov.cn/sz_list/","","","","","","","","89","事业编制");
     }
 }

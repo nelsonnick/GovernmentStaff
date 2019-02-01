@@ -28,13 +28,16 @@ public class WeiFang {
             Map<String, String> map = WeiFang();
             for (Map.Entry<String, String> key : map.entrySet()) {
                 createFile(getStructureStr(key.getValue(), true), "潍坊\\" + key.getKey());
-                retractFile("潍坊\\" + key.getKey());
+                delTab("潍坊\\" + key.getKey());
             }
-            retractFile("潍坊\\市直");
+            delTab("潍坊\\市直");
             changeFile("潍坊\\市直", "潍坊");
-            delCity("寿光市");
-            retractFile("寿光市");
-            mergeFile("潍坊",WeiFang());
+            delCity("潍坊\\寿光市");
+            delTab("潍坊\\寿光市");
+            for (Map.Entry<String, String> key : map.entrySet()) {
+                addCity("潍坊\\" + key.getKey(),"潍坊");
+            }
+            delCity("潍坊\\市直");
         } catch (Exception e) {
             e.printStackTrace();
         }

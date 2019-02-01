@@ -21,7 +21,7 @@ public class BinZhou {
                 createFile(getStructureStr(key.getValue(), true), "滨州\\" + key.getKey());
                 transFile("滨州\\" + key.getKey());
             }
-            retractFile("滨州\\市直");
+            delTab("滨州\\市直");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -33,7 +33,7 @@ public class BinZhou {
                 createFile(getStructureStr(key.getValue(), true),key.getKey());
                 transFile(key.getKey());
             }
-            retractFile("市直");
+            delTab("市直");
             mergeFile("滨州",BinZhou());
         }catch (Exception e){
 

@@ -19,7 +19,7 @@ public class ZiBo {
             }
             Map<String, String> map = ZiBo();
             createFile(getStructureStr(map.get("市直"), true),"淄博\\淄博");
-            retractFile("淄博\\淄博");
+            delTab("淄博\\淄博");
             transFile("淄博\\淄博");
         }catch (Exception e){
             e.printStackTrace();

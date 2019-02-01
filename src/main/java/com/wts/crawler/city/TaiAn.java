@@ -22,7 +22,7 @@ public class TaiAn {
                 createFile(getStructureStr(key.getValue(), true), "泰安\\" + key.getKey());
                 transFile("泰安\\" +key.getKey());
             }
-            retractFile("泰安\\市直");
+            delTab("泰安\\市直");
         } catch (Exception e) {
             e.printStackTrace();
         }

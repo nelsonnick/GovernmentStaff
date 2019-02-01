@@ -20,9 +20,9 @@ public class LiaoCheng {
             Map<String, String> map = LiaoCheng();
             for (Map.Entry<String, String> key : map.entrySet()) {
                 createFile(getStructureStr(key.getValue(), true), "聊城\\" + key.getKey());
-                retractFile("聊城\\" + key.getKey());
+                delTab("聊城\\" + key.getKey());
             }
-            retractFile("聊城\\市直");
+            delTab("聊城\\市直");
         } catch (Exception e) {
             e.printStackTrace();
         }

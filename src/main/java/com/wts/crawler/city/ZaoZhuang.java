@@ -20,9 +20,9 @@ public class ZaoZhuang {
             Map<String, String> map = ZaoZhuang();
             for (Map.Entry<String, String> key : map.entrySet()) {
                 createFile(getStructureStr(key.getValue(), true), "枣庄\\" + key.getKey());
-                retractFile("枣庄\\" + key.getKey());
+                delTab("枣庄\\" + key.getKey());
             }
-            retractFile("枣庄\\市直");
+            delTab("枣庄\\市直");
             changeFile("枣庄\\市直", "枣庄");
         } catch (Exception e) {
             e.printStackTrace();

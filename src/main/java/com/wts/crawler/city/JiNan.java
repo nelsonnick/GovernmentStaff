@@ -167,10 +167,14 @@ public class JiNan {
             Map<String, String> map = JiNan();
             for (Map.Entry<String, String> key : map.entrySet()) {
                 createFile(getStructureStr(key.getValue(), true), "济南\\" + key.getKey());
-                retractFile("济南\\" + key.getKey());
+                delTab("济南\\" + key.getKey());
             }
-            retractFile("济南\\市直");
+            delTab("济南\\市直");
             changeFile("济南\\市直", "济南");
+            for (Map.Entry<String, String> key : map.entrySet()) {
+                addCity("济南\\" + key.getKey(),"济南");
+            }
+            delCity("济南\\市直");
         } catch (Exception e) {
             e.printStackTrace();
         }

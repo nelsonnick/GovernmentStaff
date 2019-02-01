@@ -233,7 +233,7 @@ public class Common {
     /**
      * 获取更新时间
      * baseURL：基础字符串
-     * num：从第num个字符开始截取：一般是9，青岛是7
+     * num：从第num个字符开始截取：一般是9，青岛是7，济宁是1
      */
     public static String getTime(String baseURL, Integer num) {
         OkHttpClient client = new OkHttpClient();
@@ -243,7 +243,11 @@ public class Common {
         try {
             Response response = client.newCall(request).execute();
             Document doc = Jsoup.parse(response.body().string());
-            return doc.getElementById("SPAN1").text().substring(num);
+            if (num != 1) {
+                return doc.getElementById("SPAN1").text().substring(num);
+            } else {
+                return doc.getElementsByAttributeValue("style", "width:950px;height:40px;background:#0647A3;line-height:40px;padding-left:40px;font-size:14px;color:#FFFFFF;").first().text().substring(9);
+            }
         } catch (IOException e) {
             return "";
         }
@@ -419,7 +423,7 @@ public class Common {
      * 整个缩进一个tab
      * filename：文件名
      */
-    public static void retractFile(String filename) {
+    public static void delTab(String filename) {
         try {
             BufferedReader br = new BufferedReader(new FileReader(DIRECTION + filename + ".txt"));
             PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(DIRECTION + filename + "1.txt", true)));

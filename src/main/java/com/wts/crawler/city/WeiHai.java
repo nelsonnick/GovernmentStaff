@@ -23,7 +23,7 @@ public class WeiHai {
                 createFile(getStructureStr(key.getValue(), true), "威海\\" + key.getKey());
                 transFile("威海\\" + key.getKey());
             }
-            retractFile("威海\\市直");
+            delTab("威海\\市直");
         } catch (Exception e) {
             e.printStackTrace();
         }
