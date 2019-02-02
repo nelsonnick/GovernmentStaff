@@ -24,6 +24,10 @@ public class WeiHai {
                 transFile("威海\\" + key.getKey());
             }
             delTab("威海\\市直");
+            for (Map.Entry<String, String> key : map.entrySet()) {
+                addCity("威海\\" + key.getKey(),"威海");
+            }
+            delCity("威海\\市直");
         } catch (Exception e) {
             e.printStackTrace();
         }
