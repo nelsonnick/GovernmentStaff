@@ -62,7 +62,7 @@ public class MainController extends Controller {
      * ryxm：人员姓名
      */
     public void pageList() {
-        String select = "SELECT DISTINCT department.id, department.dwlx, department.dwmc, department.dwbh";
+        String select = "SELECT DISTINCT department.id, department.szcs, department.dwzd, department.dwlb, department.dwlx, department.dwmc, department.dwbh";
         String sqlExcptSelect = getsqlExcptSelect(getPara("type"), getPara("szcs"), getPara("dwzd"), getPara("dwlb"), getPara("dwlx"), getPara("sjdw"), getPara("dwmc"), getPara("ryxm"))+" ORDER BY department.szcs, department.dwzd,department.dwlb,department.dwlx,department.dwmc";
         renderJson(Db.paginate(getParaToInt("pageCurrent"), getParaToInt("pageSize"), select, sqlExcptSelect).getList());
     }
