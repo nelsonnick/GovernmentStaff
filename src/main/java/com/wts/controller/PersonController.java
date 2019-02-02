@@ -29,7 +29,7 @@ public class PersonController extends Controller {
      */
     public void pageList() {
         String select = "SELECT *";
-        String sqlExcptSelect = " FROM person WHERE dwbh = '" + getPara("dwbh") + "' AND bzlx = '" + getPara("bzlx") + "' ORDER BY ryxb";
+        String sqlExcptSelect = " FROM person WHERE dwbh = '" + getPara("dwbh") + "' AND bzlx = '" + getPara("bzlx") + "' ORDER BY convert(ryxm using gbk)";
         renderJson(Db.paginate(getParaToInt("pageCurrent"), getParaToInt("pageSize"), select, sqlExcptSelect).getList());
     }
 
@@ -52,7 +52,7 @@ public class PersonController extends Controller {
         return Db.queryLong("SELECT COUNT(*) FROM person WHERE dwbh = '" + dwbh + "' AND bzlx='" + bzlx + "' AND ryxb='" + ryxb +"'");
     }
     public void get() {
-        renderJson(Person.dao.find("SELECT id,ssbm,ryxm,ryxb,bzlx,bzqk FROM person WHERE dwbh=" + getPara("dwbh") + " AND bzlx='" + getPara("bzlx") + "' ORDER BY ryxb"));
+        renderJson(Person.dao.find("SELECT id,ssbm,ryxm,ryxb,bzlx,bzqk FROM person WHERE dwbh=" + getPara("dwbh") + " AND bzlx='" + getPara("bzlx") + "' ORDER BY convert(ryxm using gbk)"));
     }
 
     /**
