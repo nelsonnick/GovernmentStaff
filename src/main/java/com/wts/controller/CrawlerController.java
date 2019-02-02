@@ -13,12 +13,12 @@ import com.wts.crawler.city.*;
 public class CrawlerController extends Controller {
 
     public void g() {
-        JiNing.getFile();
+        TaiAn.getFile();
         renderNull();
     }
 
     public void d() {
-        JiNing.down();
+        TaiAn.down();
         renderNull();
     }
 

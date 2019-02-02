@@ -23,6 +23,10 @@ public class TaiAn {
                 transFile("泰安\\" +key.getKey());
             }
             delTab("泰安\\市直");
+            for (Map.Entry<String, String> key : map.entrySet()) {
+                addCity("泰安\\" + key.getKey(),"泰安");
+            }
+            delCity("泰安\\市直");
         } catch (Exception e) {
             e.printStackTrace();
         }
