@@ -23,6 +23,10 @@ public class LiaoCheng {
                 delTab("聊城\\" + key.getKey());
             }
             delTab("聊城\\市直");
+            for (Map.Entry<String, String> key : map.entrySet()) {
+                addCity("聊城\\" + key.getKey(),"聊城");
+            }
+            delCity("聊城\\市直");
         } catch (Exception e) {
             e.printStackTrace();
         }

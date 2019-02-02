@@ -206,7 +206,7 @@ public class URL {
         map.put("惠民县","http://smz.hmjgbz.gov.cn/");
         map.put("博兴县","http://www.bxbb.gov.cn/smzgs/");
         map.put("阳信县","http://www.yxbb.gov.cn/smzgs/");
-        map.put("滨城区","http://smzgs.bincheng.gov.cn/");
+//        map.put("滨城区","http://smzgs.bincheng.gov.cn/");
 //        map.put("无棣县","http://www.sdwdbb.gov.cn/smzgs/");
         return map;
     }

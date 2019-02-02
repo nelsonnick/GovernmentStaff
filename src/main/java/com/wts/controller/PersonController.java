@@ -28,9 +28,10 @@ public class PersonController extends Controller {
      * bzlx：编制类型
      */
     public void pageList() {
-        String select = "SELECT *";
-        String sqlExcptSelect = " FROM person WHERE dwbh = '" + getPara("dwbh") + "' AND bzlx = '" + getPara("bzlx") + "' ORDER BY convert(ryxm using gbk)";
-        renderJson(Db.paginate(getParaToInt("pageCurrent"), getParaToInt("pageSize"), select, sqlExcptSelect).getList());
+        String from = "FROM person WHERE dwbh = '" + getPara("dwbh") + "' AND bzlx = '" + getPara("bzlx") + "'";
+        String totalRowSql = "select count(*) " + from;
+        String findSql = "select * " + from + " ORDER BY convert(ryxm using gbk)";
+        renderJson(Db.paginateByFullSql(getParaToInt("pageCurrent"), getParaToInt("pageSize"), totalRowSql, findSql).getList());
     }
 
     /**

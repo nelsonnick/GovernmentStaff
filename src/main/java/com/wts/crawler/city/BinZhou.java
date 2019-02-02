@@ -22,21 +22,12 @@ public class BinZhou {
                 transFile("滨州\\" + key.getKey());
             }
             delTab("滨州\\市直");
+            for (Map.Entry<String, String> key : map.entrySet()) {
+                addCity("滨州\\" + key.getKey(),"滨州");
+            }
+            delCity("滨州\\市直");
         } catch (Exception e) {
             e.printStackTrace();
-        }
-
-
-        try {
-            Map<String, String> map = BinZhou();
-            for (Map.Entry<String, String> key : map.entrySet()){
-                createFile(getStructureStr(key.getValue(), true),key.getKey());
-                transFile(key.getKey());
-            }
-            delTab("市直");
-            mergeFile("滨州",BinZhou());
-        }catch (Exception e){
-
         }
     }
     /**
