@@ -137,10 +137,14 @@ public class YanTai {
                 List<String> row = new ArrayList<>();
                 row.add(tr.getElementsByTag("td").first().text());
                 row.add(tr.getElementsByTag("td").first().nextElementSibling().text());
-                row.add(tr.getElementsByTag("td").first().nextElementSibling().nextElementSibling().text());
-                if (cols.size() == 4) {
+                if (cols.size() == 3) {
+                    row.add(tr.getElementsByTag("td").first().nextElementSibling().nextElementSibling().text());
+                }
+                else if (cols.size() == 4) {
+                    row.add(tr.getElementsByTag("td").first().nextElementSibling().nextElementSibling().text());
                     row.add(tr.getElementsByTag("td").first().nextElementSibling().nextElementSibling().nextElementSibling().text());
                 } else if (cols.size() == 5) {
+                    row.add(tr.getElementsByTag("td").first().nextElementSibling().nextElementSibling().text());
                     row.add(tr.getElementsByTag("td").first().nextElementSibling().nextElementSibling().nextElementSibling().text());
                     row.add(tr.getElementsByTag("td").first().nextElementSibling().nextElementSibling().nextElementSibling().nextElementSibling().text());
                 } else {

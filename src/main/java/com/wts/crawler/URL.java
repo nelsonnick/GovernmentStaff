@@ -169,13 +169,13 @@ public class URL {
      */
     public static Map<String, String> LiaoCheng(){
         Map<String, String> map = new LinkedHashMap<String, String>();
-        map.put("市直","http://smz.lcbb.gov.cn/");
-        map.put("东昌府区","http://dcfsmz.lcbb.gov.cn/");
-        map.put("临清市","http://lqsmz.lcbb.gov.cn/");
-        map.put("茌平县","http://smz.cpbb.gov.cn/");
-//        map.put("东阿县","http://smz.debb.gov.cn/");
-        map.put("高唐县","http://gtsmz.lcbb.gov.cn/");
-        map.put("阳谷县","http://smz.ygbb.gov.cn/");
+//        map.put("市直","http://smz.lcbb.gov.cn/");
+//        map.put("东昌府区","http://dcfsmz.lcbb.gov.cn/");
+//        map.put("临清市","http://lqsmz.lcbb.gov.cn/");
+//        map.put("茌平县","http://smz.cpbb.gov.cn/");
+////        map.put("东阿县","http://smz.debb.gov.cn/");
+//        map.put("高唐县","http://gtsmz.lcbb.gov.cn/");
+//        map.put("阳谷县","http://smz.ygbb.gov.cn/");
         map.put("冠县","http://smz.sdgxbb.gov.cn/");
         map.put("莘县","http://smz.sdsxbb.gov.cn/");
         return map;
