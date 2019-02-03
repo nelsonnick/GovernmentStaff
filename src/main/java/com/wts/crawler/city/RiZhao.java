@@ -5,12 +5,14 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import static com.wts.crawler.Common.*;
+import static com.wts.crawler.URL.DIRECTION;
 import static com.wts.crawler.URL.RiZhao;
 
 /**
@@ -157,9 +159,17 @@ public class RiZhao {
      * 获取结构文件
      */
     public static void getFile() {
-        Map<String, String> map = RiZhao();
-        createFile(getStructureStr(map.get("市直"), false),"日照\\日照");
-        transFile("日照\\日照");
+        try {
+            File file = new File(DIRECTION + "日照");
+            if (!file.exists()) {
+                file.mkdir();
+            }
+            Map<String, String> map = RiZhao();
+            createFile(getStructureStr(map.get("市直"), false),"日照\\日照");
+            transFile("日照\\日照");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
     /**
