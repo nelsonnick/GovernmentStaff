@@ -32,7 +32,9 @@ public class Config extends JFinalConfig {
 
     @Override
     public void configRoute(Routes me) {
+//        微信调试环境
 //        String base = "GovernmentStaff";
+//        开发环境及上线环境
         String base = "";
         me.add(base + "/main", MainController.class);
         me.add(base + "/person", PersonController.class);

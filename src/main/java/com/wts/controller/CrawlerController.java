@@ -21,5 +21,7 @@ public class CrawlerController extends Controller {
         BinZhou.down();
         renderNull();
     }
-
+    public void i() {
+        renderText("服务已正常开启！");
+    }
 }
