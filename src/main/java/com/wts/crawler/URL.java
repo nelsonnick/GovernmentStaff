@@ -203,7 +203,7 @@ public class URL {
         map.put("市直","http://60.215.8.11:7002/");
         map.put("沾化区","http://218.56.22.99:8123/");
         map.put("邹平市","http://zpbb.zpgd.net/");
-        map.put("惠民县","http://smz.hmjgbz.gov.cn/");
+        map.put("惠民县","http://smz.hmjgbz.gov.cn/"); //到这里出了bug
         map.put("博兴县","http://www.bxbb.gov.cn/smzgs/");
         map.put("阳信县","http://www.yxbb.gov.cn/smzgs/");
 //        map.put("滨城区","http://smzgs.bincheng.gov.cn/");

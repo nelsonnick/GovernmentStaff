@@ -13,12 +13,12 @@ import com.wts.crawler.city.*;
 public class CrawlerController extends Controller {
 
     public void g() {
-        DongYing.getFile();
+        BinZhou.getFile();
         renderNull();
     }
 
     public void d() {
-        DongYing.down();
+        BinZhou.down();
         renderNull();
     }
     public void i() {
