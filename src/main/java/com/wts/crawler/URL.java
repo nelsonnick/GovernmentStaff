@@ -191,7 +191,7 @@ public class URL {
         map.put("河口区","http://smz.hkbb.gov.cn/");
         map.put("广饶县","http://grsmz.5hl.cn:2021/");
 //        map.put("垦利区","http://www.klbb.gov.cn/smz/");网址能打开，但是不是标准格式
-        map.put("利津县","http://218.58.213.193:8880/");
+        map.put("利津县","http://218.58.213.193:8880/");//与东营其他地市的标准格式不一致，需要重新编写代码
         return map;
     }
 
