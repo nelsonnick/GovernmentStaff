@@ -5,17 +5,20 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import static com.wts.crawler.Common.*;
+import static com.wts.crawler.URL.DIRECTION;
 import static com.wts.crawler.URL.YanTai;
 
 /**
  * YanTai class
  * 跟济南基本相似，就是发送请求时没有header
+ *
  * @author wts
  * @date 2019/1/22
  */
@@ -56,7 +59,7 @@ public class YanTai {
             String zyzz = e.getElementById("lblMainDuty").text();
             Element div = e.getElementsByTag("tr").first().nextElementSibling().nextElementSibling().nextElementSibling().nextElementSibling()
                     .getElementsByTag("td").first().getElementsByTag("div").first();
-            if (div.getElementsByTag("table").size()!=0) {
+            if (div.getElementsByTag("table").size() != 0) {
                 Element tbody = div.getElementsByTag("table").first().getElementsByTag("tbody").first();
                 Elements elements = tbody.getElementsByTag("tr");
                 for (Element element : elements) {
@@ -108,6 +111,7 @@ public class YanTai {
             saveDepartmentErr(base, szcs, dwzd, dwlb, dwlx, sjdw, dwbh, dwmc_1, time);
         }
     }
+
     /**
      * 下载人员详情
      * base：基础网址
@@ -120,7 +124,7 @@ public class YanTai {
      * dwmc：单位名称
      * bzlx：编制类型
      */
-    public  static void downPersonList(String base, String szcs, String dwzd, String dwlb, String dwlx, String sjdw, String dwbh, String dwmc, String bzlx) {
+    public static void downPersonList(String base, String szcs, String dwzd, String dwlb, String dwlx, String sjdw, String dwbh, String dwmc, String bzlx) {
         try {
             String url = getPersonUrl(base, dwbh, bzlx, false);
             Document doc = getDocWithNot(url);
@@ -139,8 +143,7 @@ public class YanTai {
                 row.add(tr.getElementsByTag("td").first().nextElementSibling().text());
                 if (cols.size() == 3) {
                     row.add(tr.getElementsByTag("td").first().nextElementSibling().nextElementSibling().text());
-                }
-                else if (cols.size() == 4) {
+                } else if (cols.size() == 4) {
                     row.add(tr.getElementsByTag("td").first().nextElementSibling().nextElementSibling().text());
                     row.add(tr.getElementsByTag("td").first().nextElementSibling().nextElementSibling().nextElementSibling().text());
                 } else if (cols.size() == 5) {
@@ -162,12 +165,20 @@ public class YanTai {
      * 获取结构文件
      */
     public static void getFile() {
-        Map<String, String> map = YanTai();
-        createFile(getStructureStr(map.get("市直"), false),"烟台\\烟台");
-        transFile("烟台\\烟台");
-        changeFile("烟台\\烟台","烟台");
-
+        try {
+            File file = new File(DIRECTION + "烟台");
+            if (!file.exists()) {
+                file.mkdir();
+            }
+            Map<String, String> map = YanTai();
+            createFile(getStructureStr(map.get("市直"), false), "烟台\\烟台");
+            transFile("烟台\\烟台");
+            changeFile("烟台\\烟台", "烟台");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
     /**
      * 下载
      */
