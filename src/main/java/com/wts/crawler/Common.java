@@ -3,6 +3,7 @@ package com.wts.crawler;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.wts.crawler.city.YanTai;
 import com.wts.entity.model.Department;
 import com.wts.entity.model.DepartmentErr;
 import com.wts.entity.model.Person;
@@ -812,7 +813,7 @@ public class Common {
     public static void downPersonError() {
         List<PersonErr> personErrs = PersonErr.dao.find("SELECT * FROM person_err");
         for (PersonErr personErr : personErrs) {
-            downPersonList(personErr.getBase(), personErr.getSzcs(), personErr.getDwzd(), personErr.getDwlb(), personErr.getDwlx(), personErr.getSjdw(), personErr.getDwbh(), personErr.getDwmc(), personErr.getBzlx());
+            YanTai.downPersonList(personErr.getBase(), personErr.getSzcs(), personErr.getDwzd(), personErr.getDwlb(), personErr.getDwlx(), personErr.getSjdw(), personErr.getDwbh(), personErr.getDwmc(), personErr.getBzlx());
             PersonErr.dao.deleteById(personErr.getId());
         }
     }
