@@ -792,11 +792,17 @@ public class Common {
     /**
      * 下载department错误数据
      */
-    public static void downDepartmentError() {
+    public static void downDepartmentError(String city) {
         List<DepartmentErr> departmentErrs = DepartmentErr.dao.find("SELECT * FROM department_err");
-        for (DepartmentErr departmentErr : departmentErrs) {
-            downDepartmentDetails(departmentErr.getBase(), departmentErr.getSzcs(), departmentErr.getDwzd(), departmentErr.getDwlb(), departmentErr.getDwlx(), departmentErr.getSjdw(), departmentErr.getDwbh(), departmentErr.getDwmc(), departmentErr.getTime());
-            DepartmentErr.dao.deleteById(departmentErr.getId());
+        try {
+            Class c = Class.forName("com.wts.crawler.city." + city);
+            Method method = c.getMethod("downDepartmentDetails", String.class, String.class, String.class, String.class, String.class, String.class, String.class, String.class, String.class);
+            for (DepartmentErr departmentErr : departmentErrs) {
+                method.invoke("", departmentErr.getBase(), departmentErr.getSzcs(), departmentErr.getDwzd(), departmentErr.getDwlb(), departmentErr.getDwlx(), departmentErr.getSjdw(), departmentErr.getDwbh(), departmentErr.getDwmc(), departmentErr.getTime());
+                DepartmentErr.dao.deleteById(departmentErr.getId());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

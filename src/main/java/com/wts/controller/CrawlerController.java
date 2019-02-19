@@ -4,6 +4,7 @@ import com.jfinal.core.Controller;
 import com.wts.crawler.city.*;
 
 import static com.wts.crawler.Common.downDepartmentError;
+import static com.wts.crawler.Common.downPersonError;
 
 
 /**
@@ -31,7 +32,8 @@ public class CrawlerController extends Controller {
      * 再次下载未成功下载的数据
      */
     public void c() {
-        downDepartmentError();
+//        downDepartmentError("YanTai");
+        downPersonError();
     }
     /**
      * 检测服务是否正常开启
