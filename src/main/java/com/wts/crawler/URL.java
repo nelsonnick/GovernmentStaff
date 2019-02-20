@@ -29,6 +29,8 @@ public class URL {
         map.put("济阳县","http://jy.jnbb.gov.cn/smzgs/");
         map.put("商河县","http://sh.jnbb.gov.cn/smzgs/");
         map.put("平阴县","http://py.jnbb.gov.cn/smzgs/");
+        map.put("莱芜区","http://lw.jnbb.gov.cn/smzgs/");
+        map.put("钢城区","http://gc.jnbb.gov.cn/smzgs/");
         return map;
     }
     /**
