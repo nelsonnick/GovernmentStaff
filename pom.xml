@@ -46,12 +46,12 @@
         <dependency>
             <groupId>com.jfinal</groupId>
             <artifactId>jfinal-undertow</artifactId>
-            <version>1.5</version>
+            <version>1.9</version>
         </dependency>
         <dependency>
             <groupId>com.jfinal</groupId>
             <artifactId>jfinal</artifactId>
-            <version>3.6</version>
+            <version>4.7</version>
         </dependency>
         <!-- 避免控制台输出如下提示信息：
              SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".

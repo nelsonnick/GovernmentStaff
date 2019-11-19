@@ -18,21 +18,21 @@ public class CrawlerController extends Controller {
      * 下载结构文件
      */
     public void a() {
-        YanTai.getFile();
+        JiNan.getFile();
         renderNull();
     }
     /**
      * 根据结构文件下载信息
      */
     public void b() {
-        YanTai.down();
+        JiNan.down();
         renderNull();
     }
     /**
      * 再次下载未成功下载的数据
      */
     public void c() {
-//        downDepartmentError("YanTai");
+        downDepartmentError("JiNan");
         downPersonError();
     }
     /**

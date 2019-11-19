@@ -21,6 +21,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.io.*;
 import java.lang.reflect.Method;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -43,7 +44,7 @@ public class Common {
     /**
      * 获取结构字符串
      * baseURL：基础字符串：http://jnbb.gov.cn/smzgs/
-     * isHtml：是否HTML：济南、青岛、淄博、枣庄、东营、潍坊、泰安、威海、滨州、德州、聊城、临沂、菏泽TRUE,省直、烟台、日照FALSE
+     * isHtml：是否HTML：青岛、淄博、枣庄、东营、潍坊、泰安、威海、滨州、德州、聊城、临沂、菏泽TRUE,省直、济南、烟台、日照FALSE
      */
     public static String getStructureStr(String baseURL, Boolean isHtml) {
         System.setProperty("webdriver.chrome.driver", "C:\\chromedriver.exe");
@@ -327,8 +328,8 @@ public class Common {
     /**
      * 生成文件，并缩进一个tab
      * filename：文件名
-     * 需要转换：省直、青岛、烟台、济宁
-     * 不需要转换：济南
+     * 需要转换：省直、青岛、烟台、济宁、济南
+     * 不需要转换：
      */
     public static void transFile(String filename) {
         try {
@@ -359,7 +360,10 @@ public class Common {
                                     || line.split("-")[1].equals("民主党派") || line.split("-")[1].equals("群众团体") || line.split("-")[1].equals("法院") || line.split("-")[1].equals("检察院")
                                     || line.split("-")[1].equals("经济实体") || line.split("-")[1].equals("其他") || line.split("-")[1].equals("街道办事处") || line.split("-")[1].equals("乡")
                                     || line.split("-")[1].equals("镇") || line.split("-")[1].equals("行政机关") || line.split("-")[1].equals("直属事业单位") || line.split("-")[1].equals("下设机构")
-                                    || line.split("-")[1].equals("事业单位")|| line.split("-")[1].equals("直属单位")) {
+                                    || line.split("-")[1].equals("事业单位")|| line.split("-")[1].equals("直属单位")|| line.split("-")[1].equals("市中区")|| line.split("-")[1].equals("历下区")
+                                    || line.split("-")[1].equals("槐荫区")|| line.split("-")[1].equals("天桥区")|| line.split("-")[1].equals("历城区")|| line.split("-")[1].equals("长清区")
+                                    || line.split("-")[1].equals("章丘区")|| line.split("-")[1].equals("济阳区")|| line.split("-")[1].equals("商河县")|| line.split("-")[1].equals("平阴县")
+                                    || line.split("-")[1].equals("莱芜区")|| line.split("-")[1].equals("钢城区")|| line.split("-")[1].equals("高新区")|| line.split("-")[1].equals("南山区")) {
                                 for (int i = 1; i < character; i++) {
                                     out.print("\t");
                                 }
@@ -401,6 +405,107 @@ public class Common {
             while (line != null) {
                 if (line.equals("\t" + cityname + "市市直")) {
                     out.println("\t市直");
+                } else {
+                    out.println(line);
+                }
+                line = br.readLine();
+            }
+            br.close();
+            out.close();
+            File oldfile = new File(DIRECTION + filename + ".txt");
+            File file = new File(DIRECTION + filename + "1.txt");
+            oldfile.delete();
+            file.renameTo(oldfile);
+        } catch (FileNotFoundException e) {
+            logger.error("转换文件--->" + DIRECTION + filename + ".txt--->失败！");
+        } catch (IOException e) {
+            logger.error("转换文件--->" + DIRECTION + filename + ".txt--->失败！");
+        }
+        logger.info("转换文件--->" + DIRECTION + filename + ".txt--->成功！");
+    }
+
+    /**
+     * 删除多余的代码
+     * filename：文件名
+     */
+    public static void delCode(String filename) {
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(DIRECTION + filename + ".txt"));
+            PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(DIRECTION + filename + "1.txt", true)));
+            String line = br.readLine();
+            while (line != null) {
+                int num = countNum(line, "\t");
+                if (line.contains("-党委")) {
+                    for (int i = 0; i < num; i++) {
+                        out.print("\t");
+                    }
+                    out.println("党委");
+                } else if (line.contains("-人大")) {
+                    for (int i = 0; i < num; i++) {
+                        out.print("\t");
+                    }
+                    out.println("人大");
+                } else if (line.contains("-政府")) {
+                    for (int i = 0; i < num; i++) {
+                        out.print("\t");
+                    }
+                    out.println("政府");
+                } else if (line.contains("-政协")) {
+                    for (int i = 0; i < num; i++) {
+                        out.print("\t");
+                    }
+                    out.println("政协");
+                } else if (line.contains("-民主党派")) {
+                    for (int i = 0; i < num; i++) {
+                        out.print("\t");
+                    }
+                    out.println("民主党派");
+                } else if (line.contains("-群众团体")) {
+                    for (int i = 0; i < num; i++) {
+                        out.print("\t");
+                    }
+                    out.println("群众团体");}
+                else if (line.contains("-法院")) {
+                    for (int i = 0; i < num; i++) {
+                        out.print("\t");
+                    }
+                    out.println("法院");
+                } else if (line.contains("-检察院")) {
+                    for (int i = 0; i < num; i++) {
+                        out.print("\t");
+                    }
+                    out.println("检察院");
+                } else if (line.contains("-经济实体")) {
+                    for (int i = 0; i < num; i++) {
+                        out.print("\t");
+                    }
+                    out.println("经济实体");
+                } else if (line.contains("-其他")) {
+                    for (int i = 0; i < num; i++) {
+                        out.print("\t");
+                    }
+                    out.println("其他");
+                } else if (line.contains("-行政机关")) {
+                    for (int i = 0; i < num; i++) {
+                        out.print("\t");
+                    }
+                    out.println("行政机关");}
+                else if (line.contains("-直属事业单位")) {
+                    for (int i = 0; i < num; i++) {
+                        out.print("\t");
+                    }
+                    out.println("直属事业单位");
+                } else if (line.contains("-事业单位")) {
+                    for (int i = 0; i < num; i++) {
+                        out.print("\t");
+                    }
+                    out.println("事业单位");
+                } else if (line.contains("-下设机构")) {
+                    for (int i = 0; i < num; i++) {
+                        out.print("\t");
+                    }
+                    out.println("下设机构");
+
                 } else {
                     out.println(line);
                 }
@@ -669,6 +774,15 @@ public class Common {
 //                System.out.println(szcs + "-" + dwzd + "-" + dwlb + "-" + dwlx + "-" + dwbh + "-" + dwmc);
                 Class c = Class.forName("com.wts.crawler.city." + city);
                 Method method = c.getMethod("downDepartmentDetails", String.class, String.class, String.class, String.class, String.class, String.class, String.class, String.class, String.class);
+                System.out.println(baseURL);
+                System.out.println(szcs);
+                System.out.println(dwzd);
+                System.out.println(dwlb);
+                System.out.println(dwlx);
+                System.out.println(sjdw);
+                System.out.println(dwbh);
+                System.out.println(dwmc);
+                System.out.println(time);
                 method.invoke("", baseURL, szcs, dwzd, dwlb, dwlx, sjdw, dwbh, dwmc, time);
 //                downDepartmentDetails(baseURL, szcs, dwzd, dwlb, dwlx, sjdw, dwbh, dwmc, time);
             }

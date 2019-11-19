@@ -4,13 +4,13 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class URL {
-    public static final String DIRECTION = "D:\\government_staff\\";
+    public static final String DIRECTION = "E:\\government_staff\\";
     /**
      * 省直
      */
     public static Map<String, String> ShengZhi(){
         Map<String, String> map = new LinkedHashMap<String, String>();
-        map.put("省直","http://218.56.49.18/");
+        map.put("省直","http://218.56.49.18:8004/");
         return map;
     }
     /**
@@ -19,18 +19,18 @@ public class URL {
     public static Map<String, String> JiNan(){
         Map<String, String> map = new LinkedHashMap<String, String>();
         map.put("市直","http://jnbb.gov.cn/smzgs/");
-        map.put("市中区","http://sz.jnbb.gov.cn/smzgs/");
-        map.put("历下区","http://lx.jnbb.gov.cn/smzgs/");
-        map.put("槐荫区","http://hy.jnbb.gov.cn/smzgs/");
-        map.put("天桥区","http://tq.jnbb.gov.cn/smzgs/");
-        map.put("历城区","http://lc.jnbb.gov.cn/smzgs/");
-        map.put("长清区","http://cq.jnbb.gov.cn/smzgs/");
-        map.put("章丘区","http://zq.jnbb.gov.cn/smzgs/");
-        map.put("济阳县","http://jy.jnbb.gov.cn/smzgs/");
-        map.put("商河县","http://sh.jnbb.gov.cn/smzgs/");
-        map.put("平阴县","http://py.jnbb.gov.cn/smzgs/");
-        map.put("莱芜区","http://lw.jnbb.gov.cn/smzgs/");
-        map.put("钢城区","http://gc.jnbb.gov.cn/smzgs/");
+//        map.put("市中区","http://sz.jnbb.gov.cn/smzgs-sz/");
+//        map.put("历下区","http://lx.jnbb.gov.cn/smzgs-lx/");
+//        map.put("槐荫区","http://hy.jnbb.gov.cn/smzgs-hy/");
+//        map.put("天桥区","http://tq.jnbb.gov.cn/smzgs-tq/");
+//        map.put("历城区","http://lc.jnbb.gov.cn/smzgs-lc/");
+//        map.put("长清区","http://cq.jnbb.gov.cn/smzgs-cq/");
+//        map.put("章丘区","http://zq.jnbb.gov.cn/smzgs-zq/");
+//        map.put("济阳区","http://jy.jnbb.gov.cn/smzgs-jy/");
+//        map.put("商河县","http://sh.jnbb.gov.cn/smzgs-sh/");
+//        map.put("平阴县","http://py.jnbb.gov.cn/smzgs-py/");
+//        map.put("莱芜区","http://lw.jnbb.gov.cn/smzgs-lw/");
+//        map.put("钢城区","http://gc.jnbb.gov.cn/smzgs-gc/");
         return map;
     }
     /**

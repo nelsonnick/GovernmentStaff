@@ -59,46 +59,48 @@ public class JiNan {
                     .getElementsByTag("td").first().getElementsByTag("div").first();
             if (div.getElementsByTag("table").size() != 0) {
                 Element tbody = div.getElementsByTag("table").first().getElementsByTag("tbody").first();
-                Elements elements = tbody.getElementsByTag("tr");
-                for (Element element : elements) {
-                    if (element.getElementsByTag("td").first().text().contains("行政")) {
-                        xzPlanNum = element.getElementsByTag("td").first().nextElementSibling().text();
-                        Element xzReal = element.getElementsByTag("td").first().nextElementSibling().nextElementSibling().nextElementSibling();
-                        if (xzReal.getElementsByTag("a").size() == 2) {
-                            xzRealNum = xzReal.getElementsByTag("a").first().text();
-                            xzLoneNum = xzReal.getElementsByTag("a").last().text();
+                if (tbody != null) {
+                    Elements elements = tbody.getElementsByTag("tr");
+                    for (Element element : elements) {
+                        if (element.getElementsByTag("td").first().text().contains("行政")) {
+                            xzPlanNum = element.getElementsByTag("td").first().nextElementSibling().text();
+                            Element xzReal = element.getElementsByTag("td").first().nextElementSibling().nextElementSibling().nextElementSibling();
+                            if (xzReal.getElementsByTag("a").size() == 2) {
+                                xzRealNum = xzReal.getElementsByTag("a").first().text();
+                                xzLoneNum = xzReal.getElementsByTag("a").last().text();
+                            } else {
+                                xzRealNum = element.getElementsByTag("td").first().nextElementSibling().nextElementSibling().nextElementSibling().text();
+                            }
+                            if (!checkNum(xzRealNum).equals("0")) {
+                                downPersonList(base, szcs, dwzd, dwlb, dwlx, sjdw, dwbh, dwmc, "行政编制");
+                            }
+                        } else if (element.getElementsByTag("td").first().text().contains("事业")) {
+                            syPlanNum = element.getElementsByTag("td").first().nextElementSibling().text();
+                            Element syReal = element.getElementsByTag("td").first().nextElementSibling().nextElementSibling().nextElementSibling();
+                            if (syReal.getElementsByTag("a").size() == 2) {
+                                syRealNum = syReal.getElementsByTag("a").first().text();
+                                syLoneNum = syReal.getElementsByTag("a").last().text();
+                            } else {
+                                syRealNum = element.getElementsByTag("td").first().nextElementSibling().nextElementSibling().nextElementSibling().text();
+                            }
+                            if (!checkNum(syRealNum).equals("0")) {
+                                downPersonList(base, szcs, dwzd, dwlb, dwlx, sjdw, dwbh, dwmc, "事业编制");
+                            }
+                        } else if (element.getElementsByTag("td").first().text().contains("工勤")) {
+                            gqPlanNum = element.getElementsByTag("td").first().nextElementSibling().text();
+                            Element gqReal = element.getElementsByTag("td").first().nextElementSibling().nextElementSibling().nextElementSibling();
+                            if (gqReal.getElementsByTag("a").size() == 2) {
+                                gqRealNum = gqReal.getElementsByTag("a").first().text();
+                                gqLoneNum = gqReal.getElementsByTag("a").last().text();
+                            } else {
+                                gqRealNum = element.getElementsByTag("td").first().nextElementSibling().nextElementSibling().nextElementSibling().text();
+                            }
+                            if (!checkNum(gqRealNum).equals("0")) {
+                                downPersonList(base, szcs, dwzd, dwlb, dwlx, sjdw, dwbh, dwmc, "工勤编制");
+                            }
                         } else {
-                            xzRealNum = element.getElementsByTag("td").first().nextElementSibling().nextElementSibling().nextElementSibling().text();
-                        }
-                        if (!checkNum(xzRealNum).equals("0")) {
-                            downPersonList(base, szcs, dwzd, dwlb, dwlx, sjdw, dwbh, dwmc, "行政编制");
-                        }
-                    } else if (element.getElementsByTag("td").first().text().contains("事业")) {
-                        syPlanNum = element.getElementsByTag("td").first().nextElementSibling().text();
-                        Element syReal = element.getElementsByTag("td").first().nextElementSibling().nextElementSibling().nextElementSibling();
-                        if (syReal.getElementsByTag("a").size() == 2) {
-                            syRealNum = syReal.getElementsByTag("a").first().text();
-                            syLoneNum = syReal.getElementsByTag("a").last().text();
-                        } else {
-                            syRealNum = element.getElementsByTag("td").first().nextElementSibling().nextElementSibling().nextElementSibling().text();
-                        }
-                        if (!checkNum(syRealNum).equals("0")) {
-                            downPersonList(base, szcs, dwzd, dwlb, dwlx, sjdw, dwbh, dwmc, "事业编制");
-                        }
-                    } else if (element.getElementsByTag("td").first().text().contains("工勤")) {
-                        gqPlanNum = element.getElementsByTag("td").first().nextElementSibling().text();
-                        Element gqReal = element.getElementsByTag("td").first().nextElementSibling().nextElementSibling().nextElementSibling();
-                        if (gqReal.getElementsByTag("a").size() == 2) {
-                            gqRealNum = gqReal.getElementsByTag("a").first().text();
-                            gqLoneNum = gqReal.getElementsByTag("a").last().text();
-                        } else {
-                            gqRealNum = element.getElementsByTag("td").first().nextElementSibling().nextElementSibling().nextElementSibling().text();
-                        }
-                        if (!checkNum(gqRealNum).equals("0")) {
-                            downPersonList(base, szcs, dwzd, dwlb, dwlx, sjdw, dwbh, dwmc, "工勤编制");
-                        }
-                    } else {
 
+                        }
                     }
                 }
             }
@@ -166,15 +168,19 @@ public class JiNan {
             }
             Map<String, String> map = JiNan();
             for (Map.Entry<String, String> key : map.entrySet()) {
-                createFile(getStructureStr(key.getValue(), true), "济南\\" + key.getKey());
+                createFile(getStructureStr(key.getValue(), false), "济南\\" + key.getKey());
                 delTab("济南\\" + key.getKey());
+                transFile("济南\\" + key.getKey());
+                addTab("济南\\" + key.getKey());
+                addTab("济南\\" + key.getKey());
             }
             delTab("济南\\市直");
-            changeFile("济南\\市直", "济南");
             for (Map.Entry<String, String> key : map.entrySet()) {
                 addCity("济南\\" + key.getKey(),"济南");
+                changeFile("济南\\" + key.getKey(), "济南");
             }
             delCity("济南\\市直");
+            addCity("济南\\市直","济南");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -194,4 +200,9 @@ public class JiNan {
         }
     }
 
+    public static void main(String[] args) {
+//        http://jnbb.gov.cn/smzgs/UnitDetails.aspx?unitId=037001000452442
+//        downDepartmentDetails("http://jnbb.gov.cn/smzgs/","济南市","市直","党委","事业单位","037001000452","037001000452425","济南市水产技术推广站","2019年10月31日");
+        downDepartmentDetails("http://jnbb.gov.cn/smzgs/","济南市","市直","党委","事业单位","037001000452","037001000452442","济南市动物卫生监督所（应撤销）","2019年10月31日");
+    }
 }
